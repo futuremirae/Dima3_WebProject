@@ -1,4 +1,4 @@
-package com.example.demo.fraud;
+package com.dima.niceweb.fraud;
 
 
 import java.io.BufferedReader;
