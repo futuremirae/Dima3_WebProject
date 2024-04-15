@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>게시판</title>
+
+	<!-- CSS 설정-->
+	<link rel="stylesheet" th:href="@{/css/main.css}">
+
+
+</head>
+
+<body>
+	<div class="container">
+		<div class="logo">
+			<img th:src="@{/images/airplane.png}" alt="logo">
+			<h2>회원전용 게시판</h2>
+		</div>
+
+		<div class="gnb">
+			<ul>
+				<!-- 아직 인증이 되지 않은 사람  -->
+				<li sec:authorize="isAnonymous()"><a th:href="@{/user/join}">회원가입</a></li>
+				<li sec:authorize="isAnonymous()"> <a th:href="@{/user/login}">로그인</a></li>
+
+				<!-- 인증이 된사람 -->
+				<li sec:authorize="isAuthenticated()"><a th:href="@{/user/logout}">[[${#authentication.name}]]님,
+						로그아웃</a></li>
+				<!-- //[[${#authentication.name}]]님, -->
+
+				<!-- 인증과 관계없음 -->
+				<li><a th:href="@{board/boardList}">게시판</a></li>
+				<li><a th:href="@{/predict}">머신러닝 붓꽃예측</a></li>
+
+
+			</ul>
+		</div>
+
+		<!--인증 관련 정보 출력 (삭제할 것)-->
+		<!--ROLE_ADMIN계정이 있다면 아래 내용 출력 -->
+
+		<h2 sec:authorize="hasRole('ROLE_ADMIN')">관리자</h2>
+		<br>
+		<!--ROLE_USER계정이 있다면 아래 내용 출력 -->
+		<h2 sec:authorize="hasRole('ROLE_USER')">인증된 사용자</h2>
+		<br>
+		<!--ROLE_ANANYMOUS계정이 있다면 아래 내용 출력 -->
+		<h2 sec:authorize="hasRole('ROLE_ANONYMOUS')">낯선자</h2>
+		<br>
+		<!--인증이 되었다면!-->
+		<h2 sec:authorize="isAuthenticated">인증 완료됨</h2>
+		<br>
+		<!--인증이 안되었다면!-->
+		<h2 sec:authorize="isAnonymous()">인증 되지않음</h2>
+		<br>
+		<!--인증시 사용된 username(ID)-->
+		Name: <h2 sec:authentication="name"></h2>
+		<br>
+		<!--인증시 사용된 객체정보-->
+		Principal: <h2 sec:authentication="principal"></h2>
+
+
+
+
+
+
+	</div>
+
+</body>
+
+</html>
