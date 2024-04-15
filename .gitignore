@@ -2,8 +2,12 @@
 # Created by https://www.toptal.com/developers/gitignore/api/gradle,java,visualstudiocode,eclipse
 # Edit at https://www.toptal.com/developers/gitignore?templates=gradle,java,visualstudiocode,eclipse
 
+##피클 파일 수정 
 **/dense_matrix.pickle
 **/dataframe.pickle
+
+## sql문 수정
+**/.sql
 ### Eclipse ###
 .metadata
 bin/
