@@ -1,0 +1,12 @@
+package net.dima.Nice.config;
+
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class AppConfig {
+	@Bean
+	RestTemplate restTemplate() {
+		return new RestTemplate();
+	}
+
+}
