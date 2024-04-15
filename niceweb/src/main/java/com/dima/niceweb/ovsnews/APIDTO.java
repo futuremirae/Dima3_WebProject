@@ -1,4 +1,4 @@
-package com.example.demo.ovsnews;
+package com.dima.niceweb.ovsnews;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
