@@ -11,26 +11,6 @@
     <link rel="stylesheet" th:href="@{/css/myPage.css}">
     <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
     <script>
-        $(function () {
-            $("#checkuserId").on('click', checkIdFunc);// 아이디 중복 검사 
-        })
-
-        function checkIdFunc() {
-            let userId = $("#userId").val(); // 사용자 입력 아이디 
-            $.ajax({
-                url: "/user/confirmId"
-                , method: 'GET'
-                , async: false
-                , data: { "userId": userId }
-                , success: function (output) {
-                    console.log(output)
-
-                }
-
-            });
-
-
-        }
 
     </script>
 
@@ -55,48 +35,47 @@
     </div>
     <hr>
     <h2>회원 가입</h2>
-
-    <form th:action="@{/user/joinProc}" method="post">
-        <section>
-            <div>
-                <h4>개인 정보</h4>
-            </div>
+    <section>
+        <div>
+            <h4>개인 정보</h4>
+        </div>
+        <form th:action="@{/user/joinProc}" method="post">
             <table border="1">
                 <tr>
                     <th>아이디</th>
                     <td>
-                        <input type="text" id="userId" name="userId"> <!-- 사용자 아이디 입력-->
-                        <button type="button" class="checkId" id="checkuserId">아이디 중복 확인</button>
+                        <input type="text" id="userId"> <!-- 사용자 아이디 입력-->
+                        <button type="button" class="checkId">아이디 중복 확인</button>
                     </td>
 
                 </tr>
                 <tr>
                     <th>비밀번호</th>
                     <td colspan="2">
-                        <input type="password" class="spassword" id="userPwd" name="userPwd">
+                        <input type="password" class="password" id="userPwd"> <!-- 타임리프 태그 추가 필요-->
                     </td>
                 </tr>
                 <tr>
                     <th>비밀번호 확인</th> <!-- 비밀번호가 다른지 확인 필수-->
                     <td>
-                        <input type="password" placeholder="비밀번호 확인" id="userPwdConfirm">
+                        <input type="password" placeholder="비밀번호 확인" id="userPwdConfirm"> <!-- 타임리프 태그 추가 필요-->
                     </td>
                 </tr>
                 <tr>
                     <th>담당자 이메일</th>
                     <td>
-                        <input type="email" id="userEmail" name="userEmail">
+                        <input type="email" id="userEmail">
                     </td>
                 </tr>
                 <tr>
                     <th>담당자 이름(영문)</th>
                     <td>
-                        <input type="text" id="userName" name="userName">
+                        <input type="text" id="userName">
                 </tr>
                 <tr>
                     <th>담당자 연락처</th>
                     <td>
-                        <input type="text" id="userPhone" name="userPhone">
+                        <input type="text" id="userPhone">
                     </td>
                 </tr>
             </table>
@@ -107,36 +86,36 @@
                 <tr>
                     <th>회사명(영문)</th>
                     <td>
-                        <input type="text" id="userCmpEng" name="userCmpEng">
+                        <input type="text" id="userCmpEng">
                     </td>
                 </tr>
                 <tr>
                     <th>회사명(한글)</th>
                     <td>
-                        <input type="text" id="userCmpKor" name="userCmpKor">
+                        <input type="text" id="userCmpKor">
                     </td>
                 </tr>
                 <tr>
                     <th>국가</th>
                     <td>
-                        <input type="text" id="userNtn" name="userNtn">
+                        <input type="text" id="userNtn"> <!-- 타임리프 태그 추가 필요 + 예전에 입력했던 정보 보여질 예정-->
                     </td>
                 </tr>
                 <tr>
                     <th>회사 대표이메일</th>
                     <td>
-                        <input type="email" id="userPubEmail" name="userPubEmail">
+                        <input type="email" id="userPubEmail">
                 </tr>
                 <tr>
                     <th>대표자명(영문)</th>
                     <td>
-                        <input type="name" id="userCeoEng" name="userCeoEng">
+                        <input type="name" id="userCeoEng">
                     </td>
                 </tr>
                 <tr>
                     <th>대표자명(국문)</th>
                     <td>
-                        <input type="name" id="userCeoKor" name="userCeoKor">
+                        <input type="name" id="userCeoKor">
                     </td>
                 </tr>
 
@@ -144,48 +123,65 @@
                 <tr>
                     <th>던스번호</th>
                     <td>
-                        <input type="text" id="userDunsNo" name="userDunsNo"> <!-- 타임리프 태그 추가 필요 + 예전에 입력했던 정보 보여질 예정-->
+                        <input type="text" id="userDunsNo"> <!-- 타임리프 태그 추가 필요 + 예전에 입력했던 정보 보여질 예정-->
                     </td>
                 </tr>
                 <tr>
                     <th>회사 주소</th>
                     <td>
-                        <input type="text" id="userUrl" name="userUrl"> <!-- 타임리프 태그 추가 필요 + 예전에 입력했던 정보 보여질 예정-->
+                        <input type="text" id="userUrl"> <!-- 타임리프 태그 추가 필요 + 예전에 입력했던 정보 보여질 예정-->
                     </td>
                 </tr>
                 <tr>
                     <th>홈페이지 주소</th>
                     <td>
-                        <input type="text" id="userAdr" name="userAdr"> <!-- 타임리프 태그 추가 필요 + 예전에 입력했던 정보 보여질 예정-->
+                        <input type="text" id="userAdr"> <!-- 타임리프 태그 추가 필요 + 예전에 입력했던 정보 보여질 예정-->
                     </td>
                 </tr>
                 <tr>
-                    <th>자사 취급 품목(영문)</th>
+                    <th>자사 품목(영문)</th>
                     <td>
-                        <input type="text" id="userSicCd" name="userSicCd">
+                        <input type="text" id="userSicCd">
                     </td>
                 </tr>
                 <tr>
-                    <th>관심 품목 키워드(영문)</th>
+                    <th>관심 품목 키워드</th>
                     <td>
-                        <input type="text" id="userKeyWord" name="userKeyWord">
+                        <span>키워드</span>
                     </td>
                 </tr>
             </table>
-        </section>
-        <div class="agreement">
-            <input type="checkbox" class="checkbox" id="agreementCheckbox">
-            <label for="agreementCheckbox" class="checkbox-label">필수 이용약관 및 개인정보 수집 및 이용, 마케팅 정보 수신에 모두 동의합니다.</label>
-        </div>
-        <!-- <div class="join">
-            <a type="button" class="join Btn btn-primary"> 가입하기</a>
-        </div> -->
-        <div class="join">
-            <input type="submit" id="submitBtn" value="회원가입" class="join Btn btn-primary" disabled>
-            <!--유효성 검사 끝나면 버튼 클릭 할 수 있도록 하기 -->
-        </div>
-    </form>
 
+            <!-- <h4>추가 회사 정보</h4>   추가 할지 말지 나중에 정의하기 
+        <table>
+            <tr>
+                <th>매출</th>
+                <td>
+                    <input type="text" class="Sales">
+                </td>
+            </tr>
+            <tr>
+                <th>자산</th>
+                <td>
+                    <input type="text" class="Asset">
+                </td>
+            </tr>
+            <tr>
+                <th>종업원수</th>
+                <td>
+                    <input type="text" class="Employees">
+                </td>
+            </tr>
+        </table> -->
+        </form>
+    </section>
+    <div class="agreement">
+        <input type="checkbox" class="checkbox" id="agreementCheckbox">
+        <label for="agreementCheckbox" class="checkbox-label">필수 이용약관 및 개인정보 수집 및 이용, 마케팅 정보 수신에 모두 동의합니다.</label>
+    </div>
+    <div class="join">
+        <a type="button" class="join Btn btn-primary"> 가입하기</a>
+    </div>
 </body>
 
 </html>
