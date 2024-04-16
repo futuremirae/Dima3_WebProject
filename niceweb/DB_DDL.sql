@@ -66,23 +66,23 @@ CREATE TABLE CLIENT
       DUNS_NO           VARCHAR2(100)   PRIMARY KEY     -- DUNS넘버
     , CMP_NM            VARCHAR2(100)   NOT NULL        -- 회사명
     , NAT_CD            CHAR(2)         NOT NULL        -- 국가 코드
-    , NAT_KOR           VARCHAR2(10)    NOT NULL        -- 국가명 (한글)
-    , NAT_ENG           VARCHAR2(10)    NOT NULL        -- 국가명 (영문)
+    , NAT_KOR           VARCHAR2(20)    NOT NULL        -- 국가명 (한글)
+    , NAT_ENG           VARCHAR2(20)    NOT NULL        -- 국가명 (영문)
     , CITY              VARCHAR2(100)   NOT NULL        -- 도시명
     , ADR               VARCHAR2(100)   NOT NULL        -- 전체 주소
     , SIC_CD            VARCHAR2(100)   NOT NULL        -- 주요 취급 품목
     , SALES             NUMBER(20)                      -- 매출
     , ASSET             NUMBER(20)                      -- 자산
     , EMP               NUMBER(10)                      -- 종업원수
-    , CONTACT_GRD_CD    CHAR(3)                         -- 마케팅 등급
+    , CONTACT_GRD_CD    VARCHAR2(4)                     -- 마케팅 등급
     -- NOT NULL이 아닌 대신 NICE의 신용조사 미응시한 모든 사용자에게 다른 사용자에게 노출이 어렵다는 점을 경고창 생성
-    , CREDIT_GRD_CD     CHAR(3)                         -- 신용 등급
-    , URL               VARCHAR2(100)   NOT NULL        -- 홈페이지 주소
+    , CREDIT_GRD_CD     VARCHAR2(4)                     -- 신용 등급
+    , URL               VARCHAR2(200)   NOT NULL        -- 홈페이지 주소
     , EML               VARCHAR2(100)   NOT NULL        -- 이메일 주소
     , ENG               VARCHAR2(2000)  NOT NULL        -- 관련 키워드 목록
 );
 
--- 회사 정보 테이블 생성
+-- 회사 정보 VIEW 생성
             CREATE VIEW CMP
                 AS
                     SELECT  DUNS_NO
@@ -102,16 +102,15 @@ CREATE TABLE CLIENT
                 ;
 
 
--- 국가 테이블 생성
--- 코드로 된 국가분류를 텍스트로 표현
+-- 국가 VIEW 생성
             CREATE VIEW NTN
                 AS
-                    SELECT  DUNS_NO
-                            , NAT_ID
+                    SELECT  NAT_ID
                             , NAT_CD
                             , NAT_KOR
                             , NAT_ENG
                     FROM CLIENT
+                    ORDER BY NAT_ID
                     WITH READ ONLY
                 ;
 
