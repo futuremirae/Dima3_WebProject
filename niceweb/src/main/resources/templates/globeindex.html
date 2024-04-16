@@ -11,6 +11,15 @@
             height: 800px;
             max-width: 100%;
         }
+
+        select {
+            width: 200px;
+            height: 25px;
+            /* 드롭다운의 너비 지정 */
+            margin-top: 25px;
+            /* 상단 여백 추가 */
+            margin-right: 50px;
+        }
     </style>
     <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
@@ -20,14 +29,19 @@
         am5.ready(function () {
 
             // Create root element
+            // https://www.amcharts.com/docs/v5/getting-started/#Root_element
             var root = am5.Root.new("chartdiv");
 
+
             // Set themes
+            // https://www.amcharts.com/docs/v5/concepts/themes/
             root.setThemes([
                 am5themes_Animated.new(root)
             ]);
 
+
             // Create the map chart
+            // https://www.amcharts.com/docs/v5/charts/map-chart/
             var chart = root.container.children.push(am5map.MapChart.new(root, {
                 panX: "rotateX",
                 panY: "rotateY",
@@ -38,7 +52,20 @@
                 paddingRight: 20
             }));
 
+
+            var backgroundSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {}));
+            backgroundSeries.mapPolygons.template.setAll({
+                fill: am5.color(0x6AE4),
+                fillOpacity: 0.9,
+                strokeOpacity: 0
+            });
+            backgroundSeries.data.push({
+                geometry: am5map.getGeoRectangle(90, 180, -90, -180)
+            });
+
+
             // Create main polygon series for countries
+            // https://www.amcharts.com/docs/v5/charts/map-chart/map-polygon-series/
             var polygonSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {
                 geoJSON: am5geodata_worldLow
             }));
@@ -46,38 +73,22 @@
             polygonSeries.mapPolygons.template.setAll({
                 tooltipText: "{name}",
                 toggleKey: "active",
-                interactive: true
+                interactive: true,
+                fill: am5.color(0x33CC33),
+                strokeWidth: 1
             });
 
             polygonSeries.mapPolygons.template.states.create("hover", {
-                fill: root.interfaceColors.get("primaryButtonHover")
-            });
-
-            var selectedColor = am5.color(0x84b761);
-
-            polygonSeries.mapPolygons.template.on("active", function (ev) {
-                var polygon = ev.target;
-                if (!polygon.isActive) {
-                    polygon.setAll({ fill: selectedColor });
-                } else {
-                    polygon.setAll({ fill: chart.get("colors").getIndex(polygonSeries.dataItems.indexOf(polygon.dataItem)) });
-                }
+                fill: am5.color(0x009900) // Darker green when hovered
             });
 
             polygonSeries.mapPolygons.template.states.create("active", {
-                fill: root.interfaceColors.get("primaryButtonHover")
+                fill: am5.color(0x006600) // Even darker green when clicked
             });
 
+
             // Create series for background fill
-            var backgroundSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {}));
-            backgroundSeries.mapPolygons.template.setAll({
-                fill: root.interfaceColors.get("alternativeBackground"),
-                fillOpacity: 0.1,
-                strokeOpacity: 0
-            });
-            backgroundSeries.data.push({
-                geometry: am5map.getGeoRectangle(90, 180, -90, -180)
-            });
+            // https://www.amcharts.com/docs/v5/charts/map-chart/map-polygon-series/#Background_polygon
 
             var graticuleSeries = chart.series.unshift(
                 am5map.GraticuleSeries.new(root, {
@@ -89,64 +100,119 @@
 
             // Set up events
             var previousPolygon;
-            var selectedColor = am5.color(0x84b761);
 
             polygonSeries.mapPolygons.template.on("active", function (active, target) {
                 if (previousPolygon && previousPolygon != target) {
                     previousPolygon.set("active", false);
-                    previousPolygon.fill = chart.get("colors").getIndex(polygonSeries.dataItems.indexOf(previousPolygon.dataItem));
                 }
                 if (target.get("active")) {
                     selectCountry(target.dataItem.get("id"));
-
-                    target.fill = selectedColor;
                 }
                 previousPolygon = target;
             });
-
-            function selectCountry(id) {
-                polygonSeries.dataItems.each(function (dataItem) {
-                    if (dataItem.get("id") === id) {
-                        var polygon = dataItem.get("mapPolygon");
-                        if (polygon) {
-                            var centroid = polygon.geoCentroid();
-                            chart.animate({ key: "rotationX", to: -centroid.longitude, duration: 1500 });
-                            chart.animate({ key: "rotationY", to: -centroid.latitude, duration: 1500 });
-                        }
-                    }
-                });
+            const countryNames = {
+                "CN": "China", "KR": "South Korea", "IN": "India", "MY": "Malaysia", "JP": "Japan", "TH": "Thailand", "HK": "Hong Kong", "SG": "Singapore", "TW": "Taiwan",
+                "AE": "United Arab Emirates", "IL": "Israel", "BH": "Bahrain", "QA": "Qatar", "VN": "Vietnam", "SA": "Saudi Arabia", "ID": "Indonesia", "PH": "Philippines", "PK": "Pakistan",
+                "LK": "Sri Lanka", "UZ": "Uzbekistan", "DE": "Germany", "GB": "United Kingdom", "FR": "France", "SE": "Sweden", "AT": "Austria", "DK": "Denmark",
+                "IT": "Italy", "BE": "Belgium", "NL": "Netherlands", "SI": "Slovenia", "HU": "Hungary", "CH": "Switzerland", "CZ": "Czech Republic", "RO": "Romania",
+                "TR": "Turkey", "RS": "Serbia", "PL": "Poland", "UA": "Ukraine", "SK": "Slovakia", "FI": "Finland", "BG": "Bulgaria", "EE": "Estonia", "GR": "Greece",
+                "NO": "Norway", "PT": "Portugal", "LV": "Latvia", "HR": "Croatia", "GE": "Georgia", "BY": "Belarus", "LT": "Lithuania", "MT": "Malta",
+                "BA": "Bosnia and Herzegovina", "ES": "Spain", "US": "United States", "CA": "Canada", "MX": "Mexico", "GT": "Guatemala", "CR": "Costa Rica", "SV": "El Salvador",
+                "JM": "Jamaica", "NI": "Nicaragua", "DO": "Dominican Republic", "VG": "British Virgin Islands", "PA": "Panama", "BR": "Brazil", "CO": "Colombia", "AR": "Argentina",
+                "CL": "Chile", "VE": "Venezuela", "EC": "Ecuador", "TT": "Trinidad and Tobago", "ZA": "South Africa", "NG": "Nigeria", "EG": "Egypt", "MA": "Morocco", "KE": "Kenya",
+                "NZ": "New Zealand", "AU": "Australia"
+            };
+            function getCountryName(code) {
+                return countryNames[code] || code;  // 국가 코드에 해당하는 이름이 없다면 코드를 그대로 반환
             }
 
-            // Uncomment this to pre-center the globe on a country when it loads
-            polygonSeries.events.on("datavalidated", function () {
-                selectCountry("KR");
+            var lastActiveTooltip = null; // Last active tooltip
+
+            function selectCountry(id) {
+                if (lastActiveTooltip) {
+                    lastActiveTooltip.hideTooltip();
+                }
+                var dataItem = polygonSeries.getDataItemById(id);
+                var target = dataItem.get("mapPolygon");
+                if (target) {
+                    moveToCountry(target);
+                    target.set("active", true);
+                    updateTooltip(target, dataItem);
+                    lastActiveTooltip = target;
+                }
+            }
+
+            function moveToCountry(target) {
+                var centroid = target.geoCentroid();
+                if (centroid) {
+                    chart.animate({ key: "rotationX", to: -centroid.longitude, duration: 1500, easing: am5.ease.inOut(am5.ease.cubic) });
+                    chart.animate({ key: "rotationY", to: -centroid.latitude, duration: 1500, easing: am5.ease.inOut(am5.ease.cubic) });
+                }
+            }
+
+            function updateTooltip(target, dataItem) {
+                var countryName = countryNames[dataItem.dataContext.id] || dataItem.dataContext.name;
+                if (target.tooltip) {
+                    target.tooltip.text = countryName;
+                } else {
+                    target.tooltip = am5.Tooltip.new(root, {
+                        text: countryName
+                    });
+                }
+                target.showTooltip();
+            }
+
+            // Update country list based on continent selection
+            function updateCountryList() {
+                var continent = document.getElementById("continentSelect").value;
+                var countrySelect = document.getElementById("countrySelect");
+                countrySelect.innerHTML = '<option value="">국가를 선택하세요</option>'; // Clear existing options
+
+                if (continent) {
+                    var countries = continentCountries[continent];
+                    countries.forEach(function (code) {
+                        var option = document.createElement("option");
+                        option.value = code;
+                        option.textContent = countryNames[code];
+                        countrySelect.appendChild(option);
+                    });
+                }
+            }
+
+            document.getElementById('countrySelect').addEventListener('change', function () {
+                var selectedCountryId = this.value;
+                if (selectedCountryId) {
+                    selectCountry(selectedCountryId);
+                }
             });
 
-            // Function to select a country by its ID
-            function selectCountry(id) {
-                var dataItem = polygonSeries.getDataItemById(id);
-                var target = dataItem.get("mapPolygon");
-                if (target) {
-                    var centroid = target.geoCentroid();
-                    if (centroid) {
-                        chart.animate({ key: "rotationX", to: -centroid.longitude, duration: 1500, easing: am5.ease.inOut(am5.ease.cubic) });
-                        chart.animate({ key: "rotationY", to: -centroid.latitude, duration: 1500, easing: am5.ease.inOut(am5.ease.cubic) });
-                    }
-                }
-            }
+            function updateCountryList() {
+                var continent = document.getElementById("continentSelect").value;
+                var countrySelect = document.getElementById("countrySelect");
+                countrySelect.innerHTML = '';  // 국가 선택 드롭다운 초기화
 
-            function selectCountry(id) {
-                var dataItem = polygonSeries.getDataItemById(id);
-                var target = dataItem.get("mapPolygon");
-                if (target) {
-                    var centroid = target.geoCentroid();
-                    if (centroid) {
-                        chart.animate({ key: "rotationX", to: -centroid.longitude, duration: 1500, easing: am5.ease.inOut(am5.ease.cubic) });
-                        chart.animate({ key: "rotationY", to: -centroid.latitude, duration: 1500, easing: am5.ease.inOut(am5.ease.cubic) });
-                    }
+                if (continent) {
+                    const countries = continentCountries[continent];
+                    countries.forEach(function (countryCode) {
+                        const option = document.createElement("option");
+                        option.value = countryCode;
+                        option.textContent = countryNames[countryCode];  // 국가 코드를 국가명으로 변환
+                        countrySelect.appendChild(option);
+                    });
                 }
+
+                const defaultOption = document.createElement("option");
+                defaultOption.textContent = "국가를 선택하세요";
+                defaultOption.selected = true;
+                defaultOption.disabled = true;
+                countrySelect.appendChild(defaultOption);
             }
-            // Country list by continent
+            // Uncomment this to pre-center the globe on a country when it loads
+            //polygonSeries.events.on("datavalidated", function() {
+            //  selectCountry("AU");
+            //});
+
+
             var continentCountries = {
                 "Asia": ["CN", "KR", "IN", "MY", "JP", "TH", "HK", "SG", "TW", "AE", "IL", "BH", "QA", "VN", "SA", "ID", "PH", "PK", "LK", "UZ"],
                 "Europe": ["DE", "GB", "FR", "SE", "AT", "DK", "IT", "BE", "NL", "SI", "HU", "CH", "CZ", "RO", "TR", "RS", "PL", "UA", "SK", "FI", "BG", "EE", "GR", "NO", "PT", "LV", "HR", "GE", "BY", "LT", "MT", "BA", "ES"],
@@ -158,21 +224,47 @@
 
             function generateCountryList(continent) {
                 var ul = document.createElement('ul');
-                continentCountries[continent].forEach(function (country) {
+                continentCountries[continent].forEach(function (countryCode) {
                     var li = document.createElement('li');
                     var a = document.createElement('a');
                     a.href = "#";
-                    a.textContent = country;
+                    a.textContent = getCountryName(countryCode);  // 국가 코드를 국가명으로 변환
                     a.addEventListener('click', function (event) {
                         event.preventDefault();
-                        selectCountry(country);
+                        selectCountry(countryCode);
                     });
                     li.appendChild(a);
                     ul.appendChild(li);
                 });
                 return ul;
             }
+            // 기존의 국가 코드 목록을 하나로 통합합니다.
+            // 모든 국가 코드 목록을 하나로 통합합니다.
+            var allContinentCountries = [].concat.apply([], Object.values(continentCountries));
 
+            // geoJSON 데이터가 시리즈에 로드된 후에 각 국가 폴리곤에 대한 설정을 합니다.
+            polygonSeries.events.on("datavalidated", function () {
+                // 모든 데이터 항목들을 반복하면서 조건에 맞지 않는 국가들의 색상을 변경합니다.
+                polygonSeries.mapPolygons.each(function (mapPolygon) {
+                    var countryId = mapPolygon.dataItem.dataContext.id;
+                    if (!allContinentCountries.includes(countryId)) {
+                        // continentCountries에 포함되지 않는 국가의 색상을 변경합니다.
+                        mapPolygon.set("fill", am5.color(0xAAAAAA)); // 색상 코드를 변경하세요.
+                    }
+                });
+            });
+            polygonSeries.events.on("datavalidated", function () {
+                polygonSeries.mapPolygons.each(function (mapPolygon) {
+                    var countryId = mapPolygon.dataItem.dataContext.id;
+                    if (!allContinentCountries.includes(countryId)) {
+                        // continentCountries에 포함되지 않는 국가의 색상을 변경합니다.
+                        mapPolygon.set("fill", am5.color(0xCCCCCC)); // 변경하고자 하는 색상 코드로 설정하세요.
+
+                        // 클릭을 비활성화합니다.
+                        mapPolygon.set("interactive", false);
+                    }
+                });
+            });
             // Populate country lists
             document.getElementById('asiaList').appendChild(generateCountryList("Asia"));
             document.getElementById('europeList').appendChild(generateCountryList("Europe"));
@@ -189,47 +281,92 @@
             var AfricaList = generateCountryList("Africa");
             var OceaniaList = generateCountryList("Oceania");
 
+
             // Make stuff animate on load
             chart.appear(1000, 100);
 
-        });
+        }); // end am5.ready()
+
+        const continentCountries = {
+            "Asia": ["CN", "KR", "IN", "MY", "JP", "TH", "HK", "SG", "TW", "AE", "IL", "BH", "QA", "VN", "SA", "ID", "PH", "PK", "LK", "UZ"],
+            "Europe": ["DE", "GB", "FR", "SE", "AT", "DK", "IT", "BE", "NL", "SI", "HU", "CH", "CZ", "RO", "TR", "RS", "PL", "UA", "SK", "FI", "BG", "EE", "GR", "NO", "PT", "LV", "HR", "GE", "BY", "LT", "MT", "BA", "ES"],
+            "NorthAmerica": ["US", "CA", "MX", "GT", "CR", "SV", "JM", "NI", "DO", "VG", "PA"],
+            "SouthAmerica": ["BR", "CO", "AR", "CL", "VE", "EC", "TT"],
+            "Africa": ["ZA", "NG", "EG", "MA", "KE"],
+            "Oceania": ["NZ", "AU"]
+        };
+
+        const countryNames = {
+            "CN": "China", "KR": "South Korea", "IN": "India", "MY": "Malaysia", "JP": "Japan", "TH": "Thailand", "HK": "Hong Kong", "SG": "Singapore", "TW": "Taiwan",
+            "AE": "United Arab Emirates", "IL": "Israel", "BH": "Bahrain", "QA": "Qatar", "VN": "Vietnam", "SA": "Saudi Arabia", "ID": "Indonesia", "PH": "Philippines", "PK": "Pakistan",
+            "LK": "Sri Lanka", "UZ": "Uzbekistan", "DE": "Germany", "GB": "United Kingdom", "FR": "France", "SE": "Sweden", "AT": "Austria", "DK": "Denmark",
+            "IT": "Italy", "BE": "Belgium", "NL": "Netherlands", "SI": "Slovenia", "HU": "Hungary", "CH": "Switzerland", "CZ": "Czech Republic", "RO": "Romania",
+            "TR": "Turkey", "RS": "Serbia", "PL": "Poland", "UA": "Ukraine", "SK": "Slovakia", "FI": "Finland", "BG": "Bulgaria", "EE": "Estonia", "GR": "Greece",
+            "NO": "Norway", "PT": "Portugal", "LV": "Latvia", "HR": "Croatia", "GE": "Georgia", "BY": "Belarus", "LT": "Lithuania", "MT": "Malta",
+            "BA": "Bosnia and Herzegovina", "ES": "Spain", "US": "United States", "CA": "Canada", "MX": "Mexico", "GT": "Guatemala", "CR": "Costa Rica", "SV": "El Salvador",
+            "JM": "Jamaica", "NI": "Nicaragua", "DO": "Dominican Republic", "VG": "British Virgin Islands", "PA": "Panama", "BR": "Brazil", "CO": "Colombia", "AR": "Argentina",
+            "CL": "Chile", "VE": "Venezuela", "EC": "Ecuador", "TT": "Trinidad and Tobago", "ZA": "South Africa", "NG": "Nigeria", "EG": "Egypt", "MA": "Morocco", "KE": "Kenya",
+            "NZ": "New Zealand", "AU": "Australia"
+        };
+
+        function updateCountryList() {
+            const continent = document.getElementById("continentSelect").value;
+            const countrySelect = document.getElementById("countrySelect");
+            countrySelect.innerHTML = ''; // 국가 선택 드롭다운 초기화
+
+            if (continent) {
+                const countries = continentCountries[continent].map(code => ({
+                    code: code,
+                    name: countryNames[code]
+                }));
+
+                countries.sort((a, b) => a.name.localeCompare(b.name)); // 이름으로 정렬
+
+                countries.forEach(country => {
+                    const option = document.createElement("option");
+                    option.value = country.code;
+                    option.textContent = country.name;
+                    countrySelect.appendChild(option);
+                });
+            }
+
+            const defaultOption = document.createElement("option");
+            defaultOption.textContent = "Select Country";
+            defaultOption.selected = true;
+            defaultOption.disabled = true;
+            countrySelect.insertBefore(defaultOption, countrySelect.firstChild);
+        }
     </script>
 </head>
 
 <body>
-    <div class="countryList" style="float: right;">
-        <div id="asiaList">
-            <h3>아시아</h3>
-        </div>
-        <div id="europeList">
-            <h3>유럽</h3>
-        </div>
-        <div id="northAmericaList">
-            <h3>북아메리카</h3>
-        </div>
-        <div id="southAmericaList">
-            <h3>남아메리카</h3>
-        </div>
-        <div id="AfricaList">
-            <h3>아프리카</h3>
-        </div>
-        <div id="OceaniaList">
-            <h3>오세아니아</h3>
-        </div>
+    <div class="dropdown-container" style="position: absolute; top: 0; right: 0;">
+        <!-- 대륙 선택 드롭다운 -->
+        <select id="continentSelect" onchange="updateCountryList()">
+            <option value="">Select Continent</option>
+            <option value="Asia">Asia</option>
+            <option value="Europe">Europe</option>
+            <option value="NorthAmerica">North America</option>
+            <option value="SouthAmerica">South America</option>
+            <option value="Africa">Africa</option>
+            <option value="Oceania">Oceania</option>
+        </select>
+
+        <!-- 국가 선택 드롭다운 -->
+        <select id="countrySelect">
+            <option value="">Select Country</option>
+        </select>
     </div>
     <!--지구본
         > 드래그를 통한 국가 탐색 기능
         > 국가 클릭 시 해당 국가를 화면 정 중앙에 위치시킴
     -->
     <div id="chartdiv"></div>
-
     <!--바이어 리스트 
         > 
         > 클릭 시 해당 국가로 이동
         > 
     -->
 </body>
-
-</html>
 
 </html>
