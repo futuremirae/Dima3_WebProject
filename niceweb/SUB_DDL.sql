@@ -62,7 +62,7 @@ CREATE TABLE INQUIRY
 CREATE TABLE REPLY
 (
     REPLY_NO            NUMBER          PRIMARY KEY
-    , INQUIRY_NO          NUMBER          REFERENCES
+    , INQUIRY_NO          NUMBER        REFERENCES
                                         INQUIRY(INQUIRY_NO)
                                         ON DELETE CASCADE
     , REPLY_WRITER      VARCHAR2(20)    REFERENCES
