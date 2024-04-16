@@ -33,7 +33,7 @@ public class UserEntity {
 	@Id
 	@GeneratedValue(generator = "userSeq")
 	@Column(name="USER_NUM" , nullable = false) // 시퀀스 -> PK
-	private String UserNum;
+	private Long UserNum;
 	
 	@Column(name="USER_ID" , nullable = false) // 사용자 아이디 
 	private String userId;
@@ -44,7 +44,7 @@ public class UserEntity {
 	@Column(name="USER_DUNS_NO" , nullable = false) // 던스넘버 
 	private String userDunsNo;
 	
-	@Column(name="USER_CMP_ENG" , nullable = false) // 영문 회사
+	@Column(name="USER_CMP_ENG" , nullable = false) // 영문 회사명 
 	private String userCmpEng;
 	
 	@Column(name="USER_CMP_KOR") // 한글 회사명 
@@ -71,10 +71,10 @@ public class UserEntity {
 	@Column(name="USER_URL" , nullable = false) // 회사 url
 	private String userUrl;
 	
-	@Column(name="USER_ADR" , nullable = false) // 담당자 주소 
+	@Column(name="USER_ADR" , nullable = false) // 회사 주소 
 	private String userAdr;
 	
-	@Column(name="USER_NAME" , nullable = false) // 담당자명 
+	@Column(name="USER_NAME" , nullable = false) // 담당자명 영어 
 	private String userName;
 	
 	@Column(name="USER_PHONE" , nullable = false) // 담당자 연락처 
@@ -99,7 +99,7 @@ public class UserEntity {
 				.userCeoEng(userDTO.getUserCeoEng())
 				.userCeoKor(userDTO.getUserCeoKor())
 				.userEmail(userDTO.getUserEmail())
-				.userPubEmail(userDTO.getUserEmail())
+				.userPubEmail(userDTO.getUserPubEmail())
 				.userSicCd(userDTO.getUserSicCd())
 				.userUrl(userDTO.getUserUrl())
 				.userAdr(userDTO.getUserAdr())
