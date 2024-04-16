@@ -1,23 +1,26 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>목록</title>
 </head>
+
 <body>
     <div class="container">
         <!-- Ajax 전송 시 필요  -->
         <input type="hidden" id="contextPath" th:value="${contextPath}">
         <input type="hidden" id="loginId" th:value="${#authentication.name}">
         <input type="hidden" id="boardNum" th:value="${board.boardNum}">
-    
+
         <div class="logo">
             <a th:href="@{/}"><img th:src="@{/images/logo.png}" alt="logo"></a>
             <h2>공지사항 보기</h2>
         </div>
     </div> <!-- .container 끝 -->
-    
+
     <!-- 글보기 -->
     <div class="content">
         <table border="1">
@@ -67,9 +70,10 @@
                     <a th:href="@{/board/boardList(searchItem=${searchItem}, searchWord=${searchWord})}"
                         class="btn btn-info">목록</a>
                 </th>
-    
+
             </tr>
         </table>
     </div>
 </body>
+
 </html>

@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>글 쓰기</title>
 </head>
+
 <body>
     <div class="container">
         <div class="logo">
             <h2>글 쓰기</h2>
         </div>
     </div> <!-- .container 끝 -->
-    
+
     <!-- 글쓰기 --> <!-- 전체적으로 손봐야함 -->
     <div class="content">
         <form th:action="@{/board/boardWrite}" method="POST" enctype="multipart/form-data">
@@ -27,22 +29,23 @@
                         <textarea name="boardContent" id="boardContent" cols="30" rows="10" required></textarea>
                     </td>
                 </tr>
-    
+
                 <tr>
-                    <th>첨부파일</th>   <!-- 혹시몰라서 냅둠-->
-                    <td><input id="uploadFile" type="file" name="uploadFile"></td> 
+                    <th>첨부파일</th> <!-- 혹시몰라서 냅둠-->
+                    <td><input id="uploadFile" type="file" name="uploadFile"></td>
                 </tr>
-    
+
                 <tr>
                     <th colspan="2">
                         <input type="submit" value="글등록" class="btn btn-primary"> &nbsp;
                         <input type="reset" value="초기화" class="btn btn-danger">
                     </th>
-    
+
                 </tr>
             </table>
-    
+
         </form>
     </div>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
 
     <!-- 전체적으로 클래스명은 안적었음 하면서 적겠음-->
 </head>
+
 <body>
     <div class="header">
         <div class="logo">
@@ -14,7 +16,7 @@
         </div>
 
         <div>
-            <ul class="menubar">    <!-- 메뉴들 상단 오른쪽-->
+            <ul class="menubar"> <!-- 메뉴들 상단 오른쪽-->
                 <li>메뉴1</li>
                 <li>메뉴2</li>
                 <li>메뉴3</li>
@@ -37,15 +39,15 @@
         </div>
     </aside>
     <section> <!-- 프로필 정보 보여주는 곳-->
-            <section>
-                <div>
-                    <span>회사이름 </span> <!--회사 이름 들어갈꺼-->
-                    <strong>
-                        <b> 담당자 이름</b> <!-- 담당자 이름-->
-                    </strong>
-                </div>
-            </section>
-            <h3> 내가 찜한 회사 정보</h3>
+        <section>
+            <div>
+                <span>회사이름 </span> <!--회사 이름 들어갈꺼-->
+                <strong>
+                    <b> 담당자 이름</b> <!-- 담당자 이름-->
+                </strong>
+            </div>
+        </section>
+        <h3> 내가 찜한 회사 정보</h3>
         <div>
             <input type="text"> 어떤회사인지 찾기 힘들때 카테고리 검색창?
         </div>
@@ -55,22 +57,22 @@
                     <th>
                         <h4>번호</h4>
                     </th>
-                    <th> 
+                    <th>
                         <h4>회사명</h4>
                     </th>
                     <td>
                         <h4>회사 URL</h4>
                     </td>
-                    <td> 
+                    <td>
                         <h4>국가</h4>
                     </td>
-                    <td> 
+                    <td>
                         <h4>이메일</h4>
                     </td>
-                    <td> 
+                    <td>
                         <h4>이메일 발송</h4>
                     </td>
-                    <td> 
+                    <td>
                         <h4> 찜 기능</h4>
                     </td>
                 </tr>
@@ -79,12 +81,14 @@
                     <th> A회사 </th>
                     <td> www.aaaa.com</td>
                     <td> A국가</td>
-                    <td> qwertty12@gmail.com  </td>
+                    <td> qwertty12@gmail.com </td>
                     <td>
-                        <img src="../../static/images/empty-email_80599.png" width="18" height="18" style="margin-left: 34px;">
+                        <img src="../../static/images/empty-email_80599.png" width="18" height="18"
+                            style="margin-left: 34px;">
                     </td>
                     <td>
-                        <img src="../../static/images/star_1828970.png" width="18" height="18" style="margin-left: 17px;">
+                        <img src="../../static/images/star_1828970.png" width="18" height="18"
+                            style="margin-left: 17px;">
                     </td>
                 </tr>
                 <tr>
@@ -92,12 +96,14 @@
                     <th> A회사 </th>
                     <td> www.aaaa.com</td>
                     <td> A국가</td>
-                    <td> qwertty12@gmail.com  </td>
+                    <td> qwertty12@gmail.com </td>
                     <td>
-                        <img src="../../static/images/empty-email_80599.png" width="18" height="18" style="margin-left: 34px;">
+                        <img src="../../static/images/empty-email_80599.png" width="18" height="18"
+                            style="margin-left: 34px;">
                     </td>
                     <td>
-                        <img src="../../static/images/star_1828970.png" width="18" height="18" style="margin-left: 17px;">
+                        <img src="../../static/images/star_1828970.png" width="18" height="18"
+                            style="margin-left: 17px;">
                     </td>
                 </tr>
                 <tr>
@@ -105,15 +111,18 @@
                     <th> A회사 </th>
                     <td> www.aaaa.com</td>
                     <td> A국가</td>
-                    <td> qwertty12@gmail.com  </td>
+                    <td> qwertty12@gmail.com </td>
                     <td>
-                        <img src="../../static/images/empty-email_80599.png" width="18" height="18" style="margin-left: 34px;">
+                        <img src="../../static/images/empty-email_80599.png" width="18" height="18"
+                            style="margin-left: 34px;">
                     </td>
                     <td>
-                        <img src="../../static/images/star_1828970.png" width="18" height="18" style="margin-left: 17px;">
+                        <img src="../../static/images/star_1828970.png" width="18" height="18"
+                            style="margin-left: 17px;">
                     </td>
                 </tr>
             </table>
         </div>
 </body>
+
 </html>

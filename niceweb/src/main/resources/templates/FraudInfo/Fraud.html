@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>사기사례</title>
 </head>
+
 <body>
     <h2>사기 사례</h2>
     <div>
@@ -12,13 +15,13 @@
         <input type="date" style="height: 20px;"> <!--날짜 들어갈듯-->
         <span>~</span>
         <input type="date" style="height: 20px;"> &nbsp;
-        
+
         <!-- 검색창 -->
         <input type="hidden" name="page" id="requestPage" th:value="${page}">
-            <select name="searchItem">
-                <option value="boardTitle" th:selected="${searchItem == 'boardTitle'}">글제목</option>
-                <option value="boardContent" th:selected="${searchItem == 'boardContent'}">글내용</option>
-            </select>
+        <select name="searchItem">
+            <option value="boardTitle" th:selected="${searchItem == 'boardTitle'}">글제목</option>
+            <option value="boardContent" th:selected="${searchItem == 'boardContent'}">글내용</option>
+        </select>
         <input type="text" name="searchWord" th:value="${searchWord}">
         <input type="submit" value="검색" class="btn btn-info">
     </div>
@@ -26,22 +29,22 @@
     <div>
         <h4>대륙</h4>
         <input type="radio" name="continent" checked> 전체
-        <input type="radio" name="continent" > 아시아
-        <input type="radio" name="continent" > 중동
-        <input type="radio" name="continent" > 유럽
-        <input type="radio" name="continent" > 북미
-        <input type="radio" name="continent" > 중남미
-        <input type="radio" name="continent" > 아프리카
+        <input type="radio" name="continent"> 아시아
+        <input type="radio" name="continent"> 중동
+        <input type="radio" name="continent"> 유럽
+        <input type="radio" name="continent"> 북미
+        <input type="radio" name="continent"> 중남미
+        <input type="radio" name="continent"> 아프리카
     </div>
-        
-        <!-- 게시글 전체 목록 출력  -->
-        <div class="content">
-            <p th:if="${#lists.isEmpty(list)}">목록이 없습니다.</p>
-            <div class="head">
-                <!-- 전체 글개수 출력 -->
-                <div class="count">
-                    <p>총 개 </p> 
-                </div>
+
+    <!-- 게시글 전체 목록 출력  -->
+    <div class="content">
+        <p th:if="${#lists.isEmpty(list)}">목록이 없습니다.</p>
+        <div class="head">
+            <!-- 전체 글개수 출력 -->
+            <div class="count">
+                <p>총 개 </p>
+            </div>
             <!-- 게시글 목록 -->
             <div>
                 <table border="1">
@@ -64,12 +67,12 @@
                     </tr>
                 </table>
             </div> <!-- .content 끝 -->
-        
+
             <!-- 글쓰기 버튼 -->
             <div class="write">
                 <a th:href="@{/board/boardWrite}" class="btn btn-primary">글쓰기</a>
             </div>
-        
+
             <!-- Page Navigation -->
             <nav class="pagination">
                 <!-- 앞 그룹 -->
@@ -81,7 +84,7 @@
                 <th:block th:unless="${navi.startPageGroup > 1}">
                     <span class="page-no navi">&laquo;</span>
                 </th:block>
-        
+
                 <!-- 앞 페이지 -->
                 <!-- 2페이지 이상의 페이지를 보고 있으면 링크 생김 -->
                 <th:block th:if="${navi.page > 1}">
@@ -91,21 +94,21 @@
                 <th:block th:unless="${navi.page > 1}">
                     <span class="page-no navi">&lsaquo;</span>
                 </th:block>
-        
+
                 <!-- 페이지 번호 출력 -->
                 <span th:each="count : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
                     <!--  보고있는 페이지가 요청한 페이지와 같을때는 링크 안생김 -->
                     <span th:if="${count == navi.page}">
                         <b class="page-no current" th:text="${count}"> </b>
                     </span>
-        
+
                     <!--  보고있는 페이지가 요청한 페이지와 다를때는 링크 생김 -->
                     <span th:unless="${count == navi.page}">
                         <a class="page-no" th:href="|javascript:pageFormSubmit(${count})|" th:text="${count}"></a>
                     </span>
                 </span>
-        
-        
+
+
                 <!-- 뒤 페이지 -->
                 <!-- 현재페이지 뒤에 다른 페이지가 있으면 링크가 생김 -->
                 <th:block th:if="${(navi.totalPages) > (navi.page)}">
@@ -115,7 +118,7 @@
                 <th:block th:unless="${(navi.totalPages) > (navi.page)}">
                     <span class="page-no navi">&rsaquo;</span>
                 </th:block>
-        
+
                 <!-- 뒷 그룹 -->
                 <!-- 다음 그룹이 있으면 링크가 생겨야함 -->
                 <th:block th:if="${(navi.currentGroup) < (navi.totalGroupCount)}">
@@ -128,4 +131,5 @@
             </nav>
         </div>
 </body>
+
 </html>

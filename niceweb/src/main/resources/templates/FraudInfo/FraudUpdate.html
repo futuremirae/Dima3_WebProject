@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>게시글 수정</title>
 </head>
+
 <body>
     <div class="container">
         <div class="logo">
             <h2>게시글 수정</h2>
         </div>
     </div> <!-- .container 끝 -->
-    
+
     <!-- 글 수정 --> <!-- 전체적으로 손봐야함 -->
     <div class="content">
         <form th:action="@{/board/boardUpdate}" method="POST" enctype="multipart/form-data">
@@ -21,7 +23,8 @@
             <table border="1">
                 <tr>
                     <th>글제목</th>
-                    <td><input id="boardTitle" type="text" name="boardTitle" th:value="${board.boardTitle}" required></td>
+                    <td><input id="boardTitle" type="text" name="boardTitle" th:value="${board.boardTitle}" required>
+                    </td>
                 </tr>
                 <tr>
                     <th>글내용</th>
@@ -30,7 +33,7 @@
                             required>[[ ${board.boardContent }]]</textarea>
                     </td>
                 </tr>
-    
+
                 <tr>
                     <th>첨부파일</th>
                     <td>
@@ -38,18 +41,19 @@
                         <span th:text="${board.originalFileName}"></span>
                     </td>
                 </tr>
-    
+
                 <tr>
                     <th colspan="2">
-    
+
                         <input type="submit" value="글수정" class="btn btn-primary"> &nbsp;
                         <a th:href="@{/board/boardList(searchItem=${searchItem}, searchWord=${searchWord})}"
                             class="btn btn-info">목록</a>
                     </th>
-    
+
                 </tr>
             </table>
         </form>
     </div>
 </body>
+
 </html>

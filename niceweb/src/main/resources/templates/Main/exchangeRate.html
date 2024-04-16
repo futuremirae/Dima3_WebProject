@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 
 <head>
     <meta charset="UTF-8">
@@ -11,7 +12,7 @@
             $("#exchangeFrom").change(showrate);
             $("#exchangeTo").change(showrate);
             $('#amount').change(showrate);
-           
+
 
         });
         function showrate() {
@@ -44,12 +45,12 @@
                         if (json.quotes.hasOwnProperty(currency)) {
                             var exchangeRate = json.quotes[currency];
                             let nation = currency.substring(3);
-                           
+
                             result += nation + `<br>`;
                         }
 
                     }
-                    
+
                     $("#all-result").html(result);
 
                 }
@@ -57,7 +58,7 @@
 
         }
 
-       
+
 
 
 
