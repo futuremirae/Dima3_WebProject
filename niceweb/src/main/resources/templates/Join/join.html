@@ -17,24 +17,37 @@
 
         function checkIdFunc() {
             let userId = $("#userId").val(); // 사용자 입력 아이디 
-            $.ajax({
-                url: "/user/confirmId"
-                , method: 'GET'
-                , async: false
-                , data: { "userId": userId }
-                , success: function (output) {
-                    console.log(output)
+            if (userId.trim().length < 1 || userId.trim().length > 13 || !/^[a-z]{4,12}$/.test(userId)) {
+                alert("아이디는 4~12글자 소문자로 입력해주세요.");
+                $("#userId").focus();
+                return;
 
-                }
 
-            });
+            }
+            else { // 아이디 중복 검사 
+                $.ajax({
+                    url: "/user/confirmId"
+                    , method: 'GET'
+                    , async: false
+                    , data: { "userId": userId }
+                    , success: function (output) {
+                        if (output == false) {
+                            alert("아이디 중벅");
+                        }
+
+
+
+                    }
+
+                });
+
+            }
+
 
 
         }
 
     </script>
-
-
 
 
 </head>
@@ -66,14 +79,14 @@
                     <th>아이디</th>
                     <td>
                         <input type="text" id="userId" name="userId"> <!-- 사용자 아이디 입력-->
-                        <button type="button" class="checkId" id="checkuserId">아이디 중복 확인</button>
+                        <button type="button" class="checkId" id="checkuserId">아이디 중복 확인
                     </td>
 
                 </tr>
                 <tr>
                     <th>비밀번호</th>
                     <td colspan="2">
-                        <input type="password" class="spassword" id="userPwd" name="userPwd">
+                        <input type="password" class="password" id="userPwd" name="userPwd">
                     </td>
                 </tr>
                 <tr>
