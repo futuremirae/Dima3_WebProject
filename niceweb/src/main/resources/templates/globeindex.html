@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>세계 지도</title>
     <style>
         #chartdiv {
             width: 70%;
@@ -15,10 +15,8 @@
         select {
             width: 200px;
             height: 25px;
-            /* 드롭다운의 너비 지정 */
             margin-top: 25px;
-            /* 상단 여백 추가 */
-            margin-right: 50px;
+            margin-right: 60px;
         }
     </style>
     <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
@@ -51,7 +49,8 @@
                 paddingLeft: 20,
                 paddingRight: 20
             }));
-
+            var filter = root.interfaceColors.get("shadow");
+            chart.set("filter", filter);
 
             var backgroundSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {}));
             backgroundSeries.mapPolygons.template.setAll({
@@ -126,102 +125,6 @@
                 return countryNames[code] || code;  // 국가 코드에 해당하는 이름이 없다면 코드를 그대로 반환
             }
 
-            var lastActiveTooltip = null; // Last active tooltip
-
-            function selectCountry(id) {
-                if (lastActiveTooltip) {
-                    lastActiveTooltip.hideTooltip();
-                }
-                var dataItem = polygonSeries.getDataItemById(id);
-                var target = dataItem.get("mapPolygon");
-                if (target) {
-                    moveToCountry(target);
-                    target.set("active", true);
-                    updateTooltip(target, dataItem);
-                    lastActiveTooltip = target;
-                }
-            }
-
-            function moveToCountry(target) {
-                var centroid = target.geoCentroid();
-                if (centroid) {
-                    chart.animate({ key: "rotationX", to: -centroid.longitude, duration: 1500, easing: am5.ease.inOut(am5.ease.cubic) });
-                    chart.animate({ key: "rotationY", to: -centroid.latitude, duration: 1500, easing: am5.ease.inOut(am5.ease.cubic) });
-                }
-            }
-
-            function updateTooltip(target, dataItem) {
-                var countryName = countryNames[dataItem.dataContext.id] || dataItem.dataContext.name;
-                if (target.tooltip) {
-                    target.tooltip.text = countryName;
-                } else {
-                    target.tooltip = am5.Tooltip.new(root, {
-                        text: countryName
-                    });
-                }
-                target.showTooltip();
-            }
-
-            // Update country list based on continent selection
-            function updateCountryList() {
-                var continent = document.getElementById("continentSelect").value;
-                var countrySelect = document.getElementById("countrySelect");
-                countrySelect.innerHTML = '<option value="">국가를 선택하세요</option>'; // Clear existing options
-
-                if (continent) {
-                    var countries = continentCountries[continent];
-                    countries.forEach(function (code) {
-                        var option = document.createElement("option");
-                        option.value = code;
-                        option.textContent = countryNames[code];
-                        countrySelect.appendChild(option);
-                    });
-                }
-            }
-
-            document.getElementById('countrySelect').addEventListener('change', function () {
-                var selectedCountryId = this.value;
-                if (selectedCountryId) {
-                    selectCountry(selectedCountryId);
-                }
-            });
-
-            function updateCountryList() {
-                var continent = document.getElementById("continentSelect").value;
-                var countrySelect = document.getElementById("countrySelect");
-                countrySelect.innerHTML = '';  // 국가 선택 드롭다운 초기화
-
-                if (continent) {
-                    const countries = continentCountries[continent];
-                    countries.forEach(function (countryCode) {
-                        const option = document.createElement("option");
-                        option.value = countryCode;
-                        option.textContent = countryNames[countryCode];  // 국가 코드를 국가명으로 변환
-                        countrySelect.appendChild(option);
-                    });
-                }
-
-                const defaultOption = document.createElement("option");
-                defaultOption.textContent = "국가를 선택하세요";
-                defaultOption.selected = true;
-                defaultOption.disabled = true;
-                countrySelect.appendChild(defaultOption);
-            }
-            // Uncomment this to pre-center the globe on a country when it loads
-            //polygonSeries.events.on("datavalidated", function() {
-            //  selectCountry("AU");
-            //});
-
-
-            var continentCountries = {
-                "Asia": ["CN", "KR", "IN", "MY", "JP", "TH", "HK", "SG", "TW", "AE", "IL", "BH", "QA", "VN", "SA", "ID", "PH", "PK", "LK", "UZ"],
-                "Europe": ["DE", "GB", "FR", "SE", "AT", "DK", "IT", "BE", "NL", "SI", "HU", "CH", "CZ", "RO", "TR", "RS", "PL", "UA", "SK", "FI", "BG", "EE", "GR", "NO", "PT", "LV", "HR", "GE", "BY", "LT", "MT", "BA", "ES"],
-                "NorthAmerica": ["US", "CA", "MX", "GT", "CR", "SV", "JM", "NI", "DO", "VG", "PA"],
-                "SouthAmerica": ["BR", "CO", "AR", "CL", "VE", "EC", "TT"],
-                "Africa": ["ZA", "NG", "EG", "MA", "KE"],
-                "Oceania": ["NZ", "AU"]
-            };
-
             function generateCountryList(continent) {
                 var ul = document.createElement('ul');
                 continentCountries[continent].forEach(function (countryCode) {
@@ -265,27 +168,94 @@
                     }
                 });
             });
-            // Populate country lists
-            document.getElementById('asiaList').appendChild(generateCountryList("Asia"));
-            document.getElementById('europeList').appendChild(generateCountryList("Europe"));
-            document.getElementById('northAmericaList').appendChild(generateCountryList("NorthAmerica"));
-            document.getElementById('southAmericaList').appendChild(generateCountryList("SouthAmerica"));
-            document.getElementById('AfricaList').appendChild(generateCountryList("Africa"));
-            document.getElementById('OceaniaList').appendChild(generateCountryList("Oceania"));
 
-            // Populate country lists
-            var asiaList = generateCountryList("Asia");
-            var europeList = generateCountryList("Europe");
-            var northAmericaList = generateCountryList("NorthAmerica");
-            var southAmericaList = generateCountryList("SouthAmerica");
-            var AfricaList = generateCountryList("Africa");
-            var OceaniaList = generateCountryList("Oceania");
+            function updateTooltip(target, dataItem) {
+                var countryName = countryNames[dataItem.dataContext.id] || dataItem.dataContext.name;
+                if (target.tooltip) {
+                    target.tooltip.text = countryName;
+                } else {
+                    target.tooltip = am5.Tooltip.new(root, {
+                        text: countryName
+                    });
+                }
+                target.showTooltip();
+            }
 
+            function getCountryName(code) {
+                return countryNames[code] || code;
+            }
 
-            // Make stuff animate on load
-            chart.appear(1000, 100);
+            var lastActiveTooltip = null; // Last active tooltip
 
-        }); // end am5.ready()
+            function selectCountry(id) {
+                // 툴팁이 이미 활성화되어 있다면 숨깁니다.
+                if (lastActiveTooltip) {
+                    lastActiveTooltip.hideTooltip();
+                }
+
+                // 선택된 국가의 데이터 항목을 가져옵니다.
+                var dataItem = polygonSeries.getDataItemById(id);
+                var target = dataItem.get("mapPolygon");
+
+                // 대상 폴리곤이 존재한다면 실행합니다.
+                if (target) {
+                    // 대상 국가의 지리적 중심으로 지도를 이동시킵니다.
+                    moveToCountry(target.geoCentroid().longitude, target.geoCentroid().latitude);
+
+                    // 국가 정보를 업데이트합니다.
+                    updateCountryInfo(id);
+
+                    // 대상 폴리곤의 툴팁을 업데이트하고 활성화 상태로 설정합니다.
+                    updateTooltip(target, dataItem);
+                    target.set("active", true);
+
+                    // 마지막으로 활성화된 툴팁을 업데이트합니다.
+                    lastActiveTooltip = target;
+                }
+            }
+
+            function moveToCountry(longitude, latitude) {
+                chart.animate({ key: "rotationX", to: -longitude, duration: 1500 });
+                chart.animate({ key: "rotationY", to: -latitude, duration: 1500 });
+            }
+
+            function updateCountryInfo(countryCode) {
+                var countryName = getCountryName(countryCode); // 국가 이름 가져오기
+                var flagUrl = `https://flagsapi.com/${countryCode}/flat/64.png`; // 국기 이미지 URL 생성
+
+                document.getElementById('countryFlag').src = flagUrl; // 이미지 소스 업데이트
+                document.getElementById('countryFlag').alt = "Flag of " + countryName; // 대체 텍스트 설정
+                document.getElementById('countryName').textContent = countryName; // 국가 이름 업데이트
+                document.getElementById('countryDetails').textContent = "Details about " + countryName; // 세부 정보 업데이트
+                document.getElementById('countryInfo').style.display = 'block'; // 정보 박스 표시
+                // 이미지 세로 길이 조정
+                document.getElementById('countryFlag').style.height = '100px'; // 예시로 100px로 조정
+
+            }
+
+            document.getElementById('countrySelect').addEventListener('change', function () {
+                var selectedCountryId = this.value;
+                selectCountry(selectedCountryId);
+            });
+
+            document.getElementById('continentSelect').addEventListener('change', function () {
+                updateCountryList();
+            });
+
+            function updateCountryList() {
+                var continent = document.getElementById("continentSelect").value;
+                var countrySelect = document.getElementById("countrySelect");
+                countrySelect.innerHTML = '<option value="">Select Country</option>';
+                if (continent) {
+                    continentCountries[continent].forEach(function (code) {
+                        var option = document.createElement("option");
+                        option.value = code;
+                        option.textContent = getCountryName(code);
+                        countrySelect.appendChild(option);
+                    });
+                }
+            }
+        });
 
         const continentCountries = {
             "Asia": ["CN", "KR", "IN", "MY", "JP", "TH", "HK", "SG", "TW", "AE", "IL", "BH", "QA", "VN", "SA", "ID", "PH", "PK", "LK", "UZ"],
@@ -307,41 +277,14 @@
             "JM": "Jamaica", "NI": "Nicaragua", "DO": "Dominican Republic", "VG": "British Virgin Islands", "PA": "Panama", "BR": "Brazil", "CO": "Colombia", "AR": "Argentina",
             "CL": "Chile", "VE": "Venezuela", "EC": "Ecuador", "TT": "Trinidad and Tobago", "ZA": "South Africa", "NG": "Nigeria", "EG": "Egypt", "MA": "Morocco", "KE": "Kenya",
             "NZ": "New Zealand", "AU": "Australia"
+
         };
 
-        function updateCountryList() {
-            const continent = document.getElementById("continentSelect").value;
-            const countrySelect = document.getElementById("countrySelect");
-            countrySelect.innerHTML = ''; // 국가 선택 드롭다운 초기화
-
-            if (continent) {
-                const countries = continentCountries[continent].map(code => ({
-                    code: code,
-                    name: countryNames[code]
-                }));
-
-                countries.sort((a, b) => a.name.localeCompare(b.name)); // 이름으로 정렬
-
-                countries.forEach(country => {
-                    const option = document.createElement("option");
-                    option.value = country.code;
-                    option.textContent = country.name;
-                    countrySelect.appendChild(option);
-                });
-            }
-
-            const defaultOption = document.createElement("option");
-            defaultOption.textContent = "Select Country";
-            defaultOption.selected = true;
-            defaultOption.disabled = true;
-            countrySelect.insertBefore(defaultOption, countrySelect.firstChild);
-        }
     </script>
 </head>
 
 <body>
     <div class="dropdown-container" style="position: absolute; top: 0; right: 0;">
-        <!-- 대륙 선택 드롭다운 -->
         <select id="continentSelect" onchange="updateCountryList()">
             <option value="">Select Continent</option>
             <option value="Asia">Asia</option>
@@ -352,21 +295,22 @@
             <option value="Oceania">Oceania</option>
         </select>
 
-        <!-- 국가 선택 드롭다운 -->
         <select id="countrySelect">
             <option value="">Select Country</option>
         </select>
     </div>
-    <!--지구본
-        > 드래그를 통한 국가 탐색 기능
-        > 국가 클릭 시 해당 국가를 화면 정 중앙에 위치시킴
-    -->
     <div id="chartdiv"></div>
-    <!--바이어 리스트 
-        > 
-        > 클릭 시 해당 국가로 이동
-        > 
-    -->
+    <div id="countryInfo"
+        style="display: none; position: absolute; top: 100px; right: 50px; padding: 20px; background-color: rgb(255, 255, 255); width: 450px; height: auto; border: 1px solid #ccc; box-shadow: 2px 2px 10px rgba(0,0,0,0.1);">
+        <div style="display: flex; align-items: center;"> <!-- flexbox를 사용하여 아이템을 수평으로 정렬 -->
+            <img id="countryFlag" src="" alt="Flag" style="width: 100px; height: 60px; margin-right: 20px;">
+            <!-- 국기 이미지 -->
+            <div>
+                <h3 id="countryName" style="font-size: 32px;">국가를 선택하세요</h3>
+            </div>
+        </div>
+        <p id="countryDetails">국가 정보가 여기에 표시됩니다.</p>
+    </div>
 </body>
 
 </html>
