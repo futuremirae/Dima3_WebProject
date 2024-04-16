@@ -49,7 +49,7 @@ CREATE TABLE CTGY
                 ;
             
             
-            CREATE VIEW ITEM_NM
+            CREATE VIEW ITEM
                 AS
                     SELECT  ITEM_ID
                             , ITEM_NM
@@ -136,7 +136,7 @@ DROP TABLE CTGY;
     
     DROP VIEW SUB_CTGY;
     
-    DROP VIEW ITEM_NM;
+    DROP VIEW ITEM;
 
 
 
