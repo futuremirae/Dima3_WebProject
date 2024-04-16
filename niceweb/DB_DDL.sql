@@ -69,8 +69,7 @@ CREATE TABLE CLIENT
     , NAT_KOR           VARCHAR2(10)    NOT NULL        -- 국가명 (한글)
     , NAT_ENG           VARCHAR2(10)    NOT NULL        -- 국가명 (영문)
     , CITY              VARCHAR2(100)   NOT NULL        -- 도시명
-    , ADR1              VARCHAR2(100)   NOT NULL        -- 주소
-    , ADR2              VARCHAR2(100)                   -- 상세 주소
+    , ADR               VARCHAR2(100)   NOT NULL        -- 전체 주소
     , SIC_CD            VARCHAR2(100)   NOT NULL        -- 주요 취급 품목
     , SALES             NUMBER(20)                      -- 매출
     , ASSET             NUMBER(20)                      -- 자산

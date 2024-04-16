@@ -1,107 +1,111 @@
--- Ä¥ï¿½Ç¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ sql ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+-- Ä¥ÆÇ¿¡ Àû¾î³õÀº sql Å×ÀÌºí Á¶Áö±â
 
 /*
 
-ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
+ÀÌ ÆÄÀÏ¿¡ »ý¼ºµÇ¾îÀÖ´Â Å×ÀÌºí
 
-- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ (USER_ACC)
-    - ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ (FAVORITE)
-    - ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (SENDED_EMLAIL)
-    - ï¿½Ö±ï¿½ ï¿½Ë»ï¿½ï¿½ï¿½ (SEARCH_LOG)
+- °èÁ¤ Å×ÀÌºí (USER_ACC)
+    - ¹ÙÀÌ¾î Áñ°ÜÃ£±â (FAVORITE)
+    - º¸³½ ¸ÞÀÏÇÔ (SENDED_EMLAIL)
+    - ÃÖ±Ù °Ë»ö¾î (SEARCH_LOG)
 
 */
 
 
--- [ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ ] ï¿½ï¿½ï¿½ï¿½ 
+-- [ °èÁ¤ Å×ÀÌºí ] »ý¼º
+
 CREATE TABLE USER_ACC
 (
       USER_NUM      NUMBER          CONSTRAINT USER_SEQ PRIMARY KEY
-    , USER_ID       VARCHAR2(20)    UNIQUE NOT NULL             -- ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½
-    , USER_PWD      VARCHAR2(100)   NOT NULL                    -- ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ð¹ï¿½È£
-    , USER_DUNS_NO  VARCHAR2(9)     NOT NULL                    -- ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£
-    , USER_CMP_ENG  VARCHAR2(100)   NOT NULL                    -- ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½)
-    , USER_CMP_KOR  VARCHAR2(100)                               -- ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½(ï¿½Ñ±ï¿½)
-    , USER_NTN      CHAR(2)                                     -- ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½
-    , USER_CEO_ENG  VARCHAR2(50)    NOT NULL                    -- ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½Ú¸ï¿½(ï¿½ï¿½ï¿½ï¿½)
-    , USER_CEO_KOR  VARCHAR2(50)                                -- ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½Ú¸ï¿½(ï¿½Ñ±ï¿½)
-    , USER_EML      VARCHAR2(100)   NOT NULL                    -- ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½)
-    , USER_PUB_EML  VARCHAR2(100)   NOT NULL                    -- ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ (È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
-    , USER_SIC_CD   VARCHAR2(100)   NOT NULL                    -- ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Ç°ï¿½ï¿½
-    , USER_URL      VARCHAR2(200)   NOT NULL                    -- ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ URL
-    , USER_NTN      VARCHAR2(50)    NOT NULL                    -- ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½)
-    , USER_ADR      VARCHAR2(200)   NOT NULL                    -- ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ (ï¿½ï¿½ï¿½ï¿½)
-    , USER_NAME     VARCHAR2(30)    NOT NULL                    -- ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½)
-    , USER_PHONE    VARCHAR2(30)    NOT NULL                    -- ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È­ï¿½ï¿½È£(ï¿½ï¿½ï¿½ï¿½ï¿½)
---    , USER_BUSINESS VARCHAR2(200)   CHECK (USER_BUSINESS IN   -- ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    , USER_ID       VARCHAR2(20)    UNIQUE NOT NULL             -- »ç¿ëÀÚ ¾ÆÀÌµð
+    , USER_PWD      VARCHAR2(100)   NOT NULL                    -- »ç¿ëÀÚ ºñ¹Ð¹øÈ£
+    , USER_DUNS_NO  VARCHAR2(9)     NOT NULL                    -- »ç¿ëÀÚ È¸»ç ´ø½º ¹øÈ£
+    , USER_CMP_ENG  VARCHAR2(100)   NOT NULL                    -- »ç¿ëÀÚ È¸»ç¸í(¿µ¹®)
+    , USER_CMP_KOR  VARCHAR2(100)                               -- »ç¿ëÀÚ È¸»ç¸í(ÇÑ±Û)
+    , USER_NTN      CHAR(2)         NOT NULL                    -- »ç¿ëÀÚ ±¹°¡ ÄÚµå
+    , USER_CEO_ENG  VARCHAR2(50)    NOT NULL                    -- »ç¿ëÀÚ ´ëÇ¥ÀÚ¸í(¿µ¹®)
+    , USER_CEO_KOR  VARCHAR2(50)                                -- »ç¿ëÀÚ ´ëÇ¥ÀÚ¸í(ÇÑ±Û)
+    , USER_EML      VARCHAR2(100)   NOT NULL                    -- »ç¿ëÀÚ ÀÌ¸ÞÀÏ (´ã´çÀÚ)
+    , USER_PUB_EML  VARCHAR2(100)   NOT NULL                    -- »ç¿ëÀÚ ÀÌ¸ÞÀÏ (È¸»ç °ø¿ë)
+    , USER_SIC_CD   VARCHAR2(100)   NOT NULL                    -- »ç¿ëÀÚ Ãë±Þ Ç°¸ñ
+    , USER_URL      VARCHAR2(200)   NOT NULL                    -- »ç¿ëÀÚ È¸»ç URL
+    , USER_ADR      VARCHAR2(200)   NOT NULL                    -- »ç¿ëÀÚ ÁÖ¼Ò (¿µ¹®)
+    , USER_NAME     VARCHAR2(30)    NOT NULL                    -- »ç¿ëÀÚ ÀÌ¸§(´ã´çÀÚ)
+    , USER_PHONE    VARCHAR2(30)    NOT NULL                    -- »ç¿ëÀÚ ÀüÈ­¹øÈ£(´ã´çÀÚ)
+--    , USER_BUSINESS VARCHAR2(200)   CHECK (USER_BUSINESS IN   -- »ç¿ëÀÚ ¾÷Á¾
 --                                    ('IMPORTER', 'EXPORTER', 'MANUFACTURER', 'DISTRIBUTOR')) 
---                                    NOT NULL    -- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ì¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß´ï¿½ ï¿½Í°ï¿½ ï¿½Þ¶ï¿½ CHECK OPTIONï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½ï¿½
-    , USER_KEYWORD  VARCHAR2(500)                               -- ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å°ï¿½ï¿½ï¿½ï¿½
-    , USER_ROLE     VARCHAR2(20)    DEFAULT 'ROLE_USER'         -- ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+--                                    NOT NULL    -- ¾÷Á¾µµ ¿ì¸®°¡ »ý°¢Çß´ø °Í°ú ´Þ¶ó¼­ CHECK OPTIONµµ ¼öÁ¤ÇØ¾ßÇÔ    
+    , USER_KEYWORD  VARCHAR2(500)                               -- »ç¿ëÀÚ °ü½É Å°¿öµå
+    , USER_ROLE     VARCHAR2(20)    DEFAULT 'ROLE_USER'         -- »ç¿ëÀÚ °¡ÀÔ ±¸ºÐ
                                     CHECK (USER_ROLE IN
                                     ('ROLE_USER','ROLE_ADMIN'))
                                     NOT NULL
-    -- ï¿½ï¿½ï¿½ï¿½ (SALES)
-    -- ï¿½Ú»ï¿½ (ASSET)
-    -- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (EMPLOYEES)
-    -- ï¿½Ö¿ï¿½ ï¿½ï¿½ï¿½ Ç°ï¿½ï¿½ (SIC_CD) (ï¿½ï¿½ï¿½ï¿½)
-    -- ï¿½ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ / ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ < ï¿½Ì°ï¿½ D&Bï¿½ï¿½ DBï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¾ï¿½ï¿½ï¿½
-    -- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½î¼­ ï¿½ï¿½ï¿½ï¿½
-    -- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½ -- ï¿½ï¿½ï¿½ï¿½(24.04.12)
+    -- ¸ÅÃâ (SALES)
+    -- ÀÚ»ê (ASSET)
+    -- Á¾¾÷¿ø¼ö (EMPLOYEES)
+    -- ÁÖ¿ä Ãë±Þ Ç°¸ñ (SIC_CD) (¿µ¹®)
+    -- ¹ÙÀÌ¾îµî±Þ / ¸¶ÄÉÆÃ µî±Þ < ÀÌ°Ç D&BÀÇ DB¿¡¼­ ¹Þ¾Æ¾ßÇÔ
+    -- ¼³¸³ÀÏÀº ¾ø¾î¼­ Á¦¿Ü
+    -- ¾ÆÁ÷ Á¤±ÔÈ­ ¾ÈÇÔ -- Áø¸í(24.04.12)
 );
 
--- user_idï¿½ï¿½ fkï¿½ï¿½ ï¿½Þ´ï¿½ ï¿½ï¿½ï¿½ï¿½ [ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ ] ï¿½ï¿½ï¿½ï¿½
--- ï¿½Û¼ï¿½ï¿½Ú¿ï¿½ ï¿½Î±ï¿½ï¿½Î»ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½à¸¸ ï¿½ï¿½ï¿½
-CREATE TABLE SENDED_EMAIL
+-- user_id¸¦ fk·Î ¹Þ´Â º¸³½ [ ¸ÞÀÏÇÔ Å×ÀÌºí ] »ý¼º
+-- ÀÛ¼ºÀÚ¿Í ·Î±×ÀÎ»ç¿ëÀÚ°¡ °°Àº Çà¸¸ Ãâ·Â
+CREATE TABLE SENDED_EML
 (
-      USER_NUM          NUMBER          REFERENCES              -- ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ = ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+      USER_NUM          NUMBER          REFERENCES              -- »ç¿ëÀÚ ¾ÆÀÌµð = º¸³½ »ç¶÷
                                         USER_ACC(USER_NUM)
                                         ON DELETE CASCADE
-    , RECEIVER          VARCHAR2(50)    NOT NULL                -- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ´ï¿½ ï¿½ï¿½ï¿½
-    , REPLY_CONTENT     VARCHAR2(3000)  NOT NULL                -- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    , RECEIVER          VARCHAR2(50)    NOT NULL                -- ¸ÞÀÏÀ» ¹Þ´Â »ç¶÷
+    , EML_CONTENT       VARCHAR2(3000)  NOT NULL                -- º¸³½ ³»¿ë
     --, REPLY_FILE
     , SENDED_DATE       DATE            NOT NULL
-    -- Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â¼ï¿½ï¿½
+    -- Ã·ºÎÆÄÀÏ ¾îÂ¼Áö
 );
 
 
--- ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½
--- ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½Ã½Ã¿ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ê¿ï¿½ ï¿½ï¿½ï¿½ï¿½Ç°Ô²ï¿½
--- ï¿½×¸ï¿½ï¿½ï¿½ USER_ACC ï¿½ï¿½ï¿½Ìºï¿½ï¿½ IDï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½Î°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ì¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½
+-- ¹ÙÀÌ¾î Âò±â´É Å×ÀÌºí »ý¼º
+-- ¹ÙÀÌ¾î ¼±ÅÃ½Ã¿¡ º°Ç¥¸¦ ´©¸£¸é ÀÌÂÊ¿¡ ÀúÀåµÇ°Ô²û
+-- ±×¸®°í USER_ACC Å×ÀÌºí°ú ID°ªÀ» °øÀ¯ÇÏ¿© ÂòÇÑ °èÁ¤°ú ·Î±×ÀÎ°èÁ¤ÀÌ µ¿ÀÏÇÑ °æ¿ì¿¡¸¸ Ãâ·Â
 CREATE TABLE FAVORITE
 (   
-      USER_NUM           NUMBER         REFERENCES
+      USER_NUM          NUMBER          REFERENCES
                                         USER_ACC(USER_NUM)
                                         ON DELETE CASCADE
-    , RECEIVER          VARCHAR2(50)    NOT NULL
+    , BUYER             VARCHAR2(100)   REFERENCES
+                                        CLIENT(CMP_NM)
+                                        ON DELETE CASCADE
+    , NAT_CD            CHAR(2)         REFERENCES
+                                        CLIENT(NAT_CD)
+                                        ON DELETE CASCADE
     , REPLY_CONTENT     VARCHAR2(3000)  NOT NULL
-    , SENDED_DATE       DATE
-    -- ï¿½ï¿½Å¸ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+    -- ±âÅ¸ ¾ç½Ä ±â¾ï
 );
 
--- ï¿½ï¿½ï¿½ï¿½Úºï¿½ ï¿½Ö±ï¿½ ï¿½Ë»ï¿½ï¿½î¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½
--- prependï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö±Ù¿ï¿½ ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½î¸¦ ï¿½ï¿½ï¿½ï¿½ ï¿½Õ¿ï¿½ ï¿½ï¿½ï¿½ï¿½Ç°Ô²ï¿½ ï¿½ï¿½ï¿½ï¿½
+-- »ç¿ëÀÚº° ÃÖ±Ù °Ë»ö¾î¸¦ ÀúÀåÇÒ Å×ÀÌºí »ý¼º
+-- prepend¸¦ »ç¿ëÇÏ¿© °¡Àå ÃÖ±Ù¿¡ °Ë»öÇÑ °Ë»ö¾î¸¦ °¡Àå ¾Õ¿¡ ³ëÃâµÇ°Ô²û »ý¼º
 CREATE TABLE SEARCH_LOG
 (
       USER_NUM           NUMBER         REFERENCES
                                         USER_ACC(USER_NUM)
                                         ON DELETE CASCADE
-    , USER_LOG          VARCHAR2(50)                        -- ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ ï¿½ï¿½ï¿½ï¿½
+    , USER_LOG          VARCHAR2(50)                        -- »ç¿ëÀÚ °Ë»ö Á¤º¸
 );
 
--- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½È´Ù¸ï¿½
--- ï¿½Ó½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ << ï¿½ï¿½ï¿½ï¿½ ï¿½Ä¼ï¿½ï¿½ï¿½
+-- ¿©À¯°¡ µÈ´Ù¸é
+-- ÀÓ½Ã º¸°üÇÔ << °¡Àå ÈÄ¼øÀ§
 
 
--- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+-- ½ÃÄö½º »ý¼º
 CREATE SEQUENCE USER_ACC_SEQ;
 
 
--- ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½
+-- Å×ÀÌºí »èÁ¦
 
 
 DROP TABLE USER_ACC;
 
-    DROP TABLE SENDED_EMAIL;
+    DROP TABLE SENDED_EML;
     
     DROP TABLE FAVORITE;
     
