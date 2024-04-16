@@ -65,6 +65,7 @@ CREATE TABLE CLIENT
 (
       DUNS_NO           VARCHAR2(100)   PRIMARY KEY     -- DUNS넘버
     , CMP_NM            VARCHAR2(100)   NOT NULL        -- 회사명
+    , NAT_ID            VARCHAR2(1000)  NOT NULL        -- 국가 아이디
     , NAT_CD            CHAR(2)         NOT NULL        -- 국가 코드
     , NAT_KOR           VARCHAR2(20)    NOT NULL        -- 국가명 (한글)
     , NAT_ENG           VARCHAR2(20)    NOT NULL        -- 국가명 (영문)
