@@ -78,7 +78,6 @@ CREATE TABLE FAVORITE
     , NAT_CD            CHAR(2)         REFERENCES
                                         CLIENT(NAT_CD)
                                         ON DELETE CASCADE
-    , REPLY_CONTENT     VARCHAR2(3000)  NOT NULL
     -- 기타 양식 기억
 );
 
