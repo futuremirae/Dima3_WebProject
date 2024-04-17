@@ -100,7 +100,7 @@
                 select.append($('<option></option>').attr('value', country.code).text(country.name));
             });
         })
-
+            ..
         function checkIdFunc() {
             let userId = $("#userId").val(); // 사용자 입력 아이디 
             if (userId.trim().length < 3 || userId.trim().length > 13 || !/^[a-z]{4,12}$/.test(userId)) {
