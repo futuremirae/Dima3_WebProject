@@ -16,6 +16,10 @@
         // let checkid = false;
         // let checkpwd = false;
         function checkjoinform() { // 자바스크립트가 모두 실행된 후에 마지막에 실행
+
+
+
+
             let userName = $("#userName").val() // 담당자 이름 
             let userPhone = $("#userPhone").val(); // 담당자 전화번호 
             let englishRegex = /^[a-zA-Z]+$/;
@@ -38,7 +42,7 @@
                 return false;
             }
             if (!koreanRegex.test($("#userCmpKor").val()) || $("#userCmpKor").val().length == 0) {
-                alert("회사명을 국문으로 작성해주세요" + $("#userCmpKor").val());
+                alert("회사명을 국문으로 작성해주세요");
                 $("#userCmpKor").focus();
                 return false;
             }
@@ -69,18 +73,33 @@
                 $("#userUrl").focus();
                 return false;
             }
-            if ($("#userSicCd").val().length == 0) {
-                alert("자사 취급 품목을 입력해주세요.")
+            if ($(!englishRegex.test($("#userSicCd").val()) || "#userSicCd").val().length == 0) {
+                alert("자사 취급 품목을 영문으로 입력해주세요.")
                 $("#userSicCd").focus();
                 return false;
             }
-            // 아이디, 비밀번호 다시한번 확인 
-            if (checkpwd && checkpwd) {
+            if ($("#userKeyWord").val().length != 0) { // 관심 품목 키워드가 입력되었는데 
+                if ($(!englishRegex.test($("#userKeyWord").val()))) { // 영문이 아닐경우 
+                    alert("관심 품목을 영문으로 입력해주세요.");
+                    $("#userKeyWord").focus();
+                    return false;
+                }
+            }
+
+            if (!$("#agreementCheckbox").is(":checked")) {
+                alert("필수 이용약관에 동의해주세요");
+                $("#agreementCheckbox").focus();
+                return false;
+
+            }
+            if ($("#userId").attr("attr-checkid") && $("#userPwdConfirm").attr("attr-checkpwd")) {
                 return true;
             } else {
-                alert("아이디와 비밀번호를 다시 확인해 주세요")
+                alert("아이디와 비밀번호를 다시 확인해 주세요" + $("#userId").attr("attr-checkid") + $("#userPwdConfirm").attr("attr-checkpwd"))
                 return false;
             }
+
+
 
         }
 
@@ -165,7 +184,10 @@
             if (!/^[a-z]{4,12}$/.test(userId)) {
                 $("#warnId").css("color", "red");
                 $("#warnId").html("아이디는 4~12글자 소문자로 입력해주세요.");
-                checkid = false;
+                $("#userId").attr("attr-checkid", "false");
+
+
+
                 return;
             }
             else { // 아이디 중복 검사 
@@ -178,12 +200,15 @@
                         if (output) {
                             $("#warnId").css("color", "blue");
                             $("#warnId").html("사용가능한 아이디입니다.");
-                            checkid = true;
+                            $("#userId").attr("attr-checkid", "true");
+
 
                         } else {
                             $("#warnId").css("color", "red");
                             $("#warnId").html("이미 존재하는 아이디입니다.");
-                            checkid = false;
+                            $("#userId").attr("attr-checkid", "false");
+
+
                         }
                     }
 
@@ -211,12 +236,15 @@
             if (userPwd != userPwdConfirm && userPwdConfirm.length >= 1) {
                 $("#warnPwdConfirm").css("color", "red");
                 $("#warnPwdConfirm").html("비밀번호가 일치하지 않습니다.");
-                checkpwd = false;
+                $("#userPwdConfirm").attr("attr-checkpwd", "false");
+
+
 
             } if (userPwd == userPwdConfirm && userPwdConfirm.length >= 1) {
                 $("#warnPwdConfirm").css("color", "blue");
                 $("#warnPwdConfirm").html("비밀번호가 일치합니다.");
-                checkpwd = true;
+                $("#userPwdConfirm").attr("attr-checkpwd", "true");
+
 
 
             }
@@ -255,7 +283,7 @@
                 <tr>
                     <th>아이디</th>
                     <td>
-                        <input type="text" id="userId" name="userId" attr-chekpid="false"> <!-- 사용자 아이디 입력-->
+                        <input type="text" id="userId" name="userId" attr-checkid="false"> <!-- 사용자 아이디 입력-->
                         <span id="warnId" style="font-size: 0.8em;"></span><!--중복 아이디 확인가능 텍스트 삽입-->
                     </td>
 
@@ -271,7 +299,7 @@
                 <tr>
                     <th>비밀번호 확인</th> <!-- 비밀번호가 다른지 확인 필수-->
                     <td>
-                        <input type="password" placeholder="비밀번호 확인" id="userPwdConfirm" attr-chekpwd="false">
+                        <input type="password" placeholder="비밀번호 확인" id="userPwdConfirm" attr-checkpwd="false">
                         <span id="warnPwdConfirm" style="font-size: 0.8em;"></span>
 
                     </td>
@@ -305,7 +333,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>회사명(한글)</th>
+                    <th>회사명(국문)</th>
                     <td>
                         <input type="text" id="userCmpKor" name="userCmpKor">
                     </td>
