@@ -5,6 +5,7 @@
 #기타 sts 파일 제외
 /mailapi/
 /spring7/
+/Cosine/
 
 
 ##피클 파일 수정 
