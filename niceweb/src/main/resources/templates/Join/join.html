@@ -11,44 +11,101 @@
     <link rel="stylesheet" th:href="@{/css/myPage.css}">
     <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
     <script>
+        // submit이 전송되기전에 무조건 거쳐가는 검사 페이지 
+        // 변수 설정 
+        // let checkid = false;
+        // let checkpwd = false;
+        function checkjoinform() { // 자바스크립트가 모두 실행된 후에 마지막에 실행
+            let userName = $("#userName").val() // 담당자 이름 
+            let userPhone = $("#userPhone").val(); // 담당자 전화번호 
+            let englishRegex = /^[a-zA-Z]+$/;
+            let koreanRegex = /^[가-힣]+$/;
+            let numberRegex = /^\d+$/; // 숫자
+            let dunsNoRegex = /^\d{9}$/; // 던스넘버
+            if (!englishRegex.test(userName)) {
+                alert("담당자 이름을 영문으로 작성해주세요");
+                $("#userName").focus();
+                return false;
+            }
+            if (!numberRegex.test(userPhone)) {
+                alert("연락처는 숫자만 입력해주세요.");
+                $("#userPhone").focus();
+                return false;
+            }
+            if (!englishRegex.test($("#userCmpEng").val()) || $("#userCmpEng").val().length == 0) {
+                alert("회사명을 영문으로 작성해주세요");
+                $("#userCmpEng").focus();
+                return false;
+            }
+            if (!koreanRegex.test($("#userCmpKor").val()) || $("#userCmpKor").val().length == 0) {
+                alert("회사명을 국문으로 작성해주세요" + $("#userCmpKor").val());
+                $("#userCmpKor").focus();
+                return false;
+            }
+            if (!$("#countrySelect").val()) {
+                alert("국가를 선택해주세요.");
+                $("#countrySelect").focus();
+                return false;
+            }
+            if (!englishRegex.test($("#userCeoEng").val()) || $("#userCeoEng").val().length == 0) {
+                alert("대표자명을 영문으로 입력해주세요.");
+                $("#userCeoEng").focus();
+                return false;
+            }
+            if (!koreanRegex.test($("#userCeoKor").val()) || $("#userCeoKor").val().length == 0) {
+                alert("대표자명을 국문으로 입력해주세요.");
+                $("#userCeoKor").focus();
+                return false;
+            }
 
-        $(function () {
-            $("#checkuserId").on('click', checkIdFunc);// 아이디 중복 검사 
-            // $("#userPwd").
+            if (!dunsNoRegex.test($("#userDunsNo").val()) || $("#userDunsNo").val().length == 0) {
+                alert("올바른 던스넘버를 입력하세요.");
+                $("#userDunsNo").focus();
+                return false;
+            }
 
+            if ($("#userUrl").val().length == 0) {
+                alert("회사 홈페이지 주소를 입력하세요.")
+                $("#userUrl").focus();
+                return false;
+            }
+            if ($("#userSicCd").val().length == 0) {
+                alert("자사 취급 품목을 입력해주세요.")
+                $("#userSicCd").focus();
+                return false;
+            }
+            // 아이디, 비밀번호 다시한번 확인 
+            if (checkpwd && checkpwd) {
+                return true;
+            } else {
+                alert("아이디와 비밀번호를 다시 확인해 주세요")
+                return false;
+            }
+
+        }
+
+        $(function () { // ajax 넘어가는 부분 
+            $("#userId").keyup(checkIdFunc); // 아이디 검사 -> 키업 이벤트
+
+
+            $("#userPwd").keyup(checkPwdFunc); // 비밀번호 유효성 검사
+            $("#userPwd").on('click', function () { $("#userPwdConfirm").val(""); $("#warnPwdConfirm").html(""); });// 변수 false도 해주는 코드 삽입 
+            $("#userPwdConfirm").keyup(doubleCheckPwd); // 비밀번호 확인 부분
 
             // 국가 데이터 배열
-            var countries = [
-                { code: 'KR', name: '대한민국' }, { code: 'AF', name: '아프가니스탄' },
-                { code: 'AL', name: '알바니아' }, { code: 'DZ', name: '알제리' }, { code: 'CN', name: '중국' },
+            let countries = [
+                { code: 'KR', name: '대한민국' }, { code: 'AF', name: '아프가니스탄' }, { code: 'AL', name: '알바니아' }, { code: 'DZ', name: '알제리' }, { code: 'CN', name: '중국' },
                 { code: 'IN', name: '인도' }, { code: 'MY', name: '말레이시아' },
                 { code: 'JP', name: '일본' }, { code: 'TH', name: '태국' }, { code: 'HK', name: '홍콩' }, { code: 'SG', name: '싱가포르' },
-                { code: 'TW', name: '대만' },
-                { code: 'AE', name: '아랍에미레이트' },
-                { code: 'IL', name: '이스라엘' },
-                { code: 'BH', name: '바레인' },
-                { code: 'QA', name: '카타르' },
-                { code: 'VN', name: '베트남' },
-                { code: 'SA', name: '사우디아라비아' },
-                { code: 'ID', name: '인도네시아' },
-                { code: 'PH', name: '필리핀' },
-                { code: 'PK', name: '파키스탄' },
-                { code: 'LK', name: '스리랑카' },
-                { code: 'UZ', name: '우즈베키스탄' },
-                { code: 'DE', name: '독일' },
-                { code: 'GB', name: '영국' },
-                { code: 'FR', name: '프랑스' },
-                { code: 'SE', name: '스웨덴' },
-                { code: 'AT', name: '오스트리아' },
-                { code: 'DK', name: '덴마크' },
-                { code: 'IT', name: '이탈리아' },
-                { code: 'BE', name: '벨기에' },
-                { code: 'NL', name: '네덜란드' },
-                { code: 'SI', name: '슬로베니아' },
-                { code: 'HU', name: '헝가리' },
-                { code: 'CH', name: '스위스' },
-                { code: 'CZ', name: '체코' },
-                { code: 'RO', name: '루마니아' },
+                { code: 'TW', name: '대만' }, { code: 'AE', name: '아랍에미레이트' }, { code: 'IL', name: '이스라엘' },
+                { code: 'BH', name: '바레인' }, { code: 'QA', name: '카타르' }, { code: 'VN', name: '베트남' },
+                { code: 'SA', name: '사우디아라비아' }, { code: 'ID', name: '인도네시아' }, { code: 'PH', name: '필리핀' },
+                { code: 'PK', name: '파키스탄' }, { code: 'LK', name: '스리랑카' }, { code: 'UZ', name: '우즈베키스탄' },
+                { code: 'DE', name: '독일' }, { code: 'GB', name: '영국' }, { code: 'FR', name: '프랑스' },
+                { code: 'SE', name: '스웨덴' }, { code: 'AT', name: '오스트리아' }, { code: 'DK', name: '덴마크' },
+                { code: 'IT', name: '이탈리아' }, { code: 'BE', name: '벨기에' }, { code: 'NL', name: '네덜란드' },
+                { code: 'SI', name: '슬로베니아' }, { code: 'HU', name: '헝가리' }, { code: 'CH', name: '스위스' },
+                { code: 'CZ', name: '체코' }, { code: 'RO', name: '루마니아' },
                 { code: 'TR', name: '터키' },
                 { code: 'RS', name: '세르비아' },
                 { code: 'PL', name: '폴란드' },
@@ -95,17 +152,20 @@
                 { code: 'AU', name: '호주' }];
 
             // 국가 선택 상자에 옵션 추가
-            var select = $('#countrySelect');
+            let select = $('#countrySelect');
             $.each(countries, function (index, country) {
                 select.append($('<option></option>').attr('value', country.code).text(country.name));
             });
         })
-            ..
+
+        // 아이디 유효성 검사 
         function checkIdFunc() {
+
             let userId = $("#userId").val(); // 사용자 입력 아이디 
-            if (userId.trim().length < 3 || userId.trim().length > 13 || !/^[a-z]{4,12}$/.test(userId)) {
-                alert("아이디는 4~12글자 소문자로 입력해주세요.");
-                $("#userId").focus();
+            if (!/^[a-z]{4,12}$/.test(userId)) {
+                $("#warnId").css("color", "red");
+                $("#warnId").html("아이디는 4~12글자 소문자로 입력해주세요.");
+                checkid = false;
                 return;
             }
             else { // 아이디 중복 검사 
@@ -116,21 +176,53 @@
                     , data: { "userId": userId }
                     , success: function (output) {
                         if (output) {
-                            alert("아이디 중복확인 완료!");
-                        }
-                        else {
-                            alert("이미 존재하는 아이디입니다. 다시 입력해주세요.");
-                            $("#userId").focus();
+                            $("#warnId").css("color", "blue");
+                            $("#warnId").html("사용가능한 아이디입니다.");
+                            checkid = true;
+
+                        } else {
+                            $("#warnId").css("color", "red");
+                            $("#warnId").html("이미 존재하는 아이디입니다.");
+                            checkid = false;
                         }
                     }
 
                 });
 
             }
+        }// 아이디 중복검사 끝
 
-
-
+        function checkPwdFunc() { // 비밀번호 유효성 검사 
+            let userPwd = $("#userPwd").val(); // 사용자가 입력한 패스워드 
+            var regex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[a-zA-Z\d@$!%*#?&]+$/;
+            if (userPwd.length < 8 || userPwd.length > 12 || !regex.test(userPwd)) { //confirmPwd
+                $("#warnPwd").css("color", "red");
+                $("#warnPwd").html("8글자 이상~12글자 이하의 영문, 숫자, 특수문자(@$!%*#?&)를 사용하세요");
+            }
+            else {
+                $("#warnPwd").css("color", "blue");
+                $("#warnPwd").html("사용가능한 비밀번호 입니다.");
+            }
         }
+
+        function doubleCheckPwd() { // 비밀번호 확인 유효성 검사 
+            let userPwd = $("#userPwd").val(); // 사용자가 입력한 패스워드 
+            let userPwdConfirm = $("#userPwdConfirm").val();
+            if (userPwd != userPwdConfirm && userPwdConfirm.length >= 1) {
+                $("#warnPwdConfirm").css("color", "red");
+                $("#warnPwdConfirm").html("비밀번호가 일치하지 않습니다.");
+                checkpwd = false;
+
+            } if (userPwd == userPwdConfirm && userPwdConfirm.length >= 1) {
+                $("#warnPwdConfirm").css("color", "blue");
+                $("#warnPwdConfirm").html("비밀번호가 일치합니다.");
+                checkpwd = true;
+
+
+            }
+        }
+
+
 
     </script>
 
@@ -154,7 +246,7 @@
     <hr>
     <h2 class="h2subject">회원 가입</h2>
 
-    <form th:action="@{/user/joinProc}" method="post">
+    <form th:action="@{/user/joinProc}" method="post" onsubmit="return checkjoinform()"> /<!--onsubmit : ajax 로만 걸기 -->
         <section>
             <div>
                 <h4 class="h4subject">개인 정보</h4>
@@ -163,8 +255,8 @@
                 <tr>
                     <th>아이디</th>
                     <td>
-                        <input type="text" id="userId" name="userId"> <!-- 사용자 아이디 입력-->
-                        <button type="button" class="checkId" id="checkuserId">아이디 중복 확인
+                        <input type="text" id="userId" name="userId" attr-chekpid="false"> <!-- 사용자 아이디 입력-->
+                        <span id="warnId" style="font-size: 0.8em;"></span><!--중복 아이디 확인가능 텍스트 삽입-->
                     </td>
 
                 </tr>
@@ -172,12 +264,16 @@
                     <th>비밀번호</th>
                     <td colspan="2">
                         <input type="password" class="password" id="userPwd" name="userPwd">
+                        <span id="warnPwd" style="font-size: 0.8em;"></span>
+                        <!-- <div>8글자 이상, 영문, 숫자, 특수문자(@$!%*#?&)를 사용하세요</div> -->
                     </td>
                 </tr>
                 <tr>
                     <th>비밀번호 확인</th> <!-- 비밀번호가 다른지 확인 필수-->
                     <td>
-                        <input type="password" placeholder="비밀번호 확인" id="userPwdConfirm">
+                        <input type="password" placeholder="비밀번호 확인" id="userPwdConfirm" attr-chekpwd="false">
+                        <span id="warnPwdConfirm" style="font-size: 0.8em;"></span>
+
                     </td>
                 </tr>
                 <tr>
@@ -194,7 +290,7 @@
                 <tr>
                     <th>담당자 연락처</th>
                     <td>
-                        <input type="text" id="userPhone" name="userPhone">
+                        <input type="text" id="userPhone" name="userPhone" placeholder="(-)를 제외한 숫자만 입력">
                     </td>
                 </tr>
             </table>
@@ -244,19 +340,19 @@
                 <tr>
                     <th>던스번호</th>
                     <td>
-                        <input type="text" id="userDunsNo" name="userDunsNo"> <!-- 타임리프 태그 추가 필요 + 예전에 입력했던 정보 보여질 예정-->
+                        <input type="text" id="userDunsNo" name="userDunsNo">
                     </td>
                 </tr>
                 <tr>
                     <th>회사 주소</th>
                     <td>
-                        <input type="text" id="userUrl" name="userUrl"> <!-- 타임리프 태그 추가 필요 + 예전에 입력했던 정보 보여질 예정-->
+                        <input type="text" id="userUrl" name="userUrl">
                     </td>
                 </tr>
                 <tr>
                     <th>홈페이지 주소</th>
                     <td>
-                        <input type="text" id="userAdr" name="userAdr"> <!-- 타임리프 태그 추가 필요 + 예전에 입력했던 정보 보여질 예정-->
+                        <input type="text" id="userAdr" name="userAdr">
                     </td>
                 </tr>
                 <tr>
