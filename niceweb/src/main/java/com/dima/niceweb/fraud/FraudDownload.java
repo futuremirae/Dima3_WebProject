@@ -17,7 +17,7 @@ public class FraudDownload {
         //필수 = ServiceKey, numOfRows, pageNo
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=1Oo0omv4bVoztr5VGKOWz2QJYFpy2gmu8Kq8DbYg%2F%2B7gX2EfMQBU2jTu6MpQfsbJoqxzTTyyyDdSfpVZ0FIPlA%3D%3D");
         urlBuilder.append("&" + URLEncoder.encode("type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("10", "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("search1", "UTF-8") + "=" + URLEncoder.encode("", "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("search2", "UTF-8") + "=" + URLEncoder.encode("", "UTF-8"));
@@ -62,5 +62,5 @@ public class FraudDownload {
  * pageNo       = 페이지 번호
  * search1      = 국가명
  * search2      = 뉴스 제목
- * search3      = 뉴스 게시일자
+ * search3      = 뉴스 게시일자 
  */
