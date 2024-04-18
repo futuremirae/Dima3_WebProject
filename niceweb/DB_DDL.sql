@@ -1,24 +1,24 @@
 
 /*
-³» SQL¼±»ý´Ô
+ë‚´ SQLì„ ìƒë‹˜
 https://gent.tistory.com/361
 
-ÀÌ ÆÄÀÏ¿¡ »ý¼ºµÇ¾îÀÖ´Â Å×ÀÌºí
+ì´ íŒŒì¼ì— ìƒì„±ë˜ì–´ìžˆëŠ” í…Œì´ë¸”
 
-- Ä«Å×°í¸® Å×ÀÌºí (CTGY)
-    - ´ëºÐ·ù (MAIN_CTGY)
-    - ¼ÒºÐ·ù (SUB_CTGY)
-    - »óÇ°¸í (ITEM_NM)
+- ì¹´í…Œê³ ë¦¬ í…Œì´ë¸” (CTGY)
+    - ëŒ€ë¶„ë¥˜ (MAIN_CTGY)
+    - ì†Œë¶„ë¥˜ (SUB_CTGY)
+    - ìƒí’ˆëª… (ITEM_NM)
 
-- URL Å×ÀÌºí(CLIENT)
-    - È¸»ç (CMP)
-    - ±¹°¡ (NTN)
-        - ±¹°¡ÄÚµåº¯È¯ (NTN_TEXT)
-    - È¸»çÁ¤º¸(INFO)
+- URL í…Œì´ë¸”(CLIENT)
+    - íšŒì‚¬ (CMP)
+    - êµ­ê°€ (NTN)
+        - êµ­ê°€ì½”ë“œë³€í™˜ (NTN_TEXT)
+    - íšŒì‚¬ì •ë³´(INFO)
 */
 
 
--- Ä«Å×°í¸® Å×ÀÌºí »ý¼º
+-- ì¹´í…Œê³ ë¦¬ í…Œì´ë¸” ìƒì„±
 
 CREATE TABLE CTGY
 (
@@ -49,7 +49,7 @@ CREATE TABLE CTGY
                 ;
             
             
-            CREATE VIEW ITEM_NM
+            CREATE VIEW ITEM
                 AS
                     SELECT  ITEM_ID
                             , ITEM_NM
@@ -59,31 +59,31 @@ CREATE TABLE CTGY
                 ;
 
 
--- URL Å×ÀÌºí »ý¼º (ºÎ¸ð) ( ´Ü¼ø ÀúÀå¿ë, Á¶È¸´Â ÀÌ°Å·Î ¾ÈÇÔ )
--- JOINÀ¸·Î ¹ÞÀº USER_ACC °´Ã¼¸¦ ÀúÀåÇØ¾ßÇÏ±â ¶§¹®¿¡ Á¤±ÔÈ­µÇÁö ¾ÊÀº ¿øµ¥ÀÌÅÍ Æ²·Î ÀúÀåÈÄ Á¶È¸ÇÒ ¶§´Â Á¤±ÔÈ­µÈ Å×ÀÌºíÀ» ÀÌ¿ë
+-- URL í…Œì´ë¸” ìƒì„± (ë¶€ëª¨) ( ë‹¨ìˆœ ì €ìž¥ìš©, ì¡°íšŒëŠ” ì´ê±°ë¡œ ì•ˆí•¨ )
+-- JOINìœ¼ë¡œ ë°›ì€ USER_ACC ê°ì²´ë¥¼ ì €ìž¥í•´ì•¼í•˜ê¸° ë•Œë¬¸ì— ì •ê·œí™”ë˜ì§€ ì•Šì€ ì›ë°ì´í„° í‹€ë¡œ ì €ìž¥í›„ ì¡°íšŒí•  ë•ŒëŠ” ì •ê·œí™”ëœ í…Œì´ë¸”ì„ ì´ìš©
 CREATE TABLE CLIENT
 (
-      DUNS_NO           VARCHAR2(100)   PRIMARY KEY     -- DUNS³Ñ¹ö
-    , CMP_NM            VARCHAR2(100)   NOT NULL        -- È¸»ç¸í
-    , NAT_CD            CHAR(2)         NOT NULL        -- ±¹°¡ ÄÚµå
-    , NAT_KOR           VARCHAR2(10)    NOT NULL        -- ±¹°¡¸í (ÇÑ±Û)
-    , NAT_ENG           VARCHAR2(10)    NOT NULL        -- ±¹°¡¸í (¿µ¹®)
-    , CITY              VARCHAR2(100)   NOT NULL        -- µµ½Ã¸í
-    , ADR1              VARCHAR2(100)   NOT NULL        -- ÁÖ¼Ò
-    , ADR2              VARCHAR2(100)                   -- »ó¼¼ ÁÖ¼Ò
-    , SIC_CD            VARCHAR2(100)   NOT NULL        -- ÁÖ¿ä Ãë±Þ Ç°¸ñ
-    , SALES             NUMBER(20)                      -- ¸ÅÃâ
-    , ASSET             NUMBER(20)                      -- ÀÚ»ê
-    , EMP               NUMBER(10)                      -- Á¾¾÷¿ø¼ö
-    , CONTACT_GRD_CD    CHAR(3)                         -- ¸¶ÄÉÆÃ µî±Þ
-    -- NOT NULLÀÌ ¾Æ´Ñ ´ë½Å NICEÀÇ ½Å¿ëÁ¶»ç ¹ÌÀÀ½ÃÇÑ ¸ðµç »ç¿ëÀÚ¿¡°Ô ´Ù¸¥ »ç¿ëÀÚ¿¡°Ô ³ëÃâÀÌ ¾î·Æ´Ù´Â Á¡À» °æ°íÃ¢ »ý¼º
-    , CREDIT_GRD_CD     CHAR(3)                         -- ½Å¿ë µî±Þ
-    , URL               VARCHAR2(100)   NOT NULL        -- È¨ÆäÀÌÁö ÁÖ¼Ò
-    , EML               VARCHAR2(100)   NOT NULL        -- ÀÌ¸ÞÀÏ ÁÖ¼Ò
-    , ENG               VARCHAR2(2000)  NOT NULL        -- °ü·Ã Å°¿öµå ¸ñ·Ï
+      DUNS_NO           VARCHAR2(100)   PRIMARY KEY     -- DUNSë„˜ë²„
+    , CMP_NM            VARCHAR2(100)   NOT NULL        -- íšŒì‚¬ëª…
+    , NAT_ID            VARCHAR2(1000)  NOT NULL        -- êµ­ê°€ ì•„ì´ë””
+    , NAT_CD            CHAR(2)         NOT NULL        -- êµ­ê°€ ì½”ë“œ
+    , NAT_KOR           VARCHAR2(20)    NOT NULL        -- êµ­ê°€ëª… (í•œê¸€)
+    , NAT_ENG           VARCHAR2(20)    NOT NULL        -- êµ­ê°€ëª… (ì˜ë¬¸)
+    , CITY              VARCHAR2(100)   NOT NULL        -- ë„ì‹œëª…
+    , ADR               VARCHAR2(100)   NOT NULL        -- ì „ì²´ ì£¼ì†Œ
+    , SIC_CD            VARCHAR2(100)   NOT NULL        -- ì£¼ìš” ì·¨ê¸‰ í’ˆëª©
+    , SALES             NUMBER(20)                      -- ë§¤ì¶œ
+    , ASSET             NUMBER(20)                      -- ìžì‚°
+    , EMP               NUMBER(10)                      -- ì¢…ì—…ì›ìˆ˜
+    , CONTACT_GRD_CD    VARCHAR2(4)                     -- ë§ˆì¼€íŒ… ë“±ê¸‰
+    -- NOT NULLì´ ì•„ë‹Œ ëŒ€ì‹  NICEì˜ ì‹ ìš©ì¡°ì‚¬ ë¯¸ì‘ì‹œí•œ ëª¨ë“  ì‚¬ìš©ìžì—ê²Œ ë‹¤ë¥¸ ì‚¬ìš©ìžì—ê²Œ ë…¸ì¶œì´ ì–´ë µë‹¤ëŠ” ì ì„ ê²½ê³ ì°½ ìƒì„±
+    , CREDIT_GRD_CD     VARCHAR2(4)                     -- ì‹ ìš© ë“±ê¸‰
+    , URL               VARCHAR2(200)   NOT NULL        -- í™ˆíŽ˜ì´ì§€ ì£¼ì†Œ
+    , EML               VARCHAR2(100)   NOT NULL        -- ì´ë©”ì¼ ì£¼ì†Œ
+    , ENG               VARCHAR2(2000)  NOT NULL        -- ê´€ë ¨ í‚¤ì›Œë“œ ëª©ë¡
 );
 
--- È¸»ç Á¤º¸ Å×ÀÌºí »ý¼º
+-- íšŒì‚¬ ì •ë³´ VIEW ìƒì„±
             CREATE VIEW CMP
                 AS
                     SELECT  DUNS_NO
@@ -103,21 +103,20 @@ CREATE TABLE CLIENT
                 ;
 
 
--- ±¹°¡ Å×ÀÌºí »ý¼º
--- ÄÚµå·Î µÈ ±¹°¡ºÐ·ù¸¦ ÅØ½ºÆ®·Î Ç¥Çö
+-- êµ­ê°€ VIEW ìƒì„±
             CREATE VIEW NTN
                 AS
-                    SELECT  DUNS_NO
-                            , NAT_ID
+                    SELECT  NAT_ID
                             , NAT_CD
                             , NAT_KOR
                             , NAT_ENG
                     FROM CLIENT
+                    ORDER BY NAT_ID
                     WITH READ ONLY
                 ;
 
 
--- ÁÖ¼Ò Å×ÀÌºí »ý¼º
+-- ì£¼ì†Œ í…Œì´ë¸” ìƒì„±
             CREATE VIEW LOC
                 AS
                     SELECT  NTN_ID
@@ -128,8 +127,8 @@ CREATE TABLE CLIENT
                 ;
 
 
--- Å×ÀÌºí »èÁ¦
--- »èÁ¦´Â »ý¼ºÀÇ ¿ª¼ø
+-- í…Œì´ë¸” ì‚­ì œ
+-- ì‚­ì œëŠ” ìƒì„±ì˜ ì—­ìˆœ
 
 DROP TABLE CTGY;
 
@@ -137,7 +136,7 @@ DROP TABLE CTGY;
     
     DROP VIEW SUB_CTGY;
     
-    DROP VIEW ITEM_NM;
+    DROP VIEW ITEM;
 
 
 

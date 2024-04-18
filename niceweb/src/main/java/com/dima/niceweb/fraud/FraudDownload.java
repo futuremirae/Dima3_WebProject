@@ -19,9 +19,9 @@ public class FraudDownload {
         urlBuilder.append("&" + URLEncoder.encode("type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("search1", "UTF-8") + "=" + URLEncoder.encode("미국", "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("search2", "UTF-8") + "=" + URLEncoder.encode("이메일", "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("search3", "UTF-8") + "=" + URLEncoder.encode("20181107", "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("search1", "UTF-8") + "=" + URLEncoder.encode("", "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("search2", "UTF-8") + "=" + URLEncoder.encode("", "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("search3", "UTF-8") + "=" + URLEncoder.encode("", "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
 
         URL url = new URL(urlBuilder.toString());
