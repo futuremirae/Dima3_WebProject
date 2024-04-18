@@ -138,7 +138,6 @@
     <h2>추천 알고리즘 </h2>
     <form th:action="@{/predict}" method="POST">
         품목 검색<input type="text" placeholder="상품을 입력하세요" id="search" name="inputKeyword">
-        <input type="button" value="검색" id="searchBtn">
     </form>
     <div class="dropdown-container">
         <select id="continentSelect" onchange="updateCountryList()">
@@ -154,6 +153,7 @@
         <select id="countrySelect">
             <option value="">Select Country</option>
         </select>
+        <input type="button" value="검색" id="searchBtn">
     </div>
     <span id="noResult"></span>
     <table id="cosine-list">
