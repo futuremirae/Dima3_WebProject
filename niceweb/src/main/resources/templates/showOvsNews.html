@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>OVSEA Market News</title>
+        <script>
+        // API 호출
+        fetch('/ovsNews')
+            .then(response => response.json())
+            .then(data => {
+                // JSON 데이터 파싱
+                const itemList = data.response.body.itemList.item;
+                // HTML 생성
+                let html = '';
+
+                // 요소를 담을 틀
+                itemList.forEach(item => {
+                    html += `
+                        <div>
+                            <p>Title:       ${item.newsTitl}</p>
+                            <p>Nation:      ${item.natn}</p>
+                            <p>URL:     <a href="${item.kotraNewsUrl}">
+                                            ${item.kotraNewsUrl}</a></p>
+                            <p>Date:        ${item.othbcDt}</p>
+                            <p>${item.newsBdt}</p>
+                        </div>
+                    `;
+                });
+                // HTML에 삽입
+                document.getElementById('output').innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+        </script>
+    </head>
+    <body>
+        <div id="output"></div>
+    </body>
+</html>
