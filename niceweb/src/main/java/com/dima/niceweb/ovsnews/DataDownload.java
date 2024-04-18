@@ -17,9 +17,9 @@ public class DataDownload {
         //필수 = ServiceKey, numOfRows, pageNo
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=1Oo0omv4bVoztr5VGKOWz2QJYFpy2gmu8Kq8DbYg%2F%2B7gX2EfMQBU2jTu6MpQfsbJoqxzTTyyyDdSfpVZ0FIPlA%3D%3D");
         urlBuilder.append("&" + URLEncoder.encode("type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("10", "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("search1", "UTF-8") + "=" + URLEncoder.encode("중국", "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("search1", "UTF-8") + "=" + URLEncoder.encode("", "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("search2", "UTF-8") + "=" + URLEncoder.encode("", "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("search4", "UTF-8") + "=" + URLEncoder.encode("", "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("search5", "UTF-8") + "=" + URLEncoder.encode("", "UTF-8"));
