@@ -23,6 +23,7 @@ app = FastAPI()
 
 class InputKeyword(BaseModel):
     inputKeyword: str
+    nation: str
 
 def to_string(text): # 리스트에서 문자열로 다 바꿔주기 
     text = str(text)
@@ -53,8 +54,8 @@ def inputKeyword(item: InputKeyword):
 
     # 사용자 입력값 
     inputKeyword = item.inputKeyword.lower()
-    print("@@@@@@@")
-    print(inputKeyword)
+    nation = item.nation # 국가
+
     #input_keyword = input_keyword.lower() # 소문자로 바꾸는 작업 
 
     # 불용어 제거 및 단어만 추출 
@@ -118,14 +119,36 @@ def inputKeyword(item: InputKeyword):
         
         index_name = []
         for num in range(len(last_answer)):
-            index_name.append(f'{num+1}위')
+            index_name.append(num)
         last_answer.index= index_name
-        #last_answer = last_answer[["DUNS_NO", "CMP_NM", "URL", "EML", "CONTACT_GRD_CD"]]
         last_answer = last_answer[['DUNS_NO', 'CMP_NM', 'NAT_CD', 'NAT_ID', 'CITY', 'ADR', 'URL', 'EML', 'CONTACT_GRD_CD']]
+        #result  = pd.DataFrame(columns=['DUNS_NO', 'CMP_NM', 'NAT_CD', 'NAT_ID', 'CITY', 'ADR', 'URL', 'EML', 'CONTACT_GRD_CD'])
+
+        # 사용자가 모든 국가에 대해서 선택했을 경우
+        if (nation =="all"):
+           
+            last_answer = last_answer.to_dict(orient="records")
+            return JSONResponse(last_answer)
+            
+        # 사용자가 국가를 선택했을 경우 nation!
+        else:
+            index = []
+            for i in range(len(last_answer)):
+                if last_answer.iloc[i]['NAT_CD'] == nation: # 사용자가 입력한 국가만 출력되도록함 
+                    index.append(i)
+            if len(index)==0: # 값이 없을 경우
+                return None
+            last_answer = last_answer.iloc[index]
+            last_answer = last_answer.to_dict(orient="records")
+            
+            return JSONResponse(last_answer)
         
-        last_answer = last_answer.to_dict(orient="records")
         
-        return JSONResponse(last_answer)
+        
+        
+        # last_answer = last_answer.to_dict(orient="records")
+        
+        # return JSONResponse(last_answer)
     
 
 
