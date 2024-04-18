@@ -15,6 +15,6 @@ import lombok.ToString;
 @Builder
 public class InputKeywordDTO {
 	private String inputKeyword;
-	
+	private String nation;
 
 }

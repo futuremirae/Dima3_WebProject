@@ -23,6 +23,7 @@ app = FastAPI()
 
 class InputKeyword(BaseModel):
     inputKeyword: str
+    nation: str
 
 def to_string(text): # 리스트에서 문자열로 다 바꿔주기 
     text = str(text)
@@ -53,8 +54,8 @@ def inputKeyword(item: InputKeyword):
 
     # 사용자 입력값 
     inputKeyword = item.inputKeyword.lower()
-    print("@@@@@@@")
-    print(inputKeyword)
+    nation = item.nation # 국가
+
     #input_keyword = input_keyword.lower() # 소문자로 바꾸는 작업 
 
     # 불용어 제거 및 단어만 추출 
@@ -90,7 +91,7 @@ def inputKeyword(item: InputKeyword):
             continue
     if count == 0: # 입력한 키워드가 품목리스트에 하나도 없음  
         print('입력하신 키워드는 품목리스트에 없습니다. 다시 입력해주세요')
-        return None
+        return -1
         
     else: # 입력한 키워드가 품목리스트에 있다면 
         print(f'"{str(search_keyword)[2:-2]}" 취급하는 회사 url에 대한 검색')
@@ -118,18 +119,37 @@ def inputKeyword(item: InputKeyword):
         
         index_name = []
         for num in range(len(last_answer)):
-            index_name.append(f'{num+1}위')
+            index_name.append(num)
         last_answer.index= index_name
-        last_answer = last_answer[["DUNS_NO", "CMP_NM", "URL", "EML", "CONTACT_GRD_CD"]]
-        last_answer = last_answer.to_dict(orient="records")
-        print(last_answer)
-        return JSONResponse(last_answer)
-        #json_result = last_answer.to_json(orient="records")
-        
-        #print(json_result)
+        last_answer = last_answer[['DUNS_NO', 'CMP_NM', 'NAT_CD', 'NAT_ID', 'CITY', 'ADR', 'URL', 'EML', 'CONTACT_GRD_CD']]
+        #result  = pd.DataFrame(columns=['DUNS_NO', 'CMP_NM', 'NAT_CD', 'NAT_ID', 'CITY', 'ADR', 'URL', 'EML', 'CONTACT_GRD_CD'])
 
-        #return json_result
-        #return json_result # map 객체 반환
+        # 사용자가 모든 국가에 대해서 선택했을 경우
+        if (nation =="all"):
+           
+            last_answer = last_answer.to_dict(orient="records")
+            return JSONResponse(last_answer)
+            
+        # 사용자가 국가를 선택했을 경우 nation!
+        else:
+            index = []
+            for i in range(len(last_answer)):
+                if last_answer.iloc[i]['NAT_CD'] == nation: # 사용자가 입력한 국가만 출력되도록함 
+                    index.append(i)
+            if len(index)==0: # 값이 없을 경우
+                return None
+            last_answer = last_answer.iloc[index]
+            last_answer = last_answer.to_dict(orient="records")
+            
+            return JSONResponse(last_answer)
+        
+        
+        
+        
+        # last_answer = last_answer.to_dict(orient="records")
+        
+        # return JSONResponse(last_answer)
+    
 
 
 

@@ -16,23 +16,26 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class SearchController {
-	private final SearchService service; 
+	private final SearchService service;
 
-	
 	@GetMapping("/search")
 	public String searchProduct() {
 		return "Company/cosine";
 	}
-	
+
+	@GetMapping("/searchcopy")
+	public String searchPro() {
+		return "Company/cosinecopy";
+	}
+
 	@PostMapping("/predict")
 	@ResponseBody
-	public  List<Map<String, Object>>  searchProduct(@ModelAttribute InputKeywordDTO inputkeyword) {
-		
-		log.info(inputkeyword.toString());// 사용자가 입력한 값 
-		List<Map<String, Object>> result = service.predictRest(inputkeyword);
-		log.info("ajax로 넘길거");// 사용자가 입력한 값 
-		return result;
-		
+	public List<Map<String, Object>> searchProduct(@ModelAttribute InputKeywordDTO inputkeyword) {
 
-}
+		log.info(inputkeyword.toString());// 사용자가 입력한 값
+		List<Map<String, Object>> result = service.predictRest(inputkeyword);
+		log.info("ajax로 넘길거");// 사용자가 입력한 값
+		return result;
+
+	}
 }
