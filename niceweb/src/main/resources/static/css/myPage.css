@@ -219,6 +219,7 @@ td {
 	text-align: right;
 }
 
+<<<<<<< HEAD
 /***********************
 버튼 부분 
 *********************/
@@ -226,6 +227,11 @@ td {
 	display: inline-block;
 	width: 100px;
 	;
+=======
+.Btn {
+	display: inline-block;
+	width: 100px;;
+>>>>>>> origin/feature-jin
 	font-weight: 500;
 	line-height: 2.5;
 	color: #212529;
@@ -257,6 +263,7 @@ td {
 	width: 100%;
 	background-color: rgba(255, 255, 255, 0.8);
 	z-index: 2;
+<<<<<<< HEAD
 }
 
 /*하단 체크 박스 부분 */
@@ -268,4 +275,6 @@ td {
 .checkbox {
 	margin-right: 10px;
 	/* 체크박스와 레이블 사이의 간격 조정 */
+=======
+>>>>>>> origin/feature-jin
 }
