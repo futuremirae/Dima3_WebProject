@@ -68,7 +68,7 @@
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
                         <td>${item.natn}</td>
-                        <td><a th:href="@{/showOvsNewsDetail}">${item.newsTitl}</a></td>
+                        <td><a href="/showOvsNewsDetail?title=${encodeURIComponent(item.newsTitl)}">${item.newsTitl}</a></td>
                         <td>${item.othbcDt}</td>
                     `;
                     tbody.appendChild(tr);
