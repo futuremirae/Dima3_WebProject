@@ -36,6 +36,9 @@ dependencies {
 
 	// https://mvnrepository.com/artifact/javax.annotation/javax.annotation-api
 	implementation 'javax.annotation:javax.annotation-api:1.3.2'
+	
+	// 이메일 디펜던시추가 
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
 
 tasks.named('test') {

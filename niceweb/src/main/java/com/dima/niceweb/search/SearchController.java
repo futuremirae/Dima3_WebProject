@@ -23,10 +23,7 @@ public class SearchController {
 		return "Company/cosine";
 	}
 
-	@GetMapping("/searchcopy")
-	public String searchPro() {
-		return "Company/cosinecopy";
-	}
+	
 
 	@PostMapping("/predict")
 	@ResponseBody
