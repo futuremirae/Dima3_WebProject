@@ -14,7 +14,7 @@ import lombok.ToString;
 @ToString
 @Builder
 public class UserDTO {
-	private Long UserNum; // 시퀀스 -> PK
+	private Long userNum; // 시퀀스 -> PK
 	private String userId; // 사용자 아이디
 	private String userPwd; // 사용자 패스워드
 	private String userDunsNo;// 던스넘버
@@ -35,7 +35,7 @@ public class UserDTO {
 
 	public static UserDTO toDTO(UserEntity userEntity) {
 		return UserDTO.builder()
-				.UserNum(userEntity.getUserNum())
+				.userNum(userEntity.getUserNum())
 				.userId(userEntity.getUserId()) //
 				.userPwd(userEntity.getUserPwd()) //
 				.userDunsNo(userEntity.getUserDunsNo())//

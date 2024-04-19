@@ -20,7 +20,6 @@ import lombok.ToString;
 @Getter
 @ToString
 @Builder
-
 @Entity
 @Table(name="USER_ACC") // 실제 테이블과 이름이 같으면생략 가능 
 public class UserEntity {
@@ -33,7 +32,7 @@ public class UserEntity {
 	@Id
 	@GeneratedValue(generator = "userSeq")
 	@Column(name="USER_NUM" , nullable = false) // 시퀀스 -> PK
-	private Long UserNum;
+	private Long userNum;
 	
 	@Column(name="USER_ID" , nullable = false) // 사용자 아이디 
 	private String userId;
@@ -89,7 +88,7 @@ public class UserEntity {
 	
 	public static UserEntity toEntity(UserDTO userDTO) {
 		return UserEntity.builder()
-				.UserNum(userDTO.getUserNum())
+				.userNum(userDTO.getUserNum())
 				.userId(userDTO.getUserId())
 				.userPwd(userDTO.getUserPwd())
 				.userDunsNo(userDTO.getUserDunsNo())
