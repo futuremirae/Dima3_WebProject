@@ -78,7 +78,6 @@ td {
 	-webkit-text-size-adjust: none;
 }
 
-<<<<<<< HEAD
 /****미래가 지정한 부분 start
 회사 로고 -> 미래가 임으로 지정 
 ****/
@@ -113,8 +112,6 @@ td {
 	/* 배경색을 밝은 회색(#F8F9FA)으로 지정 */
 }
 
-=======
->>>>>>> origin/feature-jin
 .header {
 	height: 100px;
 }
@@ -224,27 +221,17 @@ td {
 	font-weight: 700;
 }
 
-<<<<<<< HEAD
 /* 미래가 수정 그냥 h2로 하면 안먹어서 클래스 지정하고 먹임*/
 .h2subject {
-=======
-h2 {
->>>>>>> origin/feature-jin
 	margin-top: 20px;
 	font-size: 30px;
 	font-weight: 700;
 	text-align: center;
 }
 
-<<<<<<< HEAD
 .h4subject {
 	margin-left: 340px;
 	font-size: 24px;
-=======
-h4 {
-	margin-left: 340px;
-	font-size: 20px;
->>>>>>> origin/feature-jin
 	font-weight: 700;
 	margin-top: 50px;
 }
