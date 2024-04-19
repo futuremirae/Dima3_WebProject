@@ -97,12 +97,9 @@
                         receivedData += `
 
                 <tr>
-        			
-        			
         			<th>회사명</th>
         			<th>국가 코드</th>
         			<th>이메일</th>
-        			
         		</tr>
                     `;
 
@@ -111,12 +108,10 @@
                         <tr>
                             <td>${item.CMP_NM}</td>
                             <td>${item.NAT_CD}</td>
-                            <td><a href="#" class="email">${item.EML}</a></td>
-                            <td><a  class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                            <td>${item.EML}</td>
+                            <td><a  class="btn btn-primary email" data-bs-toggle="modal" data-bs-target="#myModal" cmpEmail="${item.EML}">
         Send Email
     </a></td>
-                            
-
                         </tr>`;
                         });//each 
                         $("#noResult").html("");
@@ -129,9 +124,9 @@
 
         }
         function mgl() {
-            let email = $(this).text();
-            $("#myModal").css("display", "block");
-            $(".receivedMail").val(email);
+            let email = $(this).attr("cmpEmail");
+            $("#address").val(email);
+
 
         }
 
@@ -165,56 +160,32 @@
     <table id="cosine-list"> <!--추천 알고리즘-->
     </table>
 
-    <!-- 모달 내용-->
-    <!-- <div id="myModal" class="modal">
-
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <p id="modalContent"></p>
-            <form th:action="@{/email/mailsend}" method="post">
-                <input name="address" placeholder="이메일 주소" class="form-control receivedMail" value=""> <br>
-                <input name="title" placeholder="제목" class="form-control"> <br>
-                <textarea name="message" placeholder="메일 내용을 입력해주세요." cols="60" rows="20"
-                    class="form-control"></textarea>
-                <button type="submit" class="btn btn-primary mt-2">발송</button>
-            </form>
-        </div>
-
-    </div> -->
-
-    <!--w3스쿨 모달창-->
-    <div class="container mt-3">
-        <h3>Modal Example</h3>
-        <p>Click on the button to open the modal.</p>
-
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-            Open modal
-        </button>
-    </div>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-        Open modal
-    </button>
-
-    <!-- The Modal -->
+    <!-- 이메일 모달창  -->
     <div class="modal" id="myModal">
         <div class="modal-dialog">
             <div class="modal-content">
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Modal Heading</h4>
+                    <h4 class="modal-title">이메일 발송</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
                 <!-- Modal body -->
-                <div class="modal-body">
-                    Modal body..
-                </div>
+                <form th:action="@{/email/mailsend}" method="post">
+                    <div class="modal-body">
+                        <input id="address" placeholder="이메일 주소" class="form-control" value="" readonly> <br>
+                        <input name="title" placeholder="제목" class="form-control"> <br>
+                        <textarea name="message" placeholder="메일 내용을 입력해주세요." cols="60" rows="20"
+                            class="form-control"></textarea>
+                    </div>
 
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn " style="background-color: blue; color: white;">발송</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
 
             </div>
         </div>

@@ -39,6 +39,9 @@ dependencies {
 	
 	// 이메일 디펜던시추가 
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+
+
 }
 
 tasks.named('test') {
