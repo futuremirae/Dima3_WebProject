@@ -100,6 +100,8 @@
         			<th>회사명</th>
         			<th>국가 코드</th>
         			<th>이메일</th>
+                    <th>이메일 발송</th>
+                    <th>찜</th>
         		</tr>
                     `;
 
@@ -112,6 +114,7 @@
                             <td><a  class="btn btn-primary email" data-bs-toggle="modal" data-bs-target="#myModal" cmpEmail="${item.EML}">
         Send Email
     </a></td>
+                            <td><a>찜</a></td>
                         </tr>`;
                         });//each 
                         $("#noResult").html("");
@@ -125,7 +128,7 @@
         }
         function mgl() {
             let email = $(this).attr("cmpEmail");
-            $("#address").val(email);
+            $("#cmpaddress").val(email);
 
 
         }
@@ -174,7 +177,7 @@
                 <!-- Modal body -->
                 <form th:action="@{/email/mailsend}" method="post">
                     <div class="modal-body">
-                        <input id="address" placeholder="이메일 주소" class="form-control" value="" readonly> <br>
+                        <input id="cmpaddress" name="address" placeholder="이메일 주소" class="form-control" value=""> <br>
                         <input name="title" placeholder="제목" class="form-control"> <br>
                         <textarea name="message" placeholder="메일 내용을 입력해주세요." cols="60" rows="20"
                             class="form-control"></textarea>
