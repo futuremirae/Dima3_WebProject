@@ -10,18 +10,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
-    <style>
-        #myModal {
-            display: none;
-        }
-    </style>
-
 
     <script>
         $(function () {
 
             $("#continentSelect").on('change', updateCountryList);
             $("#searchBtn").on('click', cosineSimilarity);
+
 
 
 
@@ -102,7 +97,8 @@
         			<th>이메일</th>
                     <th>이메일 발송</th>
                     <th>찜</th>
-        		</tr>
+                    <th>상세보기</th>
+        	    </tr>
                     `;
 
                         $.each(resp, function (index, item) {
@@ -111,15 +107,18 @@
                             <td>${item.CMP_NM}</td>
                             <td>${item.NAT_CD}</td>
                             <td>${item.EML}</td>
-                            <td><a  class="btn btn-primary email" data-bs-toggle="modal" data-bs-target="#myModal" cmpEmail="${item.EML}">
+                            <td><a class="btn btn-primary email" data-bs-toggle="modal" data-bs-target="#myModal" cmpEmail="${item.EML}">
         Send Email
     </a></td>
-                            <td><a>찜</a></td>
+                            <td><button class="btn btn-warning myCmp" style="color: white;" attr-dunsNo=${item.DUNS_NO}>찜기능</button></td>
+                            <td><button class="btn btn-success" " attr-dunsNo=${item.DUNS_NO}>상세보기</button></td>
                         </tr>`;
                         });//each 
                         $("#noResult").html("");
                         $("#cosine-list").html(receivedData);
                         $(".email").on('click', mgl);
+                        $(".myCmp").on('click', plusMyCmp);// 마이페이지에 회사 추가하기 
+                        // 마이페이지에 상세보기 추가 !!!!!!!!!!!!!!!!!!! 모댈창으로 추가하는거 만들기 
 
                     }
                 }
@@ -133,6 +132,10 @@
 
         }
 
+        function plusMyCmp() {
+            let dunsNo = $(this).attr("attr-dunsno");
+            alert(dunsNo);
+        }
     </script>
 
 
