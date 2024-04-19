@@ -7,6 +7,9 @@
 /spring7/
 **/__pycache__/
 
+## 비디오 파일 제거 
+*.mp4
+
 ##피클 파일 수정 
 **/dense_matrix.pickle
 **/dataframe.pickle
