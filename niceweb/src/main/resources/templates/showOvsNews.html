@@ -14,8 +14,17 @@
         <input type="date" id="search7" placeholder="게시종료일자 입력">
         <button onclick="fetchOvsData()">검색</button>
     </div>
-    <div id="sosad">ㅁ?ㄹ</div>
-    <div id="results">결과가 여기에 표시됩니다.</div>
+    <!--<div id="sosad">ㅁ?ㄹ</div>-->
+    
+    <table border="1">
+        <tr>
+            <th>국가</th>
+            <th>제목</th>
+            <th>일자</th>
+        </tr>
+        <tbody id="results"></tbody>
+    </table>
+    <!--<div id="results">결과가 여기에 표시됩니다.</div>-->
 
     <!-- Ensure the script is loaded at the end of the body to ensure all HTML elements are loaded -->
     <script>
@@ -41,7 +50,7 @@
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
-                sosad.innerHTML = url;
+                //sosad.innerHTML = url;
                 displayResults(data);
             } catch (error) {
                 console.error('Error:', error);
@@ -54,22 +63,19 @@
             results.innerHTML = ''; // 결과 영역 초기화
         
             if (data && data.response && data.response.body && data.response.body.itemList && data.response.body.itemList.item) {
+                const tbody = document.getElementById('results');
                 data.response.body.itemList.item.forEach(item => {
-                    const div = document.createElement('div');
-                    div.innerHTML = `
-                                <div>
-                                    <p>Title:       ${item.newsTitl}</p>
-                                    <p>Nation:      ${item.natn}</p>
-                                    <p>URL:     <a href="${item.kotraNewsUrl}">
-                                                    ${item.kotraNewsUrl}</a></p>
-                                    <p>Date:        ${item.othbcDt}</p>
-                                    <p>${item.newsBdt}</p>
-                                </div>
-                                `;
-                    results.appendChild(div);
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${item.natn}</td>
+                        <td><a th:href="@{/showOvsNewsDetail}">${item.newsTitl}</a></td>
+                        <td>${item.othbcDt}</td>
+                    `;
+                    tbody.appendChild(tr);
                 });
             } else {
-                results.innerHTML = '검색 결과가 없습니다.';
+                const tbody = document.getElementById('results');
+                tbody.innerHTML = '<tr><td colspan="3">검색 결과가 없습니다.</td></tr>';
             }
         }
     </script>
