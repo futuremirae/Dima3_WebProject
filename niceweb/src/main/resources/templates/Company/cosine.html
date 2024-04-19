@@ -8,15 +8,65 @@
     <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
     <script>
         $(function () {
+
+            $("#continentSelect").on('change', updateCountryList);
             $("#searchBtn").on('click', cosineSimilarity);
 
-
         });
+        //나라선택 옵션 
+
+        function updateCountryList() {
+            // 나라 선택 변수 들
+            const continentCountries = {
+
+                "Asia": ["CN", "KR", "IN", "MY", "JP", "TH", "HK", "SG", "TW", "AE", "IL", "BH", "QA", "VN", "SA", "ID", "PH", "PK", "LK", "UZ"],
+                "Europe": ["DE", "GB", "FR", "SE", "AT", "DK", "IT", "BE", "NL", "SI", "HU", "CH", "CZ", "RO", "TR", "RS", "PL", "UA", "SK", "FI", "BG", "EE", "GR", "NO", "PT", "LV", "HR", "GE", "BY", "LT", "MT", "BA", "ES"],
+                "NorthAmerica": ["US", "CA", "MX", "GT", "CR", "SV", "JM", "NI", "DO", "VG", "PA"],
+                "SouthAmerica": ["BR", "CO", "AR", "CL", "VE", "EC", "TT"],
+                "Africa": ["ZA", "NG", "EG", "MA", "KE"],
+                "Oceania": ["NZ", "AU"]
+            };
+
+            const countryNames = {
+                "CN": "China", "KR": "South Korea", "IN": "India", "MY": "Malaysia", "JP": "Japan", "TH": "Thailand", "HK": "Hong Kong", "SG": "Singapore", "TW": "Taiwan",
+                "AE": "United Arab Emirates", "IL": "Israel", "BH": "Bahrain", "QA": "Qatar", "VN": "Vietnam", "SA": "Saudi Arabia", "ID": "Indonesia", "PH": "Philippines", "PK": "Pakistan",
+                "LK": "Sri Lanka", "UZ": "Uzbekistan", "DE": "Germany", "GB": "United Kingdom", "FR": "France", "SE": "Sweden", "AT": "Austria", "DK": "Denmark",
+                "IT": "Italy", "BE": "Belgium", "NL": "Netherlands", "SI": "Slovenia", "HU": "Hungary", "CH": "Switzerland", "CZ": "Czech Republic", "RO": "Romania",
+                "TR": "Turkey", "RS": "Serbia", "PL": "Poland", "UA": "Ukraine", "SK": "Slovakia", "FI": "Finland", "BG": "Bulgaria", "EE": "Estonia", "GR": "Greece",
+                "NO": "Norway", "PT": "Portugal", "LV": "Latvia", "HR": "Croatia", "GE": "Georgia", "BY": "Belarus", "LT": "Lithuania", "MT": "Malta",
+                "BA": "Bosnia and Herzegovina", "ES": "Spain", "US": "United States", "CA": "Canada", "MX": "Mexico", "GT": "Guatemala", "CR": "Costa Rica", "SV": "El Salvador",
+                "JM": "Jamaica", "NI": "Nicaragua", "DO": "Dominican Republic", "VG": "British Virgin Islands", "PA": "Panama", "BR": "Brazil", "CO": "Colombia", "AR": "Argentina",
+                "CL": "Chile", "VE": "Venezuela", "EC": "Ecuador", "TT": "Trinidad and Tobago", "ZA": "South Africa", "NG": "Nigeria", "EG": "Egypt", "MA": "Morocco", "KE": "Kenya",
+                "NZ": "New Zealand", "AU": "Australia"
+
+            };
+            function getCountryName(code) {
+                return countryNames[code] || code;  // 국가 코드에 해당하는 이름이 없다면 코드를 그대로 반환
+            }
+
+            var continent = $("#continentSelect").val(); // 선택된 대륙 가져오기
+            var countrySelect = $("#countrySelect"); // 국가를 표시할 select 박스
+            countrySelect.html('<option value="">Select Country</option>'); // 기본 옵션 추가
+            if (continent) { // 대륙이 선택된 경우
+                continentCountries[continent].forEach(function (code) { // 선택된 대륙에 속하는 각 국가에 대해 반복
+                    var option = $("<option></option>").val(code).text(getCountryName(code)); // 새 option 요소 생성
+                    countrySelect.append(option); // select 박스에 option 추가
+                });
+            }
+        }
+
         function cosineSimilarity() {
             let inputKeyword = $("#search").val();
-            //alert(inputKeyword);
+            let nation = ""; // 국가
+            if ($("#continentSelect").val() == "all") {
+                nation = "all";
+            }
+            else nation = $("#countrySelect").val();
+
+
             let sendData = {
-                "inputKeyword": inputKeyword
+                "inputKeyword": inputKeyword,
+                "nation": nation
             }
             $.ajax({
                 url: 'predict'
@@ -56,13 +106,13 @@
                         <tr>
                             
                             <td>${item.DUNS_NO}</td>
-                            <td><a href="#">${item.CMP_NM}</a></td>
+                            <td>${item.CMP_NM}</td>
                             <td>${item.NAT_CD}</td>
                             <td>${item.NAT_ID}</td>
                             <td>${item.CITY}</td>
                             <td>${item.ADR}</td>
                             <td>${item.URL}</td>
-                            <td>${item.EML}</td>
+                            <td><a href="#${item.EML}">${item.EML}</a></td>
                             <td>${item.CONTACT_GRD_CD}</td>
 
                             </tr>`;
@@ -88,11 +138,28 @@
     <h2>추천 알고리즘 </h2>
     <form th:action="@{/predict}" method="POST">
         품목 검색<input type="text" placeholder="상품을 입력하세요" id="search" name="inputKeyword">
-        <input type="button" value="검색" id="searchBtn">
     </form>
+    <div class="dropdown-container">
+        <select id="continentSelect" onchange="updateCountryList()">
+            <option value="all">모든 국가</option>
+            <option value="Asia">Asia</option>
+            <option value="Europe">Europe</option>
+            <option value="NorthAmerica">North America</option>
+            <option value="SouthAmerica">South America</option>
+            <option value="Africa">Africa</option>
+            <option value="Oceania">Oceania</option>
+        </select>
+
+        <select id="countrySelect">
+            <option value="">Select Country</option>
+        </select>
+        <input type="button" value="검색" id="searchBtn">
+    </div>
     <span id="noResult"></span>
     <table id="cosine-list">
     </table>
+
+
 
 </body>
 
