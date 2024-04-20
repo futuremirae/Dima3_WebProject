@@ -23,11 +23,6 @@ public class SearchController {
 		return "Company/cosine";
 	}
 
-	@GetMapping("/searchhi")
-	public String searchProducta() {
-		return "Company/cmpMatch";
-	}
-
 	@PostMapping("/predict")
 	@ResponseBody
 	public List<Map<String, Object>> searchProduct(@ModelAttribute InputKeywordDTO inputkeyword) {
