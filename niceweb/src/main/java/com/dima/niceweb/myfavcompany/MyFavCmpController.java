@@ -47,6 +47,19 @@ public class MyFavCmpController {// 마이페이지 - 찜기능 관련 컨트롤
 		favCmpService.favCmpDelete(favCmpNo);
 		
 		
+		return"success";
+	}
+	
+	@GetMapping("/favCmpInsert")
+	@ResponseBody
+	public String favCmpInsert(@RequestParam(name="dunsNo") String dunsNo,@RequestParam(name="userNum") Long userNum ) {
+		log.info("넘어온 거 출력해보기~~~~"+userNum+"~~~"+dunsNo);
+		
+		Boolean result = favCmpService.favCmpInsert(userNum,dunsNo);
+		
+		
+		
+		
 		return"success!";
 	}
 	

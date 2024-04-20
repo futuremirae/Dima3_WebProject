@@ -29,23 +29,23 @@ public class SearchService {
 		log.info(url);
 		Map<String, String> error = new HashMap<>();
 		List<Map<String, Object>> result =  new ArrayList<>();
-		log.info("url출력 "+url);
-		log.info("inputkeyword출력 "+inputkeyword);
+//		log.info("url출력 "+url);
+//		log.info("inputkeyword출력 "+inputkeyword);
 		
 		try {
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 			
 			headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-			log.info("1: {}", restTemplate);
+			//log.info("1: {}", restTemplate);
 			
 			ResponseEntity<List> response=restTemplate.postForEntity(url, inputkeyword, List.class); 
 
-			log.info("여기까지는 오시나용??/");
-			log.info("2: {}", restTemplate);
+//			log.info("여기까지는 오시나용??/");
+//			log.info("2: {}", restTemplate);
 			result = response.getBody();
 		
-			log.info("결과값하이룽: {}", result);
+			//log.info("결과값하이룽: {}", result);
 			
 			
 		}catch(Exception e){

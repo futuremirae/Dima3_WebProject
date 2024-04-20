@@ -110,31 +110,52 @@
                             <td><a class="btn btn-primary email" data-bs-toggle="modal" data-bs-target="#myModal" cmpEmail="${item.EML}">
         Send Email
     </a></td>
-                            <td><button class="btn btn-warning myCmp" style="color: white;" attr-dunsNo=${item.DUNS_NO}>찜기능</button></td>
+                            <td><button class="btn btn-warning plusMyCmp" style="color: white;" attr-dunsNo=${item.DUNS_NO}>찜기능</button></td>
                             <td><button class="btn btn-success" " attr-dunsNo=${item.DUNS_NO}>상세보기</button></td>
                         </tr>`;
                         });//each 
                         $("#noResult").html("");
                         $("#cosine-list").html(receivedData);
                         $(".email").on('click', mgl);
-                        $(".myCmp").on('click', plusMyCmp);// 마이페이지에 회사 추가하기 
-                        // 마이페이지에 상세보기 추가 !!!!!!!!!!!!!!!!!!! 모댈창으로 추가하는거 만들기 
+                        $(".plusMyCmp").on('click', plusMyCmp);
+
+                        // 마이페이지에 상세보기 추가 !!!!!!!!!!!!!!!!!!! 모달창으로 추가하는거 만들기 
 
                     }
                 }
             })
 
         }
-        function mgl() {
+
+        function mgl() { // 모달창에 이메일 꽂아 넣기 !
             let email = $(this).attr("cmpEmail");
             $("#cmpaddress").val(email);
-
-
         }
 
         function plusMyCmp() {
-            let dunsNo = $(this).attr("attr-dunsno");
-            alert(dunsNo);
+            let dunsNo = $(this).attr("attr-dunsno"); // 고유 던스넘버
+            let userNum = $("#userNum").val(); // 사용자의 고유 넘버 넣어주기 ~~
+
+
+            $.ajax({
+                url: "/user/favCmpInsert"
+                , method: 'GET'
+                , data: { "dunsNo": dunsNo, "userNum": userNum }
+                , success: function (resp) {
+                    // 이미 존재하는 경우 - 경고창 
+
+                    // 존재하지 않을 경우 - 경고창 
+
+                }
+            })
+
+            alert(userNum)
+            // 우선은 이미 리스트에 있다면 이미 추가된 리스트라고 경고창 띄우기 -> 확인하는 과정은 ajax로 처리하기 
+
+
+
+
+            // 리스트에 존재하지 않는다면 추가하기 
         }
     </script>
 
@@ -143,6 +164,10 @@
 
 <body>
     <h2>추천 알고리즘 </h2>
+    <!-- 로그인 유저의 고유 넘버값 넣어주는거 있지말기-->
+    <!-- <input type="hidden" id="loginId" th:value="${#authentication.name}"> 로그인한 유저의 -->
+    <input type="hidden" id="userNum" value="1"><!--우선은 임으로 만들어봄 -->
+
     <form th:action="@{/predict}" method="POST">
         품목 검색<input type="text" placeholder="상품을 입력하세요" id="search" name="inputKeyword">
     </form>

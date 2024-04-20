@@ -39,8 +39,8 @@ def calculate_similarity(input_vector, df_vectors): # 코사인 유사도 구하
 # 본문 시작!!
 @app.post(path="/predict", status_code=201)
 def inputKeyword(item: InputKeyword):
-    print("하이루")
-    print(item)
+    #print("하이루")
+    #print(item)
     #inputKeyword = inputKeyword.inputKeyword
     #print(input_keyword)
     # 피클 파일 모두 불러오기
@@ -90,11 +90,11 @@ def inputKeyword(item: InputKeyword):
         else:
             continue
     if count == 0: # 입력한 키워드가 품목리스트에 하나도 없음  
-        print('입력하신 키워드는 품목리스트에 없습니다. 다시 입력해주세요')
+        #print('입력하신 키워드는 품목리스트에 없습니다. 다시 입력해주세요')
         return -1
         
     else: # 입력한 키워드가 품목리스트에 있다면 
-        print(f'"{str(search_keyword)[2:-2]}" 취급하는 회사 url에 대한 검색')
+        #print(f'"{str(search_keyword)[2:-2]}" 취급하는 회사 url에 대한 검색')
         #print('\n')
         input_keyword = to_string(inputKeyword) # 문자열로 바꿔주는 작업
         buyer = pd.DataFrame([inputKeyword], columns=['order'])

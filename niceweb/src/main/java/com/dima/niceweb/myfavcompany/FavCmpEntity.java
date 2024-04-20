@@ -53,8 +53,7 @@ public class FavCmpEntity { // 마이페이지 - 찜기능
     @Column(name = "URL", nullable = false) // 홈페이지 주소
     private String cmpUrl;
 
-    @Column(name = "SIC_CD", nullable = false) // 취급 품목
-    private String cmpSicCode;
+
     
     /*
      * User : FavCmp = 1: 다 관계 
@@ -71,7 +70,7 @@ public class FavCmpEntity { // 마이페이지 - 찜기능
                 .cmpEmail(favCmpDTO.getCmpEmail())
                 .cmpDunsNo(favCmpDTO.getCmpDunsNo())
                 .cmpUrl(favCmpDTO.getCmpUrl())
-                .cmpSicCode(favCmpDTO.getCmpSicCode())
+              
                 .userEntity(userEntity)
                 .build();
 	}
