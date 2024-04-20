@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dima.niceweb.company.CmpDTO;
+import com.dima.niceweb.company.CmpService;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,7 +19,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/user")
 @RequiredArgsConstructor 
 public class MyFavCmpController {// 마이페이지 - 찜기능 관련 컨트롤러
-	private final FavCmpService favCmpService; // 서비스 불러오기 
+	private final FavCmpService favCmpService; // 찜기능 서비스 불러오기 
+	private final CmpService cmpService; // 크롤링한 회사 서비스 부분 불러오기 
+	//private final	
 	
 	/**
 	 * 마이페이지의 찜기능 페이지 반환 
@@ -34,9 +39,8 @@ public class MyFavCmpController {// 마이페이지 - 찜기능 관련 컨트롤
 	@GetMapping("/favCmpAll")
 	@ResponseBody
 	public List<FavCmpDTO> favCmpAll(@RequestParam(name = "userNum") Long userNum) {
-		log.info("유저 넘버은??{}", userNum);
+	
 		List<FavCmpDTO> favCmpList  =favCmpService.favCmpAll(userNum);
-		log.info("반환값은 무엇일까??????{}", favCmpList);
 		return favCmpList;
 	}
 	
@@ -52,15 +56,26 @@ public class MyFavCmpController {// 마이페이지 - 찜기능 관련 컨트롤
 	
 	@GetMapping("/favCmpInsert")
 	@ResponseBody
-	public String favCmpInsert(@RequestParam(name="dunsNo") String dunsNo,@RequestParam(name="userNum") Long userNum ) {
-		log.info("넘어온 거 출력해보기~~~~"+userNum+"~~~"+dunsNo);
+	public Boolean favCmpInsert(@RequestParam(name="dunsNo") String dunsNo,@RequestParam(name="userNum") Long userNum ) {
+	
+		Boolean result = favCmpService.favCmpFind(userNum,dunsNo);
+		if(result) {
+			// 1) 회사 정보 찾아오기 
+			// 2) dto 만들어서 넘기기 
+			
+			CmpDTO cmpDTO = cmpService.selectOne(dunsNo); // 크롤링 데이터 끌어오는거 완료 
+			FavCmpDTO favCmpDTO = new FavCmpDTO();
+			favCmpDTO.setCmpName(cmpDTO.getCmpName()); // 회사명 
+			favCmpDTO.setCmpEmail(cmpDTO.getCmpEmail()); // 이메
+			favCmpDTO.setCmpDunsNo(dunsNo); // 던스넘버 
+			favCmpDTO.setCmpUrl(cmpDTO.getCmpUrl()); // 홈페이지 주소 
+			favCmpDTO.setUserNum(userNum); // 회원 고유번호 
+			favCmpService.favCmpInsert(favCmpDTO,userNum);
+			
+			return true;
+		}
+		return false;
 		
-		Boolean result = favCmpService.favCmpInsert(userNum,dunsNo);
-		
-		
-		
-		
-		return"success!";
 	}
 	
 	

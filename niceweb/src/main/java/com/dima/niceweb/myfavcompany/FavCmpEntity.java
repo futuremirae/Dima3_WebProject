@@ -70,7 +70,6 @@ public class FavCmpEntity { // 마이페이지 - 찜기능
                 .cmpEmail(favCmpDTO.getCmpEmail())
                 .cmpDunsNo(favCmpDTO.getCmpDunsNo())
                 .cmpUrl(favCmpDTO.getCmpUrl())
-              
                 .userEntity(userEntity)
                 .build();
 	}

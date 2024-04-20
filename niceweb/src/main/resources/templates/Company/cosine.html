@@ -131,7 +131,7 @@
             let email = $(this).attr("cmpEmail");
             $("#cmpaddress").val(email);
         }
-
+        // 관심 바이어 추가 
         function plusMyCmp() {
             let dunsNo = $(this).attr("attr-dunsno"); // 고유 던스넘버
             let userNum = $("#userNum").val(); // 사용자의 고유 넘버 넣어주기 ~~
@@ -142,20 +142,17 @@
                 , method: 'GET'
                 , data: { "dunsNo": dunsNo, "userNum": userNum }
                 , success: function (resp) {
-                    // 이미 존재하는 경우 - 경고창 
+                    // 이미 존재하는 경우 - 경고창
+                    if (resp == true) {
+                        alert("관심 바이어에 추가되었습니다.")
 
-                    // 존재하지 않을 경우 - 경고창 
+                    } else {
+                        alert("관심 바이어에 이미 추가된 항목입니다.");
+                    }
 
                 }
             })
 
-            alert(userNum)
-            // 우선은 이미 리스트에 있다면 이미 추가된 리스트라고 경고창 띄우기 -> 확인하는 과정은 ajax로 처리하기 
-
-
-
-
-            // 리스트에 존재하지 않는다면 추가하기 
         }
     </script>
 
@@ -163,7 +160,7 @@
 </head>
 
 <body>
-    <h2>추천 알고리즘 </h2>
+    <h2>추천 알고리즘</h2>
     <!-- 로그인 유저의 고유 넘버값 넣어주는거 있지말기-->
     <!-- <input type="hidden" id="loginId" th:value="${#authentication.name}"> 로그인한 유저의 -->
     <input type="hidden" id="userNum" value="1"><!--우선은 임으로 만들어봄 -->

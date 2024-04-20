@@ -2,6 +2,7 @@ package com.dima.niceweb.myfavcompany;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -55,28 +56,43 @@ public class FavCmpService { // 마이페이지  - 찜기능 관현 서비스 �
 		
 	}
 	
-	/*
-	 * 찜 리스트에 추가하기 
+	
+	/**
+	 * 해당 회사가 사용자의 찜리스트에 들어있는지 확인하기 
+	 * @param userNum
+	 * @param dunsNo
+	 * @return
 	 */
-	public Boolean favCmpInsert(Long userNum, String dunsNo) {
-		
-		// 찜한 리스트에 추가하려고 하는 회사가 있는지에 대해서 찾기 
-		
-		// 1) 우선은 사용자가 favorite의 테이블에 존재하는지 검사하기 
-		
-		
+	public Boolean favCmpFind(Long userNum, String dunsNo) {
+
 		UserEntity userEntity =userRepository.findById(userNum).get(); // 사용자 엔티티를 먼저 찾는다. 
 		List<FavCmpEntity> favCmpEntityList = favCmpRepository.findAllByUserEntity(userEntity);
 		// 사용자가 존재하지 않는다면 
 		if(favCmpEntityList.isEmpty()) {
-			// insert를 해주면 된다 
+			return true; // insert 추가해도된다. 
 			
-		}else {
-			log.info("사용자가 존재해용!!!");
-		}
+		}else{
+
+			for(FavCmpEntity temp : favCmpEntityList) {
+				if(dunsNo.equals(temp.getCmpDunsNo())) return false; // 이미 존재한다면 insert 불가능
+			}
+		return true;// insert 가능 
+		}//else
+	
+	}
+	/**
+	 * 찜리스에 회사 추가하기 
+	 * @param favCmpDTO
+	 * @param userNum
+	 */
+	public void favCmpInsert(FavCmpDTO favCmpDTO, Long userNum) {
+		Optional<UserEntity> entity = userRepository.findById(userNum);
+		UserEntity userEntity = entity.get();
 		
+		FavCmpEntity favEntity = FavCmpEntity.toEntity(favCmpDTO,userEntity);
+		favCmpRepository.save(favEntity); // 저장하기 
 		
-		return null;
 	}
 
+	
 }

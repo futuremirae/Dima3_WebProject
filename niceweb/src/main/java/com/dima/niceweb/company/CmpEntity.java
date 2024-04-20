@@ -46,7 +46,7 @@ public class CmpEntity {
 	    @Column(name = "ADR", nullable = false)
 	    private String cmpAddress;
 
-	    @Column(name = "SIC_CODE", nullable = false)
+	    @Column(name = "SIC_CD", nullable = false)
 	    private String cmpSicCode;
 
 	    @Column(name = "SALES")
@@ -69,5 +69,30 @@ public class CmpEntity {
 
 	    @Column(name = "EML", nullable = false)
 	    private String cmpEmail;
+	    
+	    
+	    
+	    public static CmpEntity toEntity(CmpDTO cmpDTO) {
+			return CmpEntity.builder()
+					.cmpDunsNo(cmpDTO.getCmpDunsNo())
+		            .cmpName(cmpDTO.getCmpName())
+		            .cmpNatId(cmpDTO.getCmpNatId())
+		            .cmpNatCd(cmpDTO.getCmpNatCd())
+		            .cmpNatKor(cmpDTO.getCmpNatKor())
+		            .cmpNatEng(cmpDTO.getCmpNatEng())
+		            .cmpCity(cmpDTO.getCmpCity())
+		            .cmpAddress(cmpDTO.getCmpAddress())
+		            .cmpSicCode(cmpDTO.getCmpSicCode())
+		            .cmpSales(cmpDTO.getCmpSales())
+		            .cmpAsset(cmpDTO.getCmpAsset())
+		            .cmpEmp(cmpDTO.getCmpEmp())
+		            .cmpMkt(cmpDTO.getCmpMkt())
+		            .cmpCredit(cmpDTO.getCmpCredit())
+		            .cmpUrl(cmpDTO.getCmpUrl())
+		            .cmpEmail(cmpDTO.getCmpEmail())
+		            .build();
+					 
+		             
+		}
 
 }
