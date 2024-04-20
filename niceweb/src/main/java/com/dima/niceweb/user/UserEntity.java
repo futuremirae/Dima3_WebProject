@@ -1,9 +1,18 @@
 package com.dima.niceweb.user;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.dima.niceweb.myfavcompany.FavCmpEntity;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -84,6 +93,19 @@ public class UserEntity {
 	
 	@Column(name="USER_ROLE") //권한 
 	private String userRoles;
+	
+	/*
+	 * 찜한회사 리스트와의 관계 설정 
+	 */
+	@OneToMany(mappedBy="userEntity",
+			cascade = CascadeType.REMOVE,
+			orphanRemoval = true,
+			fetch=FetchType.LAZY
+			)
+	@OrderBy("FAVORITE_NUM asc") // 정렬방식 
+	private List<FavCmpEntity> favCmpEntity = new ArrayList<>();
+	
+	
 	
 	
 	public static UserEntity toEntity(UserDTO userDTO) {

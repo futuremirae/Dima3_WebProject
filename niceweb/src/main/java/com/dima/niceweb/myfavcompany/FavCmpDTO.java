@@ -13,15 +13,27 @@ import lombok.ToString;
 @Setter
 @ToString
 @Builder
-public class FavCmpDTO {
-	private Long userNum;
-	private String cmpDunsNo;
+public class FavCmpDTO { //찜한 회사에 대한dto 입니다. 
 	
-	public static FavCmpDTO toDTO(FavCmpEntity favCmpEntity) {
+	private Long favCmpNo; // pk입니다 생성된 고유 번호 
+	private Long userNum; // 회원 고유 넘버 
+	private String cmpName; // 회사명
+	private String cmpEmail; // 이메일 주소
+	private String cmpDunsNo; // 던스넘버 
+	private String cmpUrl; // 홈페이지 주소
+	private String cmpSicCode; // 취급 품목
+
+	
+	public static FavCmpDTO toDTO(FavCmpEntity favCmpEntity, Long userNum) {
 		return FavCmpDTO.builder()
-				.userNum(favCmpEntity.getUserNum()) // 회원 고유 num
-				.cmpDunsNo(favCmpEntity.getCmpDunsNo()) //// 크롤링한 회사 던스넘버 
-				.build();
+				  .favCmpNo(favCmpEntity.getFavCmpNo())				
+	              .cmpName(favCmpEntity.getCmpName()) // 회사명
+	              .cmpEmail(favCmpEntity.getCmpEmail()) // 이메일 주소
+	              .cmpDunsNo(favCmpEntity.getCmpDunsNo()) // 크롤링한 회사 던스넘버
+	              .cmpUrl(favCmpEntity.getCmpUrl()) // 홈페이지 주소
+	              .cmpSicCode(favCmpEntity.getCmpSicCode()) // 취급 품목
+	              .userNum(userNum)
+	              .build();
 	}
 
 }
