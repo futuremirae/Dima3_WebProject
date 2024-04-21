@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -291,17 +291,20 @@
                 </div>
 
                 <!-- Modal body -->
-                <form th:action="@{/email/mailsend}" method="post">
+                <form th:action="@{/email/mailsend}" method="POST">
                     <div class="modal-body">
-                        <input id="cmpaddress" name="address" placeholder="이메일 주소" class="form-control" value=""> <br>
-                        <input name="title" placeholder="제목" class="form-control"> <br>
-                        <textarea name="message" placeholder="메일 내용을 입력해주세요." cols="60" rows="20"
+                        <!--수정해야할 부분입니다~~~~~~~~-->
+                        <input type="hidden" name="userNum" value="1"><!--우선은 임으로 만들어봄 -->
+                        <input id="cmpaddress" name="receiver" placeholder="이메일 주소" class="form-control" value=""> <br>
+                        <input name="emailSubject" placeholder="제목" class="form-control"> <br>
+                        <textarea name="emailContent" placeholder="메일 내용을 입력해주세요." cols="60" rows="20"
                             class="form-control"></textarea>
                     </div>
 
 
                     <div class="modal-footer">
-                        <button type="submit" class="btn " style="background-color: blue; color: white;">발송</button>
+                        <button type="submit" class="btn " style="background-color: blue; color: white;"
+                            data-bs-dismiss="modal">발송</button>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                     </div>
                 </form>

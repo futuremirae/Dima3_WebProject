@@ -44,37 +44,47 @@ public class MyFavCmpController {// 마이페이지 - 찜기능 관련 컨트롤
 		return favCmpList;
 	}
 	
+	/**
+	 * 찜리스트에서 회사 삭제 
+	 * @param favCmpNo
+	 * @return
+	 */
 	@GetMapping("/favCmpDelete")
 	@ResponseBody
 	public String favCmpDelete(@RequestParam(name="favCmpNo") Long favCmpNo) {
-		log.info("넘어온 번호{}",favCmpNo);
+		//log.info("넘어온 번호{}",favCmpNo);
 		favCmpService.favCmpDelete(favCmpNo);
-		
 		
 		return"success";
 	}
 	
+	/**
+	 * 찜리스트에 회사를 추가
+	 * @param dunsNo
+	 * @param userNum
+	 * @return
+	 */
 	@GetMapping("/favCmpInsert")
 	@ResponseBody
-	public Boolean favCmpInsert(@RequestParam(name="dunsNo") String dunsNo,@RequestParam(name="userNum") Long userNum ) {
+	public Boolean favCmpInsert(@RequestParam(name="dunsNo") String dunsNo, @RequestParam(name="userNum") Long userNum ) {
 	
 		Boolean result = favCmpService.favCmpFind(userNum,dunsNo);
 		if(result) {
-			// 1) 회사 정보 찾아오기 
-			// 2) dto 만들어서 넘기기 
-			
+			// 1) 회사 정보 찾아오기 (던스넘버를 통해 크롤링한 회사 데이터 저장 )
 			CmpDTO cmpDTO = cmpService.selectOne(dunsNo); // 크롤링 데이터 끌어오는거 완료 
+			
+			// 2) dto 만들어서 DB에 저장하기 
 			FavCmpDTO favCmpDTO = new FavCmpDTO();
-			favCmpDTO.setCmpName(cmpDTO.getCmpName()); // 회사명 
-			favCmpDTO.setCmpEmail(cmpDTO.getCmpEmail()); // 이메
+			favCmpDTO.setCmpName(cmpDTO.getCmpName()); // 회사명 끌어와서 저장하기 
+			favCmpDTO.setCmpEmail(cmpDTO.getCmpEmail()); // 이메일 끌어와서 저장하기 
 			favCmpDTO.setCmpDunsNo(dunsNo); // 던스넘버 
 			favCmpDTO.setCmpUrl(cmpDTO.getCmpUrl()); // 홈페이지 주소 
 			favCmpDTO.setUserNum(userNum); // 회원 고유번호 
 			favCmpService.favCmpInsert(favCmpDTO,userNum);
 			
-			return true;
+			return true; // 리스트에 회사를 추가한후 true를 반환 
 		}
-		return false;
+		return false; // 이미 리스트에 추가된 회사라면 false를 반환 
 		
 	}
 	

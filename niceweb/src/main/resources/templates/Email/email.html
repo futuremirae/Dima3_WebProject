@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -9,12 +9,14 @@
 
 <body>
     <h2>email 보내기</h2>
-    <form th:action="@{/email/mailsend}" method="post">
-        <input name="address" placeholder="이메일 주소" class="form-control" value=""> <br>
-        <input name="title" placeholder="제목" class="form-control"> <br>
-        <textarea name="message" placeholder="메일 내용을 입력해주세요." cols="60" rows="20" class="form-control"></textarea>
-        <button type="submit" class="btn btn-primary mt-2">발송</button>
-    </form>
+    <h2>추천 알고리즘</h2>
+    <!-- 로그인 유저의 고유 넘버값 넣어주는거 있지말기-->
+    <!-- <input type="hidden" id="loginId" th:value="${#authentication.name}"> 로그인한 유저의 -->
+    <input type="hidden" id="userNum" value="1"><!--우선은 임으로 만들어봄 -->
+    <span id="noResult"></span>
+    <table id="cosine-list"> <!--추천 알고리즘-->
+    </table>
+
 </body>
 
 </html>

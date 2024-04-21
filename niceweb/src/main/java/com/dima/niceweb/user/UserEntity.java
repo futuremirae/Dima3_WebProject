@@ -3,6 +3,7 @@ package com.dima.niceweb.user;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.dima.niceweb.email.EmailEntity;
 import com.dima.niceweb.myfavcompany.FavCmpEntity;
 
 import jakarta.persistence.CascadeType;
@@ -104,6 +105,17 @@ public class UserEntity {
 			)
 	@OrderBy("FAVORITE_NUM asc") // 정렬방식 
 	private List<FavCmpEntity> favCmpEntity = new ArrayList<>();
+	
+	/*
+	 *보낸 메일함과의 관계 설정 
+	 */
+	@OneToMany(mappedBy="userEntity",
+			cascade = CascadeType.REMOVE,
+			orphanRemoval = true,
+			fetch=FetchType.LAZY
+			)
+	@OrderBy("EMAIL_NUM asc")
+	private List<EmailEntity> emailEntity = new ArrayList<>();
 	
 	
 	

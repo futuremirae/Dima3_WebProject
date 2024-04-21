@@ -1,7 +1,6 @@
 package com.dima.niceweb.email;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -14,28 +13,15 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class EmailController {
 	private final EmailService mailService;
-	@GetMapping("/mail")
-	public String sendMailpage() {
-		//mailSer
-//		log.info("하이룽가 에불ㄹ하");
-//		log.info(mailDTO.toString());
-	//	mailService.mailSend(mailDTO);
-		return "Email/email";
-	
-	
-	
 
-}
 	@PostMapping("/mailsend")
 	public String sendMail(EmailDTO mailDTO) {
-		//mailSer
-		log.info("하이룽가 에불ㄹ하");
-		log.info(mailDTO.toString());
+		
+		
+		log.info("########"+mailDTO.toString()); // 데이터가 확인 
 		mailService.mailSend(mailDTO);
-		return "Email/email";
-	
-	
-	
+		mailService.insertMail(mailDTO);// 보낸 메일함에 메시지 저
+		return "redirect:/";
 
-}
+	}
 }
