@@ -1,0 +1,57 @@
+@charset "UTF-8";
+@import "main.css";
+
+/***********************
+	글쓰기  화면 
+***********************/
+
+div.content td {
+    text-align: left;
+    width: 800px;
+}
+
+
+div.content td input[type="text"] {
+    width: 500px;
+}
+
+div.content td textarea {
+    width: 800px;
+    height: 200px;
+}
+
+/***********************
+글보기 화면 
+***********************/
+
+pre {
+    width: 750px;
+    height: 200px;
+
+}
+
+.btn-info {
+    color: #000;
+    background-color: #0dcaf0;
+    border-color: #0dcaf0;
+}
+
+/*************
+댓글쓰기 
+****************/
+div.reply-write {
+    width: 1000px;
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+
+}
+
+input#replyText {
+    display: inline-block;
+    width: 850px;
+    height: 35px;
+
+}

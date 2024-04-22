@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>판매 상품 검색</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/user.css}">
+
+    <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
+    <script>
+        $(function () {
+            init();
+            $("#category").change(searchCategory);
+            $("#searchWord").keyup(searchCategory);
+
+
+            // 다출력 하기
+            function init() {
+                let contextPath = $("#contextPath").val();
+                $.ajax({
+                    url: contextPath + "/board/boardSearchAll"
+                    , method: 'GET'
+                    , success: resultAll
+                })
+            }
+            function resultAll(result) {
+                let receivedData = '';
+                receivedData += `<tr>
+                <th class=" no">글번호</th>
+                <th>카테고리</th>
+                <th>글제목</th>
+            </tr>`;
+
+                $.each(result, function (index, item) {
+                    let boardNum = item.boardNum;
+                    let boardTitle = item.boardTitle;
+                    let category = item.category.replace(/"/g, '');
+
+                    receivedData += `<tr>
+                <td><a data-no=${boardNum}>${boardNum}</a>
+                </td>
+                
+                
+                <td>${category}</td>
+                
+                <td class="title">
+                    <a data-no=${boardNum}>${boardTitle}</a>
+                </td>
+            </tr>`
+
+                })
+                $("#boardlist").html(receivedData);
+            }
+
+            function searchCategory() {
+
+                let contextPath = $("#contextPath").val();
+                let category = $("#category").val();
+                let searchWord = $("#searchWord").val();
+
+                $.ajax({
+                    url: contextPath + "/board/search"
+                    , method: 'GET'
+                    , data: { "category": category, "searchWord": searchWord }
+                    , success: output
+                })
+            }
+            function output(resp) {
+                let receivedData = '';
+                receivedData += `<tr>
+                <th class=" no">글번호</th>
+                <th>카테고리</th>
+                <th>글제목</th>
+            </tr>`;
+                $.each(resp, function (index, item) {
+                    let boardNum = item.boardNum;
+
+                    let boardTitle = item.boardTitle
+
+                    let category = item.category.replace(/"/g, '');
+
+                    //let contextPath = $("#contextPath").val();
+                    receivedData += `<tr>
+                <td><a  data-no=${boardNum}>${boardNum}</a>
+                </td>
+                
+                <td>${category}</td>
+                
+                <td class="title">
+                    <a data-no=${boardNum}>${boardTitle}</a>
+                </td>
+            </tr>`
+
+                })
+                $("#boardlist").html(receivedData);
+            }
+
+
+
+
+
+
+
+        })
+
+    </script>
+
+
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo">
+            <a th:href="@{/}"><img th:src="@{/images/mango.png}" alt="logo"></a>
+            <h2>판매 상품 검색</h2>
+        </div>
+    </div>
+    <div sec:authorize="isAuthenticated()" class="insertProduct btn btn-primary">
+        <a th:href="@{/board/boardWrite}">판매글 등록</a>
+    </div>
+    <!-- 검색창 -->
+    <div class="search">
+        <input type="hidden" id="contextPath" th:value="${contextPath}">
+        <select name="category" id="category">
+            <option value="all">전체</option>
+            <option value="computer">컴퓨터 및 주변기기</option>
+            <option value="camera">카메라</option>
+            <option value="car">자동차 용품</option>
+        </select>
+
+        <input type="text" id="searchWord" placeholder="상품명을 입력하세요">
+    </div>
+
+
+
+
+
+
+    <table id="boardlist">
+    </table>
+    </div> <!--.content끝-->
+
+
+
+
+
+
+
+</body>
+
+</html>

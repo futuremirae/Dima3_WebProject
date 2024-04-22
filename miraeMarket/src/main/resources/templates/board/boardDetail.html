@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 보기 화면</title>
+
+    <link rel="stylesheet" th:href="@{/css/detail.css}">
+    <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
+    <script>
+
+        $(function () {
+            $("#buy").on('click', buyproduct); // 상태 바꾸고 리스트에서 제외시키기 
+            init(); // 댓글 전체 출력 부분 
+            $("#replyBtn").on('click', replyWrite); // 댓글 입력부분 
+        });
+        // 댓글 모두 불러오기 
+
+        // 모든 댓글 내용을 읽어 오는 함수 
+        function init() {
+            let contextPath = $("#contextPath").val();
+            let boardNum = $("#boardNum").val();
+            $.ajax({
+                url: contextPath + "/reply/replyAll"
+                , method: 'GET'
+                , data: { "boardNum": boardNum }
+                , success: output
+
+            })
+
+        }
+
+        function output(resp) {
+            let receivedData = '';
+            receivedData += `
+        <tr>
+            <th>글 내용</th>
+            <th>작성자</th>
+            <th>글쓴시간</th>
+            <th>비고</th>
+        </tr>
+    `;
+
+            let replycount = 0;
+            $.each(resp, function (index, item) {
+                let contextPath = $("#contextPath").val();
+                let replyNum = item["contentNum"];
+                let replyText = item["commentText"];
+                let memberId = item["memberId"];
+                let createDate = item["createDate"];
+                receivedData += `
+            <tr>
+                <td>${replyText}</td>
+                <td>${memberId}</td>
+                <td>${createDate}</td>
+                <td>`;
+
+                if ($("#loginId").val() == memberId) {
+                    receivedData +=
+                        `<input type="button" class="correct btn btn-info" value="수정" data-no="${replyNum}">
+                <input type="button" class="delBtn btn btn-danger" value="삭제" data-no="${replyNum}">`;
+                }
+
+                receivedData += `</td>`;
+                receivedData += `</tr>`;
+            }); // each
+
+            // 반복문이 끝난 후 한 번에 #reply-list에 출력
+            $("#reply-list").html(receivedData);
+
+            // 이벤트 핸들러 연결은 출력이 완료된 후에 수행되어야 함
+            $(".delBtn").on('click', deleteReply);
+            $(".correct").on('click', updateReply);
+        }
+
+        // 댓글 작성 부분 
+        //댓글 등록 / 댓글 업뎃 
+        function replyWrite() {
+
+            let commentText = $("#replyText").val();
+            let boardNum = $("#boardNum").val(); // 어떤 게시글의 댓글인지 알려줘야함 
+            let contextPath = $("#contextPath").val(); // 어떤 게시글의 댓글인지 알려줘야함 
+            let memberId = $("#loginId").val(); // 사용자 아이디 
+            let replyNum = $(this).attr("data-no");
+            // 타임리프 문법을 쓰면 안된다 
+            // 제이쿼리랑 자바스크립트 문법이랑 같이 쓰지말자 
+
+            let sendData = {
+                "memberId": memberId
+                , "commentText": commentText
+                , "boardNum": boardNum
+            };
+
+            if (commentText.trim().length == 0) {
+                alert("댓글 내용을 입력하세요!");
+                $("#replyText").focus();
+            }
+
+            $.ajax({
+                url: contextPath + "/reply/replyInsert"
+                , method: "POST"
+                , data: sendData
+                , success: function (resp) {
+                    $("#replyText").val("");
+                    $("#replyText").attr("placeholder", "댓글 내용 입력");
+                    let replyNum = resp["contentNum"];
+                    let commentText = resp["commentText"];
+                    let memberId = resp["memberId"];
+                    let createDate = resp["createDate"];
+                    // 저장이 되면 할 예정 
+                    let receivedData = `
+                    <tr>
+                        
+                        <td>${commentText}</td>
+                        <td>${memberId}</td>
+                        <td>${createDate}</td>
+                        <td>
+                            <input type="button"  class="correct btn btn-info" value="수정" data-no="${replyNum}">
+                            <input type="button" class="delBtn btn btn-danger" value="삭제" data-no="${replyNum}">
+                        </td>
+                        
+                    </tr>
+                        `;
+                    $("#reply-list").append(receivedData);
+                    $(".delBtn").on('click', deleteReply);
+                    $(".correct").on('click', updateReply);
+                }
+
+            })
+
+        }
+        // 댓글 삭제 
+        //댓글 삭제
+        function deleteReply() {
+
+            let contextPath = $("#contextPath").val();
+            let replyNum = $(this).attr("data-no");
+
+
+            $.ajax({
+                url: contextPath + "/reply/replydelete"
+                , method: 'GET'
+                , data: { "replyNum": replyNum }
+                , success: function (deledata) {
+
+
+                }
+            })
+            let data = $(this).parent().parent();// 제이쿼리객체 
+
+            data.remove();
+
+        }
+        // 댓글 수정 버튼 
+
+        // 댓글 업데이트  
+        function updateReply() {
+            let contextPath = $("#contextPath").val();
+            let replyNum = $(this).attr("data-no");// 해당 댓글의 번호와 ~ 
+            // 버튼 바꾸기 -ok 
+            $("#replyBtn").attr("style", "display: none;");
+            $("#correctBtn").attr("style", "display");
+            $("#correctBtn").attr("data-no", replyNum);
+            // 댓글 내용 가지고 오기 
+            $.ajax({
+                url: contextPath + "/reply/replyCorrect"// dto를 가지고옴 
+                , method: 'GET'
+                , data: { "replyNum": replyNum }
+                , success: function (output) {
+                    //alert("댓글내용" + output.replyText);
+                    $("#replyText").val(output.commentText); // 댓글 창에 뿌리기 
+                    $("#replyText").focus();
+                }
+            })
+            // 수정 버튼을 클릭한다면 
+            $("#correctBtn").on('click', correctReply)
+            //본격적인 댓글 작업 
+            function correctReply() {
+                //alert($(this).attr("data-no"));
+                let replyText = $("#replyText").val();
+
+                let replyNum = $(this).attr("data-no");
+
+                $.ajax({
+                    url: contextPath + "/reply/replyCorrect"// dto를 가지고옴 
+                    , method: 'POST'
+                    , data: { "replyNum": replyNum, "replyText": replyText }
+                    , success: function (output) {
+
+                        $("#replyBtn").attr("style", "display");
+                        $("#correctBtn").attr("style", "display: none;");
+                        $("#replyText").val("");
+                        init();
+
+                    }
+                })
+
+
+            }
+
+
+        }
+
+
+
+
+
+
+        // 구매하기 버튼 입니다!! 
+        function buyproduct() {
+            let contextPath = $("#contextPath").val();
+            let boardNum = $("#boardNum").val(); // 해당 상품의 pk이다 
+            let loginId = $("#loginId").val(); // 구매하기를 원하는자 !
+            $.ajax({
+                url: contextPath + "/board/boardUpdate"// dto를 가지고옴 
+                , method: 'POST'
+                , data: { "loginId": loginId, "boardNum": boardNum }
+                , success: function (output) {
+                    $("#buy").val("구매 완료");
+                    $("#buy").attr("disabled", "true;");
+                    alert("구매완료되었습니다.");
+
+                }
+            })
+        }
+
+        // 
+
+
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo">
+            <a th:href="@{/}"><img th:src="@{/images/mango.png}" alt="logo"></a>
+            <h2>판매 정보</h2>
+        </div>
+    </div>
+    <!-- 글 보기  -->
+
+    <div class="content">
+        <input type="hidden" id="boardNum" th:value="${board.boardNum}">
+        <input type="hidden" id="contextPath" th:value="${contextPath}">
+        <input type="hidden" id="loginId" th:value="${#authentication.name}">
+
+        <table border="1">
+            <tr>
+                <th>작성자</th>
+                <td>
+                    <span th:text="${board.boardWriter}">작성자</span>
+                </td>
+            </tr>
+            <tr>
+                <th>글제목</th>
+                <td>
+                    <span th:text="${board.boardTitle}">글제목</span>
+
+                </td>
+            </tr>
+            <tr>
+                <th>작성일</th>
+                <td>
+                    <span th:text="${board.createDate}">작성일</span>
+                </td>
+            </tr>
+            <tr>
+                <th>글내용</th>
+                <td>
+                    <pre>[[${board.boardContent}]]</pre>
+
+                </td>
+            </tr>
+            <th:block th:if="${board.boardWriter != #authentication.name}">
+                <tr>
+                    <th colspan="2">
+                        <input type="button" id="buy" class="btn btn-primary" value="구매하기">
+                    </th>
+                </tr>
+            </th:block>
+
+            <tr>
+                <th colspan="2">
+                    <!-- 글 삭제와 수정은 글쓴 사람과 로그인한 사람과 동일한 경우에만 나타나야함-->
+
+                    <th:block th:if="${board.boardWriter == #authentication.name}">
+                        <a th:href="@{/board/boardDelete(boardNum=${board.boardNum},searchItem=${searchItem},searchWord=${searchWord})}"
+                            class="btn btn-danger">삭제</a>
+                    </th:block>
+                    <a th:href="@{/board/boardList}" class="btn btn-info">목록</a>
+
+                </th>
+            </tr>
+
+        </table>
+        <!--댓글 입력부분: 로그인한 사람만 가능-->
+        <div class="reply-write">
+            <input type="text" id="replyText" placeholder="댓글 내용 입력">
+            <input type="button" id="replyBtn" class="btn btn-info" value="댓글작성">
+            <input type="button" id="correctBtn" class="btn btn-update" value="댓글수정" style="display: none;">
+        </div>
+
+        <!--댓글 목록 출력 부분 -->
+        <table id="reply-list">
+        </table>
+
+
+    </div>
+
+</body>
+
+</html>
