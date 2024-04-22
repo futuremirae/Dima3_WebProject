@@ -1,5 +1,8 @@
 package com.dima.niceweb.email;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -55,5 +58,26 @@ public class EmailService {
 		emailRepository.save(emailEntity);
 	
 		
+	}
+	
+	/**
+	 * 이메일 리스트 출력 
+	 * @param userNum
+	 * @return
+	 */
+	public List<EmailDTO> selectAll(Long userNum) {
+		// 사용자 엔티티 찾고 
+		UserEntity userEntity =userRepository.findById(userNum).get(); 
+		
+		List<EmailEntity> emailEntityList = emailRepository.findAllByUserEntityOrderByEmailNumDesc(userEntity); // 최근에 보낸 메일 순서대로 출력 
+		
+		List<EmailDTO> emailDTOList = new ArrayList<>();
+		
+		for(EmailEntity temp : emailEntityList) {
+			
+			EmailDTO dto =EmailDTO.toDTO(temp, userNum);
+			emailDTOList.add(dto);
+		}
+		return emailDTOList;
 	}
 }

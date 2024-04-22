@@ -12,5 +12,6 @@ public interface FavCmpRepository extends JpaRepository<FavCmpEntity, Long> {
 
 	List<FavCmpEntity> findAllByUserEntity(UserEntity userEntity);
 
+	
 
 }
