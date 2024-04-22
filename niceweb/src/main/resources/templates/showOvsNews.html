@@ -10,8 +10,8 @@
     <div>
         <input type="text" id="search1" placeholder="국가명 입력">
         <input type="text" id="search2" placeholder="뉴스 제목 입력">
-        <input type="date" id="search4" placeholder="게시시작일자 입력">
-        <input type="date" id="search7" placeholder="게시종료일자 입력">
+        <!--<input type="date" id="search4" placeholder="게시시작일자 입력">
+        <input type="date" id="search7" placeholder="게시종료일자 입력">-->
         <button onclick="fetchOvsData()">검색</button>
     </div>
     <!--<div id="sosad">ㅁ?ㄹ</div>-->
@@ -31,13 +31,13 @@
         async function fetchOvsData() {
             const search1 = encodeURIComponent(document.getElementById('search1').value);
             const search2 = encodeURIComponent(document.getElementById('search2').value);
-            const search4 = (document.getElementById('search4').value);
+            ///const search4 = (document.getElementById('search4').value);
             const search5 = 'I001200';
             const search6 = 'ECNMY%2CANA';
-            const search7 = (document.getElementById('search7').value);
+            //const search7 = (document.getElementById('search7').value);
         
             const serviceKey = '1Oo0omv4bVoztr5VGKOWz2QJYFpy2gmu8Kq8DbYg%2F%2B7gX2EfMQBU2jTu6MpQfsbJoqxzTTyyyDdSfpVZ0FIPlA%3D%3D';
-            const url = `https://apis.data.go.kr/B410001/kotra_overseasMarketNews/ovseaMrktNews/ovseaMrktNews?serviceKey=${serviceKey}&type=json&numOfRows=10&pageNo=1&search1=${search1}&search2=${search2}&search3=&search4=${search4}&search5=${search5}&search6=${search6}&search7=${search7}&_type=json`;
+            const url = `https://apis.data.go.kr/B410001/kotra_overseasMarketNews/ovseaMrktNews/ovseaMrktNews?serviceKey=${serviceKey}&type=json&numOfRows=10&pageNo=1&search1=${search1}&search2=${search2}&search3=&search5=${search5}&search6=${search6}&_type=json`;
             
             try {
                 const response = await fetch(url, {
