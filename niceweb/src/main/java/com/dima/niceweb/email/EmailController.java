@@ -49,7 +49,7 @@ public class EmailController {
 	
 	
 	/**
-	 * 메일 보내기 
+	 * 메일 보내기  - 검색 페이지 다시요총 
 	 * @param mailDTO
 	 * @return
 	 */
@@ -60,16 +60,48 @@ public class EmailController {
 		log.info("########"+mailDTO.toString()); // 데이터가 확인 
 		mailService.mailSend(mailDTO);
 		mailService.insertMail(mailDTO);// 보낸 메일함에 메시지 저장 
-		log.info("sdkfjlsfjsalkfjasdlkfjasdlkfjslsdjlssls");
+		
 		log.info(inputkeyword.getInputKeyword());
 		log.info(inputkeyword.getNation());
 		
 		rttr.addAttribute("inputKeyword", inputkeyword.getInputKeyword());
 		rttr.addAttribute("nation",inputkeyword.getNation());
 		
-		return "redirect:/search";////////////??????/ 이부분 하는거 알려줘 !!!!!!!!!
+		return "redirect:/search";////////////
 
 	}
+	
+	/**
+	 * 이메일 한개 찾기 (이메일 세부사항에서 확인할 때 사용)
+	 * @param emailNum
+	 * @return
+	 */
+	@GetMapping("/mailSelectOne")
+	@ResponseBody
+	public EmailDTO mailSelectOne(@RequestParam(name="emailNum") Long emailNum){
+		
+		
+		EmailDTO mailDTO = mailService.selectOne(emailNum);
+		
+		
+		return mailDTO;
+	}
+	
+	/**
+	 * 이메일 삭제 
+	 * @param emailNum
+	 */
+	@GetMapping("mailDelete")
+	@ResponseBody
+	public String mailDelete(@RequestParam(name="emailNum") Long emailNum) {
+		log.info("~~~~~~~~~여기는까지 오  니??"+emailNum);
+		mailService.deleteOne(emailNum);
+		
+		return "success";
+	
+		
+	}
+
 	
 	
 }

@@ -80,4 +80,26 @@ public class EmailService {
 		}
 		return emailDTOList;
 	}
+	/**
+	 * 이메일 한개 찾기 (이메일 세부사항에서 확인할 때 사용)
+	 * @param emailNum
+	 * @return
+	 */
+	public EmailDTO selectOne(Long emailNum) {
+		EmailEntity emailEntity = emailRepository.findById(emailNum).get();
+		EmailDTO emailDTO = EmailDTO.toDTO(emailEntity, emailNum);
+		
+		return emailDTO;
+	}
+
+	public void deleteOne(Long emailNum) {
+		
+		emailRepository.deleteById(emailNum);
+		log.info(emailNum+"을 삭제 완료했습니다 ");
+		
+	}
+	
+	
+	
+	
 }
