@@ -77,7 +77,7 @@ CREATE TABLE CLIENT
     , EMP               NUMBER(10)                      -- 종업원수
     , CONTACT_GRD_CD    VARCHAR2(4)                     -- 마케팅 등급
     -- NOT NULL이 아닌 대신 NICE의 신용조사 미응시한 모든 사용자에게 다른 사용자에게 노출이 어렵다는 점을 경고창 생성
-    , CREDIT_GRD_CD     VARCHAR2(4)                     -- 신용 등급
+    -- , CREDIT_GRD_CD     VARCHAR2(4)                     -- 신용 등급
     , URL               VARCHAR2(200)   NOT NULL        -- 홈페이지 주소
     , EML               VARCHAR2(100)   NOT NULL        -- 이메일 주소
     , ENG               VARCHAR2(2000)  NOT NULL        -- 관련 키워드 목록
@@ -125,6 +125,103 @@ CREATE TABLE CLIENT
                     FROM CLIENT
                     WITH READ ONLY
                 ;
+                
+-- 국가 기본정보 테이블 생성
+CREATE TABLE STAT_INFO
+( 
+      STAT_NO       NUMBER          PRIMARY KEY     -- 국가 넘버
+    , STAT_NTN      VARCHAR2(50)    UNIQUE NOT NULL -- 국가 명
+    , STAT_POP      NUMBER          NOT NULL        -- 국가 인구
+    , STAT_CPT      VARCHAR2(50)    UNIQUE NOT NULL -- 국가 수도
+    , STAT_LAN      VARCHAR2(50)    NOT NULL        -- 국가 언어
+);
+
+
+-- 국가 통계 테이블 생성
+-- 5년치를 담을 예정
+
+-- 이거 생각보다 졸라 복잡하게 담아야할듯
+-- 수출액 수입액 무역수지 경제성장률 GDP 각각 따로 테이블 만들고 연도를 컬럼으로 만들어야 할 거 같다
+-- 수출액 테이블
+    CREATE TABLE STAT_EXP
+    ( 
+          STAT_NO       NUMBER      REFERENCES          -- 국가 넘버
+                                    STAT_INFO(STAT_NO) 
+                                    ON DELETE CASCADE
+        , EXP_2019      NUMBER      NOT NULL            -- 수출액
+        , EXP_2020      NUMBER      NOT NULL            -- 수입액
+        , EXP_2021      NUMBER      NOT NULL            -- 무역수지
+        , EXP_2022      NUMBER      NOT NULL            -- 경제성장률
+        , EXP_2023      NUMBER      NOT NULL            -- 1인당 GDP
+    );
+    
+-- 수입액 테이블
+    CREATE TABLE STAT_IMP
+    ( 
+          STAT_NO       NUMBER      REFERENCES          -- 국가 넘버
+                                    STAT_INFO(STAT_NO) 
+                                    ON DELETE CASCADE
+        , IMP_2019      NUMBER      NOT NULL            -- 수출액
+        , IMP_2020      NUMBER      NOT NULL            -- 수입액
+        , IMP_2021      NUMBER      NOT NULL            -- 무역수지
+        , IMP_2022      NUMBER      NOT NULL            -- 경제성장률
+        , IMP_2023      NUMBER      NOT NULL            -- 1인당 GDP
+    );
+    
+-- 무역수지 테이블
+    CREATE TABLE STAT_BAL
+    ( 
+          STAT_NO       NUMBER      REFERENCES          -- 국가 넘버
+                                    STAT_INFO(STAT_NO) 
+                                    ON DELETE CASCADE
+        , BAL_2019      NUMBER      NOT NULL            -- 수출액
+        , BAL_2020      NUMBER      NOT NULL            -- 수입액
+        , BAL_2021      NUMBER      NOT NULL            -- 무역수지
+        , BAL_2022      NUMBER      NOT NULL            -- 경제성장률
+        , BAL_2023      NUMBER      NOT NULL            -- 1인당 GDP
+    );
+    
+-- 경제성장률 테이블
+    CREATE TABLE STAT_GWT
+    ( 
+          STAT_NO       NUMBER      REFERENCES          -- 국가 넘버
+                                    STAT_INFO(STAT_NO) 
+                                    ON DELETE CASCADE
+        , GWT_2019      NUMBER      NOT NULL            -- 수출액
+        , GWT_2020      NUMBER      NOT NULL            -- 수입액
+        , GWT_2021      NUMBER      NOT NULL            -- 무역수지
+        , GWT_2022      NUMBER      NOT NULL            -- 경제성장률
+        , GWT_2023      NUMBER      NOT NULL            -- 1인당 GDP
+    );
+    
+-- GDP 테이블
+    CREATE TABLE STAT_GDP
+    ( 
+          STAT_NO       NUMBER      REFERENCES          -- 국가 넘버
+                                    STAT_INFO(STAT_NO) 
+                                    ON DELETE CASCADE
+        , GDP_2019      NUMBER      NOT NULL            -- 수출액
+        , GDP_2020      NUMBER      NOT NULL            -- 수입액
+        , GDP_2021      NUMBER      NOT NULL            -- 무역수지
+        , GDP_2022      NUMBER      NOT NULL            -- 경제성장률
+        , GDP_2023      NUMBER      NOT NULL            -- 1인당 GDP
+    );  
+
+
+-- 국가 규제사항 테이블 생성
+
+CREATE TABLE STAT_REG
+( 
+      STAT_NO       NUMBER          REFERENCES      -- 국가 넘버
+                                    STAT_INFO(STAT_NO) 
+                                    ON DELETE CASCADE
+    , STAT_REG1     VARCHAR2(500)    NOT NULL        -- 규제품목
+    , STAT_REG2     VARCHAR2(500)    NOT NULL        -- 규제분류
+    , STAT_REG3     VARCHAR2(500)    NOT NULL        -- 규제대상국
+    , STAT_HS       VARCHAR2(500)    NOT NULL        -- 규제대상 HS CODE
+);
+
+
 
 
 -- 테이블 삭제
