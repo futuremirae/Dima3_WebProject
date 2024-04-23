@@ -57,7 +57,7 @@ public class EmailController {
 	public String sendMail(EmailDTO mailDTO, InputKeywordDTO inputkeyword, RedirectAttributes rttr) {
 		
 		
-		log.info("########"+mailDTO.toString()); // 데이터 확인 
+		
 		mailService.mailSend(mailDTO);
 		mailService.insertMail(mailDTO);// 보낸 메일함에 메시지 저장 
 		

@@ -1,5 +1,4 @@
 package com.dima.niceweb.user;
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,16 +35,17 @@ public class UserService {
 		
 	}
 
+
 	/**
 	 * 아이디 중복 검사 
 	 * @param userId
 	 * @return boolean 
 	 */
 	public boolean findByUserId(String userId) {
+		
+		
+		
 		UserEntity entity = userRepository.findByUserId(userId);
-		
-		
-	
 		// 데이터가 들어있다면 
 		if(entity != null) {
 			return false;
