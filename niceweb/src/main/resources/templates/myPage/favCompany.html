@@ -35,9 +35,14 @@
             /* container 위에 20px의 여백을 줍니다. */
         }
 
+        .count {
+            margin-left: 500px;
+
+        }
+
         table {
             width: 68%;
-            /* 예시로 너비를 화면 너비의 80%로 설정합니다. */
+            /* 화면 너비 설정 */
             margin-left: auto;
             margin-right: auto;
             border-collapse: collapse;
@@ -54,10 +59,16 @@
             border-top: 2px solid #000;
             border-bottom: 2px solid #000;
             color: #000;
+            font-weight: bold;
+        }
+
+        #favoriteList tbody tr {
+            border-bottom: 1px solid #d3d3d3;
+            /* 회색 선 추가 */
         }
 
         /* 테이블 올렸을 때 -호버*/
-        tbody tr:hover {
+        tbody i:hover {
             background-color: #d3d3d3;
             opacity: 0.9;
             cursor: pointer;
@@ -68,16 +79,49 @@
             /* 두 번째 열의 너비를 150px로 설정 */
         }
 
+        #favoriteList td:nth-child(4),
         #favoriteList td:nth-child(5),
         #favoriteList td:nth-child(6) {
-            width: 100px;
+            width: 80px;
             /* 예시로 너비를 100px로 지정합니다. */
+        }
+
+        #favoriteList td:nth-child(2),
+        #favoriteList td:nth-child(4),
+        #favoriteList td:nth-child(5),
+        #favoriteList td:nth-child(6) {
+            text-align: center;
+            /*글씨 가운데로 조정*/
         }
 
 
         #favoriteList td {
             font-size: 14px;
-            /* 원하는 크기로 조정하세요 */
+            /* 폰트크기*/
+        }
+
+
+        tbody i:hover.fa-lg {
+            font-size: 24px;
+            /* 호버시 아이콘 사이즈 설정 */
+        }
+
+        #favoriteList td:nth-child(3) a:hover {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .table-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        /* 총건수 스타일 */
+        .count {
+            margin-left: 230px;
+            font-weight: bold;
+            /* 글씨 두껍게 설정 */
+
         }
     </style>
     <script>
@@ -107,7 +151,7 @@
                             <th>던스넘버</th>
                             <th>홈페이지</th>
                             <th>메일</th>
-                            <th>자세히 보기</th>
+                            <th>상세정보</th>
                             <th>삭제</th>
                         </tr>
                     </thead>`;
@@ -118,10 +162,10 @@
                             <tr>
                                 <td>${item.cmpName}</td>
                                 <td>${item.cmpDunsNo}</td>
-                                <td>${item.cmpUrl}</td>
-                                <td>${item.cmpEmail}</td>
-                                <td><i type="button" class="fa-solid fa-magnifying-glass" attr-dunsNo=${item.cmpDunsNo}></i></td>
-                                <td><i type="button" class="fa-regular fa-trash-can delBtn" attr-favCmpNo=${item.favCmpNo}></i></td>`
+                                <td><a href="${item.cmpUrl}" target="_blank">${item.cmpUrl}</a></td>
+                                <td><i type="button" class="fa-regular fa-envelope fa-lg " attr-cmpEmail=${item.cmpEmail}></i></td>
+                                <td><i type="button" class="fa-solid fa-magnifying-glass fa-lg" attr-dunsNo=${item.cmpDunsNo}></i></td>
+                                <td><i type="button" class="fa-regular fa-trash-can delBtn fa-lg" attr-favCmpNo=${item.favCmpNo}></i></td>`
 
 
                     ;// 찜기능은 삭제 버튼이다.
@@ -173,46 +217,46 @@
                     <div class="nav-wrap">
                         <ul class="gnb-list">
                             <li>
-                                <a href="about.html" class="has-depth">
+                                <a href="" class="has-depth"><!--추후 수정 필요-->
                                     <span>ABOUT</span>
                                 </a>
                                 <ul>
                                     <li>
-                                        <a href="about.html">
+                                        <a href="#"><!--추후 수정 필요-->
                                             <span>NICE TO MATCH YOU</span>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="service.html" class="has-depth">
+                                <a href="#" class="has-depth">
                                     <span>SERVICE</span>
                                 </a>
                                 <ul>
                                     <li>
-                                        <a href="service.html">
+                                        <a th:href="@{/showovsNews}">
                                             <span>NEWS</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="service.html">
+                                        <a th:href="@{/showFraud}">
                                             <span>무역 사기사례</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="service.html">
+                                        <a th:href="@{/rate}">
                                             <span>Exchange Rate</span>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="match.html">
+                                <a th:href="@{/search}"><!--서희가 수정한 css로 파일한-->
                                     <span>MATCH</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="info.html">
+                                <a href="#">
                                     <span>INFO</span>
                                 </a>
                             </li>
@@ -254,7 +298,7 @@
 
                 <!--찜 기능 리스트-->
                 <div class="count">
-                    <span>총</span><span id="board-count"></span><span>건</span>
+                    <span>총 </span><span id="board-count" style="color: #ff4dd6;"></span><span> 건</span>
                 </div>
                 <!--데이터가 꽂히는 부분-->
                 <table id="favoriteList" border="1">

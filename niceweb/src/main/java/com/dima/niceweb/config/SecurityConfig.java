@@ -28,7 +28,6 @@ public class SecurityConfig {
 					,"/user/joinProc" // 데이터 베이스에 저장 해달라는 요청  post 
 					,"/user//confirmId" // 중복 아이디 확인 get
 					,"/user/login" // 로그인 -get
-					,"/user/ex1" // 지워야함 
 					,"/user/myFavCompany" // ** 마이페이지 찜기능 화면요청 get
 					,"/user/favCmpAll" // ** 찜한 회사목록 모두 출력 get
 					,"/user/favCmpDelete" // ** 찜리스에서 회사 삭제 get
