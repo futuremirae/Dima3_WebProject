@@ -18,16 +18,32 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 	private final CustomFailuerHandler failureHandler;
 	
+	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 		http
 		.authorizeHttpRequests((auth)->auth// 인증 절차에 대해서 설정 
-				.requestMatchers(// 로그인을 안해도 되는 것 
+				.requestMatchers(// 로그인을 안해도 되는 페이지 , ** 붙은건 추후에 로그인이 필요한 페이지로 넘긴다!
 						"/"
 						,"/user/join" // 화면 요청 
-						,"/user/confirmId"
-						,"/user/joinProc" // 데이터 베이스에 저장 해달라는 요청 - post 
-						,"/user/login"
-						,"/reply/replyAll"
+						,"/user/joinProc" // 데이터 베이스에 저장 해달라는 요청  post 
+						,"/user//confirmId" // 중복 아이디 확인 get
+						,"/user/login" // 로그인 -get
+						,"/user/myFavCompany" // ** 마이페이지 찜기능 화면요청 get
+						,"/user/favCmpAll" // ** 찜한 회사목록 모두 출력 get
+						,"/user/favCmpDelete" // ** 찜리스에서 회사 삭제 get
+						,"/user/favCmpInsert" // ** 찜리스에서 회사 추가 get
+						,"/mail/sendedMail" // ** 메일함 화면 요청 get
+						,"/mail/mailList" // ** 메일 dto리스트 반환 get
+						,"/mail/mailsend" // ** 메일 보내기 post
+						,"/mail/mailSelectOne" // ** 메일 dto한개 반환 get
+						,"/mail/mailDelete" // ** 메일 삭제 post
+						,"/rate" // 환율 get
+						,"/fraud" // * 사기 get
+						,"/showFraud" //* 사기 get
+						,"/globeindex" // * get
+						,"/search" //**추천 알고리즘 검색 화면 요청 get
+						,"/cmpSelect" // ** 회사 상세보기 get
+						,"/predict" // ** fast api사용 post
 						,"/images/**"
 						,"/fonts/**"
 						,"/css/**"
@@ -35,7 +51,7 @@ public class SecurityConfig {
 						,"/script/**").permitAll()//permitAll()은 인증 절차 없이도 접근가능한 요청 
 				.requestMatchers("/admin/**").hasRole("ADMIN")
 				.requestMatchers("/my/**").hasAnyRole("ADMIN","USER")
-				.anyRequest().authenticated() // 위에는 권한에 따라 분리를 하였고, 기타 다른 경로눈 인증된 사용자만 접근 가능, 가장 마지막에 둘것 
+				.anyRequest().authenticated() // 위에는 권한에 따라 분리를 하였고, 기타 다른 경로는 인증된 사용자만 접근 가능, 가장 마지막에 둘것 
 				);
 	// Custom Login 설정 : 내가 만든 로그인 화면 
 	http

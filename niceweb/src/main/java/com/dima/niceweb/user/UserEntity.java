@@ -142,6 +142,11 @@ public class UserEntity {
 				.userRoles(userDTO.getUserRoles())
 				.build();
 	}
+
+
+
+
+	
 	
 	
 
