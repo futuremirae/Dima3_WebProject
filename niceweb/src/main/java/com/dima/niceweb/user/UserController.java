@@ -43,6 +43,15 @@ public class UserController {
 		userService.joinProc(userDTO);
 		return "redirect:/";
 	}
+	@GetMapping("/login")
+	public String login() {
+		return"login/login";
+	}
+
+	@GetMapping("/find")
+	public String find() {
+		return"find/find";
+	}
 	
 	/**
 	 * 아이디 중복 검사 
