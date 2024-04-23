@@ -15,6 +15,7 @@
             display: flex; /* Flexbox를 활용해 요소 내부 컨텐츠 중앙 정렬 */
             width: 75px;
             height: 45px;
+            transition: all 0.3s ease;
 
             font-size: 1.05em;
             font-weight: bold;
@@ -29,8 +30,10 @@
         }
 
         .statBtn:hover {
-            background: darkblue;
-            color: white;
+            height: 60px; /* hover 상태에서의 높이 */
+            background: darkblue; /* hover 상태에서의 배경색 */
+            color: white; /* hover 상태에서의 글자색 */
+            transform: translateY(-10px); /* 늘어난 높이의 절반만큼 위로 이동 */
         }
 
 
@@ -439,15 +442,13 @@
 
             // 데이터 설정
             // 각 국가에 맞는 데이터들을 꽂아넣기
-            var data = {
-            "US" : [
-                    {date: new Date(2019, 5, 3).getTime(), value: 50000}
-                    , {date: new Date(2020, 5, 3).getTime(), value: 52000}
-                    , {date: new Date(2021, 5, 3).getTime(), value: 48000}
-                    , {date: new Date(2022, 5, 3).getTime(), value: 47000}
-                    , {date: new Date(2023, 5, 3).getTime(), value: 26999, bullet: true}
+            var data = [
+            {date: new Date(2019, 5, 3).getTime(), value: 50000}
+            , {date: new Date(2020, 5, 3).getTime(), value: 52000}
+            , {date: new Date(2021, 5, 3).getTime(), value: 48000}
+            , {date: new Date(2022, 5, 3).getTime(), value: 47000}
+            , {date: new Date(2023, 5, 3).getTime(), value: 76999, bullet: true}
             ]
-            }
 
             // 만약 가장 최근값이 null이라면 직전 값에 bullet(빨강 강조표시)값을 추가
             for (let i = 1; i < data.length; i++) {
