@@ -101,9 +101,17 @@
         }
 
 
-        tbody i:hover.fa-lg {
+        /* tbody i:hover.fa-lg {
             font-size: 24px;
-            /* 호버시 아이콘 사이즈 설정 */
+           
+        } */
+        td i:hover {
+            transform: scale(1.5);
+            /* 마우스를 올렸을 때 크기를 1.2배로 확대합니다. */
+            transition: transform 0.3s ease;
+            /* 부드러운 전환 효과를 추가합니다. */
+            cursor: pointer;
+            /* 마우스 커서를 포인터로 변경합니다. */
         }
 
         #favoriteList td:nth-child(3) a:hover {
@@ -126,12 +134,10 @@
     </style>
     <script>
         $(function () {
-            init();
-
+            init(); // 출력 
         });
         function init() {
             let userNum = $("#userNum").val();// 로그인한 사람의 고유번호(시퀀스)
-
             $.ajax({
                 url: "/user/favCmpAll"
                 , method: 'GET'
@@ -140,11 +146,9 @@
             })
 
         }// init-end
-
+        // 출력 함수
         function output(resp) {
-
             let receivedData = `
-            
                     <thead class="favList-head">
                         <tr>
                             <th>기업명</th>
@@ -163,10 +167,9 @@
                                 <td>${item.cmpName}</td>
                                 <td>${item.cmpDunsNo}</td>
                                 <td><a href="${item.cmpUrl}" target="_blank">${item.cmpUrl}</a></td>
-                                <td><i type="button" class="fa-regular fa-envelope fa-lg " attr-cmpEmail=${item.cmpEmail}></i></td>
-                                <td><i type="button" class="fa-solid fa-magnifying-glass fa-lg" attr-dunsNo=${item.cmpDunsNo}></i></td>
+                                <td><i type="button" class="sendEmail fa-regular fa-envelope fa-lg" data-bs-toggle="modal" data-bs-target="#myModal" attr-cmpEmail=${item.cmpEmail}></i></td>
+                                <td><i type="button" class="DetailBtn fa-solid fa-magnifying-glass fa-lg" data-bs-toggle="modal" data-bs-target="#Details" attr-dunsNo=${item.cmpDunsNo}></i></td>
                                 <td><i type="button" class="fa-regular fa-trash-can delBtn fa-lg" attr-favCmpNo=${item.favCmpNo}></i></td>`
-
 
                     ;// 찜기능은 삭제 버튼이다.
                 // 각각의 버튼에 이벤트 걸어주기 
@@ -175,6 +178,8 @@
             $("#favoriteList").html(receivedData);
             $("#board-count").html(favCount);
             $(".delBtn").on('click', deleteCmp);// html로 모두 생성된 이후에 이벤트를 걸어야함 
+            $(".sendEmail").on('click', mgl);// 이메일 상세 버튼 클릭시 모달 창
+            $(".DetailBtn").on('click', Details);
         }// output 함수 종료부분
 
         // 삭제 함수 - 데이터 베이스에서 삭제함 
@@ -196,8 +201,35 @@
                 $("#board-count").html(favCount);
 
             }
+        }//function deleteCmp --end
 
+        function mgl() { // 모달창에 이메일 꽂아 넣기 !
+            let email = $(this).attr("attr-cmpEmail");
+            $("#cmpaddress").val(email);
         }
+        function Details() {
+            let dunsNo = $(this).attr("attr-dunsno"); // 던스넘버
+            $.ajax({
+                url: "/cmpSelect"
+                , method: 'GET'
+                , data: { "dunsNo": dunsNo }
+                , success: function (resp) {
+                    // 정보 가지고 오기
+                    $("#cmpName").html(resp.cmpName);
+                    $("#cmpDunsNo").html(resp.cmpDunsNo);
+                    $("#cmpSicCode").html(resp.cmpSicCode);
+                    $("#cmpNatCd").html(resp.cmpNatCd);
+                    $("#cmpNatEng").html(resp.cmpNatEng);
+                    $("#cmpAddress").html(resp.cmpAddress);
+                    $("#cmpEmp").html(resp.cmpEmp);
+                    $("#cmpMkt").html(resp.cmpMkt);
+                    $("#cmpSales").html(resp.cmpSales);
+                    $("#cmpUrl").html(resp.cmpUrl);
+                    $("#cmpUrl").attr("href", resp.cmpUrl);
+                }
+            })
+
+        }//function Details --end
     </script>
 
 </head>
@@ -312,8 +344,8 @@
                 <div class="footer-inner">
                     <div class="cont site">
                         <div class="menu">
-                            <a href="/privacy.html">개인정보처리방침</a>
-                            <a href="/terms.html">이용약관</a>
+                            <a href="#">개인정보처리방침</a>
+                            <a href="#">이용약관</a>
                         </div>
                         <div class="select-box">
                             <select class="select family" title="나이스투매치유">
@@ -340,6 +372,112 @@
             </footer>
         </div><!-- id:scroller-->
     </div><!-- // #wrap -->
+    <!--모달창-->
+    <!-- 이메일 모달창  -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">이메일 발송</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <form th:action="@{/mail/myPageSendEmail}" method="POST">
+                    <!--데이터 가지고 가는 부분-->
+                    <input type="hidden" name="inputKeyword" value="" id="emailinputKeyword">
+                    <input type="hidden" name="nation" value="" id="emailnation">
+
+                    <div class="modal-body">
+                        <!--수정해야할 부분입니다~~~~~~~~-->
+                        <input type="hidden" name="userNum" value="1"><!--우선은 임으로 만들어봄 -->
+                        <input id="cmpaddress" name="receiver" placeholder="이메일 주소" class="form-control" value=""> <br>
+                        <input name="emailSubject" placeholder="제목" class="form-control"> <br>
+                        <textarea name="emailContent" placeholder="메일 내용을 입력해주세요." cols="60" rows="20"
+                            class="form-control"></textarea>
+                    </div>
+
+                    <!-- Modal footer -->
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn " style="background-color: blue; color: white;"
+                            data-bs-dismiss="modal">발송</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div> <!--이메일 모달창 끝-->
+    <!--상세페이지 모달창-->
+    <div class="modal" id="Details">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <i class="fa-regular fa-building fa-xl"></i>&nbsp;&nbsp;
+                    <h3 class="modal-title" id="cmpName" style="font-size: 20px; font-weight: bolder;"></h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+
+                <div class="modal-body">
+                    <table>
+                        <tr>
+                            <td>D-U-N-S® Number</td>
+                            <td id="cmpDunsNo"></td>
+                        </tr>
+                        <tr>
+                            <td>Primary SIC Code</td>
+                            <td id="cmpSicCode"></td>
+                        </tr>
+                        <tr>
+                            <td>국가코드</td>
+                            <td id="cmpNatCd"></td>
+                        </tr>
+                        <tr>
+                            <td>국가</td>
+                            <td id="cmpNatEng"></td>
+                        </tr>
+                        <tr>
+                            <td>주소</td>
+                            <td id="cmpAddress"></td>
+                        </tr>
+                        <tr>
+                            <td>Employees(All site)</td>
+                            <td id="cmpEmp"></td>
+                        </tr>
+                        <tr>
+                            <td>마케팅 등급</td>
+                            <td id="cmpMkt"></td>
+                        </tr>
+                        <tr>
+                            <td>Annual Sales</td>
+                            <td id="cmpSales"></td>
+                        </tr>
+                        <tr>
+                            <td>홈페이지</td>
+                            <td><a href="" id="cmpUrl"></a></td>
+                        </tr>
+                    </table>
+
+                </div>
+
+
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+
+
+            </div>
+        </div>
+    </div><!--상세페이지 모달창 end-->
+
 
 
 
