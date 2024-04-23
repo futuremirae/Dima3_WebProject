@@ -57,7 +57,7 @@ public class EmailController {
 	public String sendMail(EmailDTO mailDTO, InputKeywordDTO inputkeyword, RedirectAttributes rttr) {
 		
 		
-		log.info("########"+mailDTO.toString()); // 데이터가 확인 
+		
 		mailService.mailSend(mailDTO);
 		mailService.insertMail(mailDTO);// 보낸 메일함에 메시지 저장 
 		
@@ -67,7 +67,7 @@ public class EmailController {
 		rttr.addAttribute("inputKeyword", inputkeyword.getInputKeyword());
 		rttr.addAttribute("nation",inputkeyword.getNation());
 		
-		return "redirect:/search";////////////
+		return "redirect:/search";
 
 	}
 	

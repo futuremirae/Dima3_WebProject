@@ -39,6 +39,12 @@ dependencies {
 	
 	// 이메일 디펜던시추가 
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	
+	// 보안 
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+	testImplementation 'org.springframework.security:spring-security-test'
+	
 
 
 
