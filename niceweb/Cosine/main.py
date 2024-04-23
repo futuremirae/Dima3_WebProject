@@ -18,8 +18,7 @@ from konlpy.tag import Mecab
 from sklearn.metrics.pairwise import cosine_similarity
 
 wlem = nltk.WordNetLemmatizer()
-mecab_path = 'C:\\mecab\\mecab-ko-dic'  # MeCab 사전의 설치 경로
-tokenizer = Mecab(dicpath=mecab_path).morphs
+tokenizer = Mecab().morphs
 app = FastAPI()
 
 class InputKeyword(BaseModel):
