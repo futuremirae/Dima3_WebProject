@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="utf-8">
@@ -8,15 +8,15 @@
 		content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
 	<meta name="format-detection" content="telephone=no">
 	<title>NICE TO MATCH YOU</title>
-	<link rel="icon" href="@resource/images/common/favi.png" type="image/x-icon">
+	<link rel="icon" th:href="@{/images/common/favi.png}">
 	<meta property="og:title" content="나이스투매치유">
 	<meta property="og:image:type" content="image/png">
 	<meta property="og:image" content="http://ilmobility.co.kr/@resource/images/common/sns_share.png"> <!-- 페이지가 소셜 미디어 플랫폼에 공유될 때 표시될 이미지의 URL을 지정 -->
 	<meta property="og:image:width" content="800">
 	<meta property="og:image:height" content="400">
-	<link type="text/css" rel="stylesheet" href="@resource/css/nice_dev.css">
-	<script src="@resource/js/lib/jquery-3.2.1.min.js"></script>
-	<script src="@resource/js/nice_dev.js"></script>
+	<link type="text/css" rel="stylesheet" th:href="@{/css/nice_dev.css}">
+	<script th:src="@{/js/lib/jquery-3.7.1.min.js}"></script>
+	<script th:src="@{/js/nice_dev.js}"></script>
 </head>
 <body>
 	<div class="skip-nav"> <a href="#content">본문 바로가기</a> </div>
@@ -76,7 +76,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="join.html">
+						<a th:href="@{/user/login}">
 							<span>LOGIN</span>
 						</a>
 					</li>
@@ -94,13 +94,14 @@
 		<div class="nav-bg"></div>
 	</div>
 </header>
+
 		<div id="scroller" class="scroller" data-scrollbar>
 			<div id="container" class="container">
 				<div id="content" class="main">
 					<section class="section intro">
 						<div class="video-wrap">
 							<video muted="" autoplay="" loop="" playsinline="">
-								<source src="@resource/video/intro_video_ver_1.mp4" type="video/mp4">
+								<source th:src="@{/video/intro_video_ver_1.mp4}" type="video/mp4">
 							</video>
 						</div>
 				
@@ -121,7 +122,7 @@
 					<option value="http://www.ec21.co.kr/">EC21</option>
 					<option value="https://www.valuelinku.com/">ValueLinkeU</option>
 					<option value="https://www.hanwhacorp.co.kr/">HANWHA</option>
-					<option value="https://www.itronics.co.kr">5조</option>
+					<option value="https://www.itronics.co.kr">PASSWIN</option>
 				</select>
 			</div>
 		</div>
@@ -137,11 +138,11 @@
 </footer>			</div>
 		</div><!-- // #wrap -->
 
-		<script src="@resource/js/lib/gsap.min.js"></script>
-		<script src="@resource/js/lib/ScrollTrigger.min.js"></script>
-		<script src="@resource/js/lib/smooth-scrollbar.js"></script>
-		<script src="@resource/js/lib/aos.js"></script>
-		<script src="@resource/js/lib/swiper-bundle.js"></script>
+		<script th:src="@{/js/lib/gsap.min.js}"></script>
+		<script th:src="@{/js/lib/ScrollTrigger.min.js}"></script>
+		<script th:src="@{/js/lib/smooth-scrollbar.js}"></script>
+		<script th:src="@{/js/lib/aos.js}"></script>
+		<script th:src="@{/js/lib/swiper-bundle.js}"></script>
 		<script>
 
 			jQuery(function () {
