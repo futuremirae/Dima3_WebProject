@@ -402,7 +402,6 @@
             "JM": "Jamaica", "NI": "Nicaragua", "DO": "Dominican Republic", "VG": "British Virgin Islands", "PA": "Panama", "BR": "Brazil", "CO": "Colombia", "AR": "Argentina",
             "CL": "Chile", "VE": "Venezuela", "EC": "Ecuador", "TT": "Trinidad and Tobago", "ZA": "South Africa", "NG": "Nigeria", "EG": "Egypt", "MA": "Morocco", "KE": "Kenya",
             "NZ": "New Zealand", "AU": "Australia"
-        
         };        
     </script>
     <script>
@@ -419,7 +418,7 @@
                     btn.style.borderBottom = 'none';
                 });
 
-                ///////////////
+                //
             });
         });
     </script>
@@ -440,23 +439,22 @@
 
             // 데이터 설정
             // 각 국가에 맞는 데이터들을 꽂아넣기
-            var data = [{
-                date: new Date(2019, 5, 3).getTime(),
-                value: 50000
-            }, {
-                date: new Date(2020, 5, 3).getTime(),
-                value: 52000
-            }, {
-                date: new Date(2021, 5, 3).getTime(),
-                value: 48000
-            }, {
-                date: new Date(2022, 5, 3).getTime(),
-                value: 47000
-            }, {
-                date: new Date(2023, 5, 3).getTime(),
-                value: null,
-                bullet: true
-            }]
+            var data = {
+            "US" : [
+                    {date: new Date(2019, 5, 3).getTime(), value: 50000}
+                    , {date: new Date(2020, 5, 3).getTime(), value: 52000}
+                    , {date: new Date(2021, 5, 3).getTime(), value: 48000}
+                    , {date: new Date(2022, 5, 3).getTime(), value: 47000}
+                    , {date: new Date(2023, 5, 3).getTime(), value: 26999, bullet: true}
+            ]
+            }
+
+            // 만약 가장 최근값이 null이라면 직전 값에 bullet(빨강 강조표시)값을 추가
+            for (let i = 1; i < data.length; i++) {
+                if (data[i].value === null) {
+                    data[i - 1].bullet = true;
+                }
+            }
 
 
 
