@@ -1,26 +1,5 @@
 
 /*
-<<<<<<< HEAD
-ë‚´ SQLì„ ìƒë‹˜
-https://gent.tistory.com/361
-
-ì´ íŒŒì¼ì— ìƒì„±ë˜ì–´ìžˆëŠ” í…Œì´ë¸”
-
-- ì¹´í…Œê³ ë¦¬ í…Œì´ë¸” (CTGY)
-    - ëŒ€ë¶„ë¥˜ (MAIN_CTGY)
-    - ì†Œë¶„ë¥˜ (SUB_CTGY)
-    - ìƒí’ˆëª… (ITEM_NM)
-
-- URL í…Œì´ë¸”(CLIENT)
-    - íšŒì‚¬ (CMP)
-    - êµ­ê°€ (NTN)
-        - êµ­ê°€ì½”ë“œë³€í™˜ (NTN_TEXT)
-    - íšŒì‚¬ì •ë³´(INFO)
-*/
-
-
--- ì¹´í…Œê³ ë¦¬ í…Œì´ë¸” ìƒì„±
-=======
 ³» SQL¼±»ý´Ô
 https://gent.tistory.com/361
 
@@ -40,7 +19,6 @@ https://gent.tistory.com/361
 
 
 -- Ä«Å×°í¸® Å×ÀÌºí »ý¼º
->>>>>>> origin/feature-jin
 
 CREATE TABLE CTGY
 (
@@ -81,33 +59,6 @@ CREATE TABLE CTGY
                 ;
 
 
-<<<<<<< HEAD
--- URL í…Œì´ë¸” ìƒì„± (ë¶€ëª¨) ( ë‹¨ìˆœ ì €ìž¥ìš©, ì¡°íšŒëŠ” ì´ê±°ë¡œ ì•ˆí•¨ )
--- JOINìœ¼ë¡œ ë°›ì€ USER_ACC ê°ì²´ë¥¼ ì €ìž¥í•´ì•¼í•˜ê¸° ë•Œë¬¸ì— ì •ê·œí™”ë˜ì§€ ì•Šì€ ì›ë°ì´í„° í‹€ë¡œ ì €ìž¥í›„ ì¡°íšŒí•  ë•ŒëŠ” ì •ê·œí™”ëœ í…Œì´ë¸”ì„ ì´ìš©
-CREATE TABLE CLIENT
-(
-      DUNS_NO           VARCHAR2(100)   PRIMARY KEY     -- DUNSë„˜ë²„
-    , CMP_NM            VARCHAR2(100)   NOT NULL        -- íšŒì‚¬ëª…
-    , NAT_ID            VARCHAR2(1000)  NOT NULL        -- êµ­ê°€ ì•„ì´ë””
-    , NAT_CD            CHAR(2)         NOT NULL        -- êµ­ê°€ ì½”ë“œ
-    , NAT_KOR           VARCHAR2(20)    NOT NULL        -- êµ­ê°€ëª… (í•œê¸€)
-    , NAT_ENG           VARCHAR2(20)    NOT NULL        -- êµ­ê°€ëª… (ì˜ë¬¸)
-    , CITY              VARCHAR2(100)   NOT NULL        -- ë„ì‹œëª…
-    , ADR               VARCHAR2(100)   NOT NULL        -- ì „ì²´ ì£¼ì†Œ
-    , SIC_CD            VARCHAR2(100)   NOT NULL        -- ì£¼ìš” ì·¨ê¸‰ í’ˆëª©
-    , SALES             NUMBER(20)                      -- ë§¤ì¶œ
-    , ASSET             NUMBER(20)                      -- ìžì‚°
-    , EMP               NUMBER(10)                      -- ì¢…ì—…ì›ìˆ˜
-    , CONTACT_GRD_CD    VARCHAR2(4)                     -- ë§ˆì¼€íŒ… ë“±ê¸‰
-    -- NOT NULLì´ ì•„ë‹Œ ëŒ€ì‹  NICEì˜ ì‹ ìš©ì¡°ì‚¬ ë¯¸ì‘ì‹œí•œ ëª¨ë“  ì‚¬ìš©ìžì—ê²Œ ë‹¤ë¥¸ ì‚¬ìš©ìžì—ê²Œ ë…¸ì¶œì´ ì–´ë µë‹¤ëŠ” ì ì„ ê²½ê³ ì°½ ìƒì„±
-    , CREDIT_GRD_CD     VARCHAR2(4)                     -- ì‹ ìš© ë“±ê¸‰
-    , URL               VARCHAR2(200)   NOT NULL        -- í™ˆíŽ˜ì´ì§€ ì£¼ì†Œ
-    , EML               VARCHAR2(100)   NOT NULL        -- ì´ë©”ì¼ ì£¼ì†Œ
-    , ENG               VARCHAR2(2000)  NOT NULL        -- ê´€ë ¨ í‚¤ì›Œë“œ ëª©ë¡
-);
-
--- íšŒì‚¬ ì •ë³´ VIEW ìƒì„±
-=======
 -- URL Å×ÀÌºí »ý¼º (ºÎ¸ð) ( ´Ü¼ø ÀúÀå¿ë, Á¶È¸´Â ÀÌ°Å·Î ¾ÈÇÔ )
 -- JOINÀ¸·Î ¹ÞÀº USER_ACC °´Ã¼¸¦ ÀúÀåÇØ¾ßÇÏ±â ¶§¹®¿¡ Á¤±ÔÈ­µÇÁö ¾ÊÀº ¿øµ¥ÀÌÅÍ Æ²·Î ÀúÀåÈÄ Á¶È¸ÇÒ ¶§´Â Á¤±ÔÈ­µÈ Å×ÀÌºíÀ» ÀÌ¿ë
 CREATE TABLE CLIENT
@@ -126,14 +77,13 @@ CREATE TABLE CLIENT
     , EMP               NUMBER(10)                      -- Á¾¾÷¿ø¼ö
     , CONTACT_GRD_CD    VARCHAR2(4)                     -- ¸¶ÄÉÆÃ µî±Þ
     -- NOT NULLÀÌ ¾Æ´Ñ ´ë½Å NICEÀÇ ½Å¿ëÁ¶»ç ¹ÌÀÀ½ÃÇÑ ¸ðµç »ç¿ëÀÚ¿¡°Ô ´Ù¸¥ »ç¿ëÀÚ¿¡°Ô ³ëÃâÀÌ ¾î·Æ´Ù´Â Á¡À» °æ°íÃ¢ »ý¼º
-    , CREDIT_GRD_CD     VARCHAR2(4)                     -- ½Å¿ë µî±Þ
+    -- , CREDIT_GRD_CD     VARCHAR2(4)                     -- ½Å¿ë µî±Þ
     , URL               VARCHAR2(200)   NOT NULL        -- È¨ÆäÀÌÁö ÁÖ¼Ò
     , EML               VARCHAR2(100)   NOT NULL        -- ÀÌ¸ÞÀÏ ÁÖ¼Ò
     , ENG               VARCHAR2(2000)  NOT NULL        -- °ü·Ã Å°¿öµå ¸ñ·Ï
 );
 
 -- È¸»ç Á¤º¸ VIEW »ý¼º
->>>>>>> origin/feature-jin
             CREATE VIEW CMP
                 AS
                     SELECT  DUNS_NO
@@ -153,11 +103,7 @@ CREATE TABLE CLIENT
                 ;
 
 
-<<<<<<< HEAD
--- êµ­ê°€ VIEW ìƒì„±
-=======
 -- ±¹°¡ VIEW »ý¼º
->>>>>>> origin/feature-jin
             CREATE VIEW NTN
                 AS
                     SELECT  NAT_ID
@@ -170,11 +116,7 @@ CREATE TABLE CLIENT
                 ;
 
 
-<<<<<<< HEAD
--- ì£¼ì†Œ í…Œì´ë¸” ìƒì„±
-=======
 -- ÁÖ¼Ò Å×ÀÌºí »ý¼º
->>>>>>> origin/feature-jin
             CREATE VIEW LOC
                 AS
                     SELECT  NTN_ID
@@ -183,15 +125,107 @@ CREATE TABLE CLIENT
                     FROM CLIENT
                     WITH READ ONLY
                 ;
+                
+-- ±¹°¡ ±âº»Á¤º¸ Å×ÀÌºí »ý¼º
+CREATE TABLE STAT_INFO
+( 
+      STAT_NO       NUMBER          PRIMARY KEY     -- ±¹°¡ ³Ñ¹ö
+    , STAT_NTN      VARCHAR2(50)    UNIQUE NOT NULL -- ±¹°¡ ¸í
+    , STAT_POP      NUMBER          NOT NULL        -- ±¹°¡ ÀÎ±¸
+    , STAT_CPT      VARCHAR2(50)    UNIQUE NOT NULL -- ±¹°¡ ¼öµµ
+    , STAT_LAN      VARCHAR2(50)    NOT NULL        -- ±¹°¡ ¾ð¾î
+);
 
 
-<<<<<<< HEAD
--- í…Œì´ë¸” ì‚­ì œ
--- ì‚­ì œëŠ” ìƒì„±ì˜ ì—­ìˆœ
-=======
+-- ±¹°¡ Åë°è Å×ÀÌºí »ý¼º
+-- 5³âÄ¡¸¦ ´ãÀ» ¿¹Á¤
+
+-- ÀÌ°Å »ý°¢º¸´Ù Á¹¶ó º¹ÀâÇÏ°Ô ´ã¾Æ¾ßÇÒµí
+-- ¼öÃâ¾× ¼öÀÔ¾× ¹«¿ª¼öÁö °æÁ¦¼ºÀå·ü GDP °¢°¢ µû·Î Å×ÀÌºí ¸¸µé°í ¿¬µµ¸¦ ÄÃ·³À¸·Î ¸¸µé¾î¾ß ÇÒ °Å °°´Ù
+-- ¼öÃâ¾× Å×ÀÌºí
+    CREATE TABLE STAT_EXP
+    ( 
+          STAT_NO       NUMBER      REFERENCES          -- ±¹°¡ ³Ñ¹ö
+                                    STAT_INFO(STAT_NO) 
+                                    ON DELETE CASCADE
+        , EXP_2019      NUMBER      NOT NULL            -- ¼öÃâ¾×
+        , EXP_2020      NUMBER      NOT NULL            -- ¼öÀÔ¾×
+        , EXP_2021      NUMBER      NOT NULL            -- ¹«¿ª¼öÁö
+        , EXP_2022      NUMBER      NOT NULL            -- °æÁ¦¼ºÀå·ü
+        , EXP_2023      NUMBER      NOT NULL            -- 1ÀÎ´ç GDP
+    );
+    
+-- ¼öÀÔ¾× Å×ÀÌºí
+    CREATE TABLE STAT_IMP
+    ( 
+          STAT_NO       NUMBER      REFERENCES          -- ±¹°¡ ³Ñ¹ö
+                                    STAT_INFO(STAT_NO) 
+                                    ON DELETE CASCADE
+        , IMP_2019      NUMBER      NOT NULL            -- ¼öÃâ¾×
+        , IMP_2020      NUMBER      NOT NULL            -- ¼öÀÔ¾×
+        , IMP_2021      NUMBER      NOT NULL            -- ¹«¿ª¼öÁö
+        , IMP_2022      NUMBER      NOT NULL            -- °æÁ¦¼ºÀå·ü
+        , IMP_2023      NUMBER      NOT NULL            -- 1ÀÎ´ç GDP
+    );
+    
+-- ¹«¿ª¼öÁö Å×ÀÌºí
+    CREATE TABLE STAT_BAL
+    ( 
+          STAT_NO       NUMBER      REFERENCES          -- ±¹°¡ ³Ñ¹ö
+                                    STAT_INFO(STAT_NO) 
+                                    ON DELETE CASCADE
+        , BAL_2019      NUMBER      NOT NULL            -- ¼öÃâ¾×
+        , BAL_2020      NUMBER      NOT NULL            -- ¼öÀÔ¾×
+        , BAL_2021      NUMBER      NOT NULL            -- ¹«¿ª¼öÁö
+        , BAL_2022      NUMBER      NOT NULL            -- °æÁ¦¼ºÀå·ü
+        , BAL_2023      NUMBER      NOT NULL            -- 1ÀÎ´ç GDP
+    );
+    
+-- °æÁ¦¼ºÀå·ü Å×ÀÌºí
+    CREATE TABLE STAT_GWT
+    ( 
+          STAT_NO       NUMBER      REFERENCES          -- ±¹°¡ ³Ñ¹ö
+                                    STAT_INFO(STAT_NO) 
+                                    ON DELETE CASCADE
+        , GWT_2019      NUMBER      NOT NULL            -- ¼öÃâ¾×
+        , GWT_2020      NUMBER      NOT NULL            -- ¼öÀÔ¾×
+        , GWT_2021      NUMBER      NOT NULL            -- ¹«¿ª¼öÁö
+        , GWT_2022      NUMBER      NOT NULL            -- °æÁ¦¼ºÀå·ü
+        , GWT_2023      NUMBER      NOT NULL            -- 1ÀÎ´ç GDP
+    );
+    
+-- GDP Å×ÀÌºí
+    CREATE TABLE STAT_GDP
+    ( 
+          STAT_NO       NUMBER      REFERENCES          -- ±¹°¡ ³Ñ¹ö
+                                    STAT_INFO(STAT_NO) 
+                                    ON DELETE CASCADE
+        , GDP_2019      NUMBER      NOT NULL            -- ¼öÃâ¾×
+        , GDP_2020      NUMBER      NOT NULL            -- ¼öÀÔ¾×
+        , GDP_2021      NUMBER      NOT NULL            -- ¹«¿ª¼öÁö
+        , GDP_2022      NUMBER      NOT NULL            -- °æÁ¦¼ºÀå·ü
+        , GDP_2023      NUMBER      NOT NULL            -- 1ÀÎ´ç GDP
+    );  
+
+
+-- ±¹°¡ ±ÔÁ¦»çÇ× Å×ÀÌºí »ý¼º
+
+CREATE TABLE STAT_REG
+( 
+      STAT_NO       NUMBER          REFERENCES      -- ±¹°¡ ³Ñ¹ö
+                                    STAT_INFO(STAT_NO) 
+                                    ON DELETE CASCADE
+    , STAT_REG1     VARCHAR2(500)    NOT NULL        -- ±ÔÁ¦Ç°¸ñ
+    , STAT_REG2     VARCHAR2(500)    NOT NULL        -- ±ÔÁ¦ºÐ·ù
+    , STAT_REG3     VARCHAR2(500)    NOT NULL        -- ±ÔÁ¦´ë»ó±¹
+    , STAT_HS       VARCHAR2(500)    NOT NULL        -- ±ÔÁ¦´ë»ó HS CODE
+);
+
+
+
+
 -- Å×ÀÌºí »èÁ¦
 -- »èÁ¦´Â »ý¼ºÀÇ ¿ª¼ø
->>>>>>> origin/feature-jin
 
 DROP TABLE CTGY;
 
