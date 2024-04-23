@@ -67,14 +67,7 @@ public class UserController {
 		
 	} 
 	
-	@GetMapping("/login")
-	public String login() {
-		
-		
-		return "/login/login"; // 데이터가 없다면 true -회원가입 가능 ! 
-		
-	} 
-	
+
 	
 	
 	
