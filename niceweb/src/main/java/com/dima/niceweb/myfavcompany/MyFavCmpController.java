@@ -33,7 +33,7 @@ public class MyFavCmpController {// 마이페이지 - 찜기능 관련 컨트롤
 	}
 	@GetMapping("/ex1")
 	public String f() {
-		return "myPage/myFavCompany"; // 태수 
+		return "myPage/favCompanytae"; // 태수 
 		
 	}
 	
