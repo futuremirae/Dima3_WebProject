@@ -3,6 +3,7 @@ package com.dima.niceweb.globe;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name="STAT_INFO")
 public class StaticInfoEntity {
 
     @Id
@@ -118,31 +120,31 @@ public class StaticInfoEntity {
                 .statPop(staticInfoDTO.getStatPop())
                 .statCpt(staticInfoDTO.getStatCpt())
                 .statLan(staticInfoDTO.getStatLan())
-                .exp19(staticStatDTO.getExp19())
-                .exp20(staticStatDTO.getExp20())
-                .exp21(staticStatDTO.getExp21())
-                .exp22(staticStatDTO.getExp22())
-                .exp23(staticStatDTO.getExp23())
-                .imp19(staticStatDTO.getImp19())
-                .imp20(staticStatDTO.getImp20())
-                .imp21(staticStatDTO.getImp21())
-                .imp22(staticStatDTO.getImp22())
-                .imp23(staticStatDTO.getImp23())
-                .bal19(staticStatDTO.getBal19())
-                .bal20(staticStatDTO.getBal20())
-                .bal21(staticStatDTO.getBal21())
-                .bal22(staticStatDTO.getBal22())
-                .bal23(staticStatDTO.getBal23())
-                .gwt19(staticStatDTO.getGwt19())
-                .gwt20(staticStatDTO.getGwt20())
-                .gwt21(staticStatDTO.getGwt21())
-                .gwt22(staticStatDTO.getGwt22())
-                .gwt23(staticStatDTO.getGwt23())
-                .gdp19(staticStatDTO.getGdp19())
-                .gdp20(staticStatDTO.getGdp20())
-                .gdp21(staticStatDTO.getGdp21())
-                .gdp22(staticStatDTO.getGdp22())
-                .gdp23(staticStatDTO.getGdp23())
+                .exp19(staticInfoDTO.getExp19())
+                .exp20(staticInfoDTO.getExp20())
+                .exp21(staticInfoDTO.getExp21())
+                .exp22(staticInfoDTO.getExp22())
+                .exp23(staticInfoDTO.getExp23())
+                .imp19(staticInfoDTO.getImp19())
+                .imp20(staticInfoDTO.getImp20())
+                .imp21(staticInfoDTO.getImp21())
+                .imp22(staticInfoDTO.getImp22())
+                .imp23(staticInfoDTO.getImp23())
+                .bal19(staticInfoDTO.getBal19())
+                .bal20(staticInfoDTO.getBal20())
+                .bal21(staticInfoDTO.getBal21())
+                .bal22(staticInfoDTO.getBal22())
+                .bal23(staticInfoDTO.getBal23())
+                .gwt19(staticInfoDTO.getGwt19())
+                .gwt20(staticInfoDTO.getGwt20())
+                .gwt21(staticInfoDTO.getGwt21())
+                .gwt22(staticInfoDTO.getGwt22())
+                .gwt23(staticInfoDTO.getGwt23())
+                .gdp19(staticInfoDTO.getGdp19())
+                .gdp20(staticInfoDTO.getGdp20())
+                .gdp21(staticInfoDTO.getGdp21())
+                .gdp22(staticInfoDTO.getGdp22())
+                .gdp23(staticInfoDTO.getGdp23())
                 .build();
     }
 }
