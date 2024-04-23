@@ -19,16 +19,33 @@
     <link type="text/css" rel="stylesheet" th:href="@{/css/myPage.css}">
     <script th:src="@{/js/lib/jquery-3.7.1.min.js}"></script>
     <script>
-        // submit이 전송되기전에 무조건 거쳐가는 검사 페이지 
-        // 변수 설정 
-        // let checkid = false;
-        // let checkpwd = false;
+
+        //aa();
+
+        function aa() {
+            let a = "sdfsfs";
+            let englishRegex = /^[a-z|A-Z]+$/;
+            let koreanRegex = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+
+            if (englishRegex.test(a)) { // 영문이 아닐경우 
+                alert(englishRegex.test(a));
+
+            }
+            if (koreanRegex.test(a)) {
+                alert("~~~aaaaaaaaa~!!!관심 품목을 한글이다.");
+
+            }
+        }
+
         function checkjoinform() { // 자바스크립트가 모두 실행된 후에 마지막에 실행
 
             let userName = $("#userName").val() // 담당자 이름 
             let userPhone = $("#userPhone").val(); // 담당자 전화번호 
-            let englishRegex = /^[a-zA-Z]+$/;
-            let koreanRegex = /^[가-힣]+$/;
+            // let englishRegex = /^[a-zA-Z]+$/;
+            // let koreanRegex = /^[가-힣]+$/;
+
+            let englishRegex = /^[a-z|A-Z]+$/;
+            let koreanRegex = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
             let numberRegex = /^\d+$/; // 숫자
             let dunsNoRegex = /^\d{9}$/; // 던스넘버
             if (!englishRegex.test(userName)) {
@@ -83,13 +100,13 @@
                 $("#userSicCd").focus();
                 return false;
             }
-            // if ($("#userKeyWord").val().length != 0) { // 관심 품목 키워드가 입력되었는데 
-            //     if ($(!englishRegex.test($("#userKeyWord").val()))) { // 영문이 아닐경우 
-            //         alert("관심 품목을 영문으로 입력해주세요.");
-            //         $("#userKeyWord").focus();
-            //         return false;
-            //     }
-            // }
+            if ($("#userKeyWord").val().length != 0) { // 관심 품목 키워드가 입력되었는데 
+                if ($(!englishRegex.test($("#userKeyWord").val()))) { // 영문이 아닐경우 
+                    alert("관심 품목을 영문으로 입력해주세요.");
+                    $("#userKeyWord").focus();
+                    return false;
+                }
+            }
 
             if (!$("#agreementCheckbox").is(":checked")) {
                 alert("필수 이용약관에 동의해주세요");
