@@ -104,11 +104,22 @@
         /**************************
         *******************************/
         /* 테이블 제목과 테이블 왼쪽 너비 맞춤 */
-        div.table-content {
+        .count {
+            font-weight: bolder;
+
+        }
+
+        .content {
+            width: 68%;
+            margin: 0 auto;
+        }
+
+
+        /* div.table-content {
             width: 68%;
             margin: 0 auto;
             margin-bottom: 100px;
-        }
+        } */
 
         table th {
             padding: 8px;
@@ -297,7 +308,9 @@
 
                         if (data && data.response && data.response.body && data.response.body.itemList && data.response.body.itemList.item) {
                             const tbody = document.getElementById('results');
+                            let count = 0;
                             data.response.body.itemList.item.forEach(item => {
+                                count += 1;
                                 let fraudType = item.fraudType;
                                 if (item.fraudType == "") {
                                     fraudType = "-";
@@ -311,6 +324,7 @@
                                         `;
                                 tbody.appendChild(tr);
                             });
+                            $("#board-count").html(count);
                         } else {
                             const tbody = document.getElementById('results');
                             tbody.innerHTML = '<tr><td colspan="3">검색 결과가 없습니다.</td></tr>';

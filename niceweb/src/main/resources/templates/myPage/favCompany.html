@@ -25,33 +25,29 @@
     <script th:src="@{/js/lib/jquery-3.7.1.min.js}"></script>
     <script th:src="@{/js/nice_dev.js}"></script>
     <style>
-        header {
-            margin-bottom: 20px;
-            /* header 아래에 20px의 여백을 줍니다. */
-        }
-
-        /* 다시한번 클래스 이름으로 위아래 너비 설정 */
-        .container {
-            margin-top: 20px;
-            /* container 위에 20px의 여백을 줍니다. */
+        .content {
+            margin-top: 40s0px;
+            width: 68%;
+            margin: 0 auto;
         }
 
         .count {
-            margin-left: 500px;
-
+            text-align: left;
+            font-weight: bolder;
         }
 
-        table {
-            width: 68%;
-            /* 화면 너비 설정 */
-            margin-left: auto;
-            margin-right: auto;
-            border-collapse: collapse;
-
-            margin: 1rem auto;
-            background-color: white;
-
+        /**페이지 헤더**/
+        .page-header {
+            text-align: center;
+            font-size: 36px;
+            margin-top: 150px;
+            margin-bottom: 50px;
         }
+
+
+
+
+
 
         #favoriteList th {
             padding: 8px;
@@ -102,10 +98,6 @@
         }
 
 
-        /* tbody i:hover.fa-lg {
-            font-size: 24px;
-           
-        } */
         td i:hover {
             transform: scale(1.5);
             /* 마우스를 올렸을 때 크기를 1.2배로 확대합니다. */
@@ -126,12 +118,6 @@
         }
 
         /* 총건수 스타일 */
-        .count {
-            margin-left: 230px;
-            font-weight: bold;
-            /* 글씨 두껍게 설정 */
-
-        }
     </style>
     <script>
         $(function () {
@@ -328,6 +314,9 @@
             <div class="content">
                 <!-- <input type="hidden" id="loginId" th:value="${#authentication.name}"> 로그인한 유저의 -->
                 <input type="hidden" id="userNum" value="1"><!--우선은 임으로 만들어봄 -->
+                <div class="page-header on">
+                    <h2>보낸 메일함</h2>
+                </div>
 
                 <!--찜 기능 리스트-->
                 <div class="count">
