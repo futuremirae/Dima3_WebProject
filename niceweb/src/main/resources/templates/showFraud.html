@@ -33,15 +33,26 @@
             /* header 아래에 20px의 여백을 줍니다. */
         }
 
-
+        .content {
+            margin-top: 200px;
+        }
 
         .searchBox {
             margin-top: 120px;
             /* 화면 상단에서 떨어진 정도 */
         }
 
+        /**페이지 헤더**/
+        .page-header {
+            text-align: center;
+            font-size: 36px;
+            margin-top: 150px;
+            margin-bottom: 50px;
+        }
+
         /* 검색창 영역*/
         div.search {
+            width: 560px;
             margin: 0 auto;
             background-color: white;
             width: 500px;
@@ -90,43 +101,14 @@
 
         /* 테이블 출력 부분 */
 
-        .count {
-            margin-left: 500px;
-
-        }
-
-        /**************************8
+        /**************************
         *******************************/
         /* 테이블 제목과 테이블 왼쪽 너비 맞춤 */
         div.table-content {
             width: 68%;
             margin: 0 auto;
+            margin-bottom: 100px;
         }
-
-        div.table-content .count {
-            text-align: left;
-        }
-
-
-        table {
-            width: 100%;
-            /* 화면 너비 설정 */
-
-            border-collapse: collapse;
-
-            margin: 1rem auto;
-            background-color: white;
-
-        }
-
-        /* table {
-            width: 68%;
-            
-            border-collapse: collapse;
-            margin: 1rem auto;
-            background-color: white;
-
-        } */
 
         table th {
             padding: 8px;
@@ -147,6 +129,13 @@
 
             color: #ff4dd6;
             /* 원하는 크기로 조정하세요 */
+        }
+
+        #results td:nth-child(2),
+        #results td:nth-child(3),
+        #results td:nth-child(4) {
+            text-align: center;
+            /* 가운데 정렬로 수정 */
         }
     </style>
 
@@ -235,7 +224,11 @@
 
 
             <!--데이터 꽂히는 부분 내용 들어갈 부분!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+
             <div class="content">
+                <div class="page-header on">
+                    <h2>무역 사기사례</h2>
+                </div>
                 <!--검색창-->
                 <div class="searchBox">
                     <div class="search">
@@ -249,7 +242,7 @@
                     <!-- <button onclick="fetchFraudData()">검색</button> -->
                 </div>
 
-                <br><br><br><br><br>
+                <br><br>
                 <!--테이블 출력 부분-->
 
                 <div class="table-content">
@@ -259,9 +252,9 @@
                     <table border="1">
                         <thead>
                             <tr>
+                                <th>제목</th>
                                 <th>사기 유형</th>
                                 <th>국가명</th>
-                                <th>제목</th>
                                 <th>일자</th>
                             </tr>
                         </thead>
@@ -305,11 +298,15 @@
                         if (data && data.response && data.response.body && data.response.body.itemList && data.response.body.itemList.item) {
                             const tbody = document.getElementById('results');
                             data.response.body.itemList.item.forEach(item => {
+                                let fraudType = item.fraudType;
+                                if (item.fraudType == "") {
+                                    fraudType = "-";
+                                }
                                 const tr = document.createElement('tr');
                                 tr.innerHTML = `
-                                            <td>${item.fraudType}</td>
+                                <td><a class="showDetails" href="/showFraudDetail?title=${encodeURIComponent(item.titl)}">${item.titl}</a></td>
+                                            <td>${fraudType}</td>
                                             <td>${item.natn}</td>
-                                            <td><a class="showDetails" href="/showFraudDetail?title=${encodeURIComponent(item.titl)}">${item.titl}</a></td>
                                             <td>${item.othbcDt}</td>
                                         `;
                                 tbody.appendChild(tr);
