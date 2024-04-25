@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 	<meta charset="utf-8">
@@ -77,11 +77,25 @@
 									<span>INFO</span>
 								</a>
 							</li>
-							<li>
+							<li sec:authorize="isAnonymous()">
 								<a th:href="@{/user/login}">
-									<span>LOGIN</span>
+									<span>Login</span>
 								</a>
 							</li>
+							<li sec:authorize="isAuthenticated()">
+								<a href="" class="has-depth">
+									<span>MyPage</span>
+								</a>
+								<ul>
+									<li>
+										<a th:href="@{/user/logout}">
+											<span>Logout</span>
+										</a>
+									</li>
+
+								</ul>
+							</li>
+
 						</ul>
 					</div> <!-- // .nav-wrap -->
 				</nav>
