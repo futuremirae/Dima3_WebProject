@@ -7,7 +7,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
-    <title>무역사기사례 - details</title>
+    <title>무역사기사례details</title>
     <link rel="icon" th:href="@{/images/common/favi.png}">
     <meta property="og:title" content="나이스투매치유">
     <meta property="og:image:type" content="image/png">
@@ -86,6 +86,10 @@
             margin-bottom: 50px;
         }
 
+        /*************************
+        로딩중 페이지 
+        **************************/
+
         .main {
             width: 90vw;
             margin: 0 auto;
@@ -110,14 +114,6 @@
             animation: bounce 1.2s cubic-bezier(0.3, 0.01, 0.4, 1) infinite;
         }
 
-        /* 
-        #footer {
-            margin-top: 400px;
-        } */
-
-        /***************
-        로딩중 페이지
-        *******************/
         .main {
             position: absolute;
             top: calc(50% - 50px);
@@ -127,7 +123,6 @@
             z-index: 9999;
             /* 필요에 따라 조정 */
         }
-
 
         .droplet_spinner .droplet:nth-child(1) {
             animation-delay: -0.4s;
@@ -153,7 +148,8 @@
             }
         }
 
-        /***********************************/
+        /* 로딩중 end */
+
 
         /***********************************
         세부 조정
@@ -286,7 +282,6 @@
                             <div class="droplet"></div>
                         </div>
                     </div>
-
                 </div><!--로딩 end-->
 
 
