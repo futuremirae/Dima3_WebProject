@@ -7,7 +7,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
-    <title>미래마이페이지</title>
+    <title>관심 바이어</title>
     <link rel="icon" th:href="@{/images/common/favi.png}">
     <meta property="og:title" content="나이스투매치유">
     <meta property="og:image:type" content="image/png">
@@ -315,7 +315,7 @@
                 <!-- <input type="hidden" id="loginId" th:value="${#authentication.name}"> 로그인한 유저의 -->
                 <input type="hidden" id="userNum" value="1"><!--우선은 임으로 만들어봄 -->
                 <div class="page-header on">
-                    <h2>보낸 메일함</h2>
+                    <h2>관심 바이어</h2>
                 </div>
 
                 <!--찜 기능 리스트-->
@@ -381,8 +381,8 @@
                     <input type="hidden" name="nation" value="" id="emailnation">
 
                     <div class="modal-body">
-                        <!--수정해야할 부분입니다~~~~~~~~-->
-                        <input type="hidden" name="userNum" value="1"><!--우선은 임으로 만들어봄 -->
+                        <!-- <input type="hidden" name="userNum" value="1"> -->
+                        <input type="hidden" id="userNum" th:value="${#authentication.principal.userNum}">
                         <input id="cmpaddress" name="receiver" placeholder="이메일 주소" class="form-control" value=""> <br>
                         <input name="emailSubject" placeholder="제목" class="form-control"> <br>
                         <textarea name="emailContent" placeholder="메일 내용을 입력해주세요." cols="60" rows="20"
