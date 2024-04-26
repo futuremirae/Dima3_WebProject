@@ -125,6 +125,8 @@
         });
         function init() {
             let userNum = $("#userNum").val();// 로그인한 사람의 고유번호(시퀀스)
+
+
             $.ajax({
                 url: "/user/favCmpAll"
                 , method: 'GET'
@@ -236,24 +238,24 @@
                     <div class="nav-wrap">
                         <ul class="gnb-list">
                             <li>
-                                <a href="" class="has-depth"><!--추후 수정 필요-->
+                                <a href="" class="has-depth">
                                     <span>ABOUT</span>
                                 </a>
                                 <ul>
                                     <li>
-                                        <a href="#"><!--추후 수정 필요-->
+                                        <a href="#"><!--페이지 나중에 삽입-->
                                             <span>NICE TO MATCH YOU</span>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="#" class="has-depth">
+                                <a href="" class="has-depth">
                                     <span>SERVICE</span>
                                 </a>
                                 <ul>
                                     <li>
-                                        <a th:href="@{/showovsNews}">
+                                        <a th:href="@{/showOvsNews}">
                                             <span>NEWS</span>
                                         </a>
                                     </li>
@@ -270,20 +272,34 @@
                                 </ul>
                             </li>
                             <li>
-                                <a th:href="@{/search}"><!--서희가 수정한 css로 파일한-->
+                                <a th:href="@{/search}">
                                     <span>MATCH</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href=""><!--수정 필요-->
                                     <span>INFO</span>
                                 </a>
                             </li>
-                            <li>
+                            <li sec:authorize="isAnonymous()">
                                 <a th:href="@{/user/login}">
-                                    <span>LOGIN</span>
+                                    <span>Login</span>
                                 </a>
                             </li>
+                            <li sec:authorize="isAuthenticated()">
+                                <a href="" class="has-depth">
+                                    <span>MyPage</span>
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a th:href="@{/user/logout}">
+                                            <span>Logout</span>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
+
                         </ul>
                     </div> <!-- // .nav-wrap -->
                 </nav>
@@ -312,8 +328,8 @@
             </section>
 
             <div class="content">
-                <!-- <input type="hidden" id="loginId" th:value="${#authentication.name}"> 로그인한 유저의 -->
-                <input type="hidden" id="userNum" value="1"><!--우선은 임으로 만들어봄 -->
+                <input type="hidden" id="loginId" th:value="${#authentication.name}">
+
                 <div class="page-header on">
                     <h2>관심 바이어</h2>
                 </div>
@@ -382,7 +398,8 @@
 
                     <div class="modal-body">
                         <!-- <input type="hidden" name="userNum" value="1"> -->
-                        <input type="hidden" id="userNum" th:value="${#authentication.principal.userNum}">
+                        <input type="hidden" id="userNum" name="userNum"
+                            th:value="${#authentication.principal.userNum}">
                         <input id="cmpaddress" name="receiver" placeholder="이메일 주소" class="form-control" value=""> <br>
                         <input name="emailSubject" placeholder="제목" class="form-control"> <br>
                         <textarea name="emailContent" placeholder="메일 내용을 입력해주세요." cols="60" rows="20"
