@@ -31,7 +31,6 @@ public class SearchController {
 		
 		
 		return "Company/cosine";
-		//return "Stat/mirae";
 	}
 
 	@PostMapping("/predict")
