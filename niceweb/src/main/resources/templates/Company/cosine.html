@@ -24,6 +24,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
+        /* 모달창 닫기 버튼 css */
         .closeBtn {
             color: #fff;
             background-color: #dc3545;
@@ -250,34 +251,34 @@
                     <div class="nav-wrap">
                         <ul class="gnb-list">
                             <li>
-                                <a href="" class="has-depth">
+                                <a href="about.html" class="has-depth">
                                     <span>ABOUT</span>
                                 </a>
                                 <ul>
                                     <li>
-                                        <a href="#"><!--페이지 나중에 삽입-->
+                                        <a href="about.html">
                                             <span>NICE TO MATCH YOU</span>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="" class="has-depth">
+                                <a href="service.html" class="has-depth">
                                     <span>SERVICE</span>
                                 </a>
                                 <ul>
                                     <li>
-                                        <a th:href="@{/showOvsNews}">
+                                        <a href="service.html">
                                             <span>NEWS</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a th:href="@{/showFraud}">
+                                        <a href="service.html">
                                             <span>무역 사기사례</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a th:href="@{/rate}">
+                                        <a href="service.html">
                                             <span>Exchange Rate</span>
                                         </a>
                                     </li>
@@ -289,29 +290,15 @@
                                 </a>
                             </li>
                             <li>
-                                <a href=""><!--수정 필요-->
+                                <a href="info.html">
                                     <span>INFO</span>
                                 </a>
                             </li>
-                            <li sec:authorize="isAnonymous()">
+                            <li>
                                 <a th:href="@{/user/login}">
-                                    <span>Login</span>
+                                    <span>LOGIN</span>
                                 </a>
                             </li>
-                            <li sec:authorize="isAuthenticated()">
-                                <a href="" class="has-depth">
-                                    <span>MyPage</span>
-                                </a>
-                                <ul>
-                                    <li>
-                                        <a th:href="@{/user/logout}">
-                                            <span>Logout</span>
-                                        </a>
-                                    </li>
-
-                                </ul>
-                            </li>
-
                         </ul>
                     </div> <!-- // .nav-wrap -->
                 </nav>
@@ -416,6 +403,7 @@
                     <input type="hidden" name="nation" value="" id="emailnation">
 
                     <div class="modal-body">
+                        <!--사용자 고유 pk(사용자 DB에 저장하기 위함)-->
                         <input type="hidden" id="userNum" name="userNum"
                             th:value="${#authentication.principal.userNum}">
                         <input id="cmpaddress" name="receiver" placeholder="이메일 주소" class="form-control" value=""> <br>
