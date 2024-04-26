@@ -251,34 +251,34 @@
                     <div class="nav-wrap">
                         <ul class="gnb-list">
                             <li>
-                                <a href="" class="has-depth">
+                                <a href="about.html" class="has-depth">
                                     <span>ABOUT</span>
                                 </a>
                                 <ul>
                                     <li>
-                                        <a th:href="@{/about}"><!--페이지 나중에 삽입-->
+                                        <a href="about.html">
                                             <span>NICE TO MATCH YOU</span>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="" class="has-depth">
+                                <a href="service.html" class="has-depth">
                                     <span>SERVICE</span>
                                 </a>
                                 <ul>
                                     <li>
-                                        <a th:href="@{/showOvsNews}">
+                                        <a href="service.html">
                                             <span>NEWS</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a th:href="@{/showFraud}">
+                                        <a href="service.html">
                                             <span>무역 사기사례</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a th:href="@{/rate}">
+                                        <a href="service.html">
                                             <span>Exchange Rate</span>
                                         </a>
                                     </li>
@@ -290,29 +290,15 @@
                                 </a>
                             </li>
                             <li>
-                                <a href=""><!--수정 필요-->
+                                <a href="info.html">
                                     <span>INFO</span>
                                 </a>
                             </li>
-                            <li sec:authorize="isAnonymous()">
+                            <li>
                                 <a th:href="@{/user/login}">
-                                    <span>Login</span>
+                                    <span>LOGIN</span>
                                 </a>
                             </li>
-                            <li sec:authorize="isAuthenticated()">
-                                <a th:href="@{/user/myPage}" class="has-depth">
-                                    <span>MyPage</span>
-                                </a>
-                                <ul>
-                                    <li>
-                                        <a th:href="@{/user/logout}">
-                                            <span>Logout</span>
-                                        </a>
-                                    </li>
-
-                                </ul>
-                            </li>
-
                         </ul>
                     </div> <!-- // .nav-wrap -->
                 </nav>
@@ -334,10 +320,7 @@
 
                     <!-- cosine 시작 -->
                     <h2>MATCH</h2>
-                    <!-- 로그인 유저의 고유 넘버값 넣어주는거 있지말기-->
-                    <!-- <input type="hidden" id="loginId" th:value="${#authentication.name}"> 로그인한 유저의 -->
-                    <input type="hidden" id="userNum" value="1"><!--우선은 임의로 만들어봄 -->
-
+                    <input type="hidden" id="userNum" name="userNum" th:value="${#authentication.principal.userNum}">
                     <form th:action="@{/predict}" method="POST">
                         <div class="search">
                             <input type="text" placeholder="키워드 입력" id="search" name="inputKeyword"
@@ -417,9 +400,8 @@
                     <input type="hidden" name="nation" value="" id="emailnation">
 
                     <div class="modal-body">
-                        <!--사용자 고유 pk(사용자 DB에 저장하기 위함)-->
-                        <input type="hidden" id="userNum" name="userNum"
-                            th:value="${#authentication.principal.userNum}">
+                        <!--수정해야할 부분입니다~~~~~~~~-->
+                        <input type="hidden" name="userNum" value="1"><!--우선은 임의로 만들어봄 -->
                         <input id="cmpaddress" name="receiver" placeholder="이메일 주소" class="form-control" value=""> <br>
                         <input name="emailSubject" placeholder="제목" class="form-control"> <br>
                         <textarea name="emailContent" placeholder="메일 내용을 입력해주세요." cols="60" rows="20"
@@ -431,7 +413,7 @@
                     <div class="modal-footer">
                         <button type="submit" class="btn " style="background-color: blue; color: white;"
                             data-bs-dismiss="modal">발송</button>
-                        <button type="button" class="closeBtn" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                     </div>
                 </form>
 

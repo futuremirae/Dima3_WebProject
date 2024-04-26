@@ -30,7 +30,7 @@ public class SearchController {
 		model.addAttribute("nation",nation);
 		
 		
-		return "Company/cosine";
+		return "/Company/cosine";
 	}
 
 	@PostMapping("/predict")
