@@ -7,7 +7,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
-    <title>사기사례 검색</title>
+    <title>무역사기사례details</title>
     <link rel="icon" th:href="@{/images/common/favi.png}">
     <meta property="og:title" content="나이스투매치유">
     <meta property="og:image:type" content="image/png">
@@ -24,129 +24,165 @@
     <link type="text/css" rel="stylesheet" th:href="@{/css/nice_dev.css}"><!--이거 때문에 안됨-->
     <script th:src="@{/js/lib/jquery-3.7.1.min.js}"></script>
     <script th:src="@{/js/nice_dev.js}"></script>
-
     <script>
+        async function fetchFraudDetail() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const title = urlParams.get('title');
+            const apiUrl = `https://apis.data.go.kr/B410001/cmmrcFraudCase/cmmrcFraudCase?serviceKey=1Oo0omv4bVoztr5VGKOWz2QJYFpy2gmu8Kq8DbYg%2F%2B7gX2EfMQBU2jTu6MpQfsbJoqxzTTyyyDdSfpVZ0FIPlA%3D%3D&type=json&numOfRows=1&pageNo=1&search1=&search2=${title}&search3=&_type=json`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                document.getElementById('fraudContent').innerHTML = `
+                                        <div>
+                                            <div id="fraudsTitle"><p>${data.response.body.itemList.item[0].titl}</p></div>
+                                            <div id="fraudsInfo">
+                                                <p>무역사기사례</p>
+                                                <p>|</p>
+                                                <p>Nation:&nbsp;&nbsp; ${data.response.body.itemList.item[0].natn}</p>
+                                                <p>|</p>
+                                                <p>Region:&nbsp;&nbsp; ${data.response.body.itemList.item[0].regn}</p>
+                                                <p>|</p>
+                                                <p>FraudType:&nbsp;&nbsp; ${data.response.body.itemList.item[0].fraudType}</p>
+                                                <p>|</p>
+                                                <p>Date:&nbsp;&nbsp; ${data.response.body.itemList.item[0].othbcDt}</p>
+                                            </div>
+                                            <div id="fraudsContent">
+                                                <p>${data.response.body.itemList.item[0].bdtCntnt}</p>
+                                            </div>
+                                        </div>
+                                    `;
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('fraudContent').innerHTML = '데이터를 불러오는 중 오류가 발생했습니다.';
+            }
+        }
+
+        fetchFraudDetail();
     </script>
+
     <style>
-        header {
-            margin-bottom: 20px;
-            /* header 아래에 20px의 여백을 줍니다. */
-        }
-
         .content {
-            margin-top: 200px;
+            margin-top: 100px;
+            width: 68%;
+            margin: 0 auto;
+            /* 가운데 정렬 */
         }
 
-        .searchBox {
-            margin-top: 120px;
-            /* 화면 상단에서 떨어진 정도 */
-        }
-
-        /**페이지 헤더**/
+        /***헤더 조정****/
         .page-header {
             text-align: center;
+            /* 텍스트를 가운데 정렬 */
             font-size: 36px;
+            /* 폰트 크기를 크게 설정 */
             margin-top: 150px;
+            /* 상단 여백 추가 */
             margin-bottom: 50px;
         }
 
-        /* 검색창 영역*/
-        div.search {
-            width: 560px;
-            margin: 0 auto;
-            background-color: white;
-            width: 500px;
-            height: 50px;
-            border-radius: 25px;
-            /* box-shadow: 5px 5px 5px gray; */
-            padding-left: 10px;
-            border: 1px solid gray;
+        /*************************
+        로딩중 페이지 
+        **************************/
 
+        .main {
+            width: 90vw;
+            margin: 0 auto;
+            text-align: center;
         }
 
-        div.search {
+        .droplet_spinner {
             display: flex;
-            justify-content: space-around;
-            align-items: center;
+            justify-content: center;
+            margin: 30px;
         }
 
-        input {
-            display: inline-block;
-            /* width: 100px; */
+        .droplet_spinner .droplet {
+            width: 15px;
+            height: 15px;
+            margin: 0 5px;
 
-            /* padding: 15px 5px 5px 5px; */
-            margin-left: 20px;
-            /*margin: 5px 0px 0px 20px;*/
-            border: 0px;
-            outline: none;
+            background-color: #e14242;
+            border-radius: 50%;
+            transform-origin: center bottom;
 
-            font-size: 16px;
+            animation: bounce 1.2s cubic-bezier(0.3, 0.01, 0.4, 1) infinite;
+        }
+
+        .main {
+            position: absolute;
+            top: calc(50% - 50px);
+            /* 화면의 세로 중앙에서 50px 위로 조정 */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            /* 필요에 따라 조정 */
+        }
+
+        .droplet_spinner .droplet:nth-child(1) {
+            animation-delay: -0.4s;
+        }
+
+        .droplet_spinner .droplet:nth-child(2) {
+            animation-delay: -0.2s;
+        }
+
+        .droplet_spinner .droplet:nth-child(3) {
+            animation-delay: 0s;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* 로딩중 end */
+
+
+        /***********************************
+        세부 조정
+        ***********************************/
+        #fraudsTitle {
+            font-size: 30px;
+            line-height: 38px;
+            letter-spacing: -2px;
+
+            padding-bottom: 15px;
 
         }
 
-        #search1 {
-            margin-left: 20px;
-            width: 80px;
-        }
+        #fraudsInfo {
 
-        #search2 {
-            margin-left: 20px;
-            text-align: center;
+            border-bottom: 1px solid #e2e2e2;
+            padding-bottom: 20px;
+            color: #666;
 
         }
 
-        .lineIcon {
-            height: 20px;
-        }
-
-        /* 테이블 출력 부분 */
-
-        /**************************
-        *******************************/
-        /* 테이블 제목과 테이블 왼쪽 너비 맞춤 */
-        .count {
-            font-weight: bolder;
+        #fraudsInfo p {
+            display: inline;
+            margin-right: 20px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
 
         }
 
-        .content {
-            width: 68%;
-            margin: 0 auto;
-        }
-
-
-        /* div.table-content {
-            width: 68%;
-            margin: 0 auto;
-            margin-bottom: 100px;
-        } */
-
-        table th {
-            padding: 8px;
-            text-align: left;
-            text-align: center;
-            border-top: 2px solid #000;
-            border-bottom: 2px solid #000;
-            color: #000;
-            font-weight: bold;
-        }
-
-        #results tr {
-            border-bottom: 1px solid #d3d3d3;
-            /* 회색 선 추가 */
-        }
-
-        .showDetails:hover {
-
-            color: #ff4dd6;
-            /* 원하는 크기로 조정하세요 */
-        }
-
-        #results td:nth-child(2),
-        #results td:nth-child(3),
-        #results td:nth-child(4) {
-            text-align: center;
-            /* 가운데 정렬로 수정 */
+        #fraudsContent p:nth-child(2) {
+            color: white;
+            /* 글자 안보이게 하기 */
         }
     </style>
 
@@ -167,24 +203,24 @@
                     <div class="nav-wrap">
                         <ul class="gnb-list">
                             <li>
-                                <a href="" class="has-depth">
+                                <a href="" class="has-depth"><!--추후 수정 필요-->
                                     <span>ABOUT</span>
                                 </a>
                                 <ul>
                                     <li>
-                                        <a href="#"><!--페이지 나중에 삽입-->
+                                        <a th:href="@{/about}"><!--추후 수정 필요-->
                                             <span>NICE TO MATCH YOU</span>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="" class="has-depth">
+                                <a href="#" class="has-depth">
                                     <span>SERVICE</span>
                                 </a>
                                 <ul>
                                     <li>
-                                        <a th:href="@{/showOvsNews}">
+                                        <a th:href="@{/showovsNews}">
                                             <span>NEWS</span>
                                         </a>
                                     </li>
@@ -201,34 +237,20 @@
                                 </ul>
                             </li>
                             <li>
-                                <a th:href="@{/search}">
+                                <a th:href="@{/search}"><!--서희가 수정한 css로 파일한-->
                                     <span>MATCH</span>
                                 </a>
                             </li>
                             <li>
-                                <a href=""><!--수정 필요-->
+                                <a href="#">
                                     <span>INFO</span>
                                 </a>
                             </li>
-                            <li sec:authorize="isAnonymous()">
+                            <li>
                                 <a th:href="@{/user/login}">
-                                    <span>Login</span>
+                                    <span>LOGIN</span>
                                 </a>
                             </li>
-                            <li sec:authorize="isAuthenticated()">
-                                <a href="" class="has-depth">
-                                    <span>MyPage</span>
-                                </a>
-                                <ul>
-                                    <li>
-                                        <a th:href="@{/user/logout}">
-                                            <span>Logout</span>
-                                        </a>
-                                    </li>
-
-                                </ul>
-                            </li>
-
                         </ul>
                     </div> <!-- // .nav-wrap -->
                 </nav>
@@ -249,105 +271,18 @@
 
 
             <!--데이터 꽂히는 부분 내용 들어갈 부분!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-
             <div class="content">
-                <div class="page-header on">
-                    <h2>무역 사기사례</h2>
-                </div>
-                <!--검색창-->
-                <div class="searchBox">
-                    <div class="search">
-                        <input type="text" id="search1" placeholder="국가명 입력">
-                        <img th:src="@{/images/line.png}" alt="" class="lineIcon">
-                        <input type="text" id="search2" placeholder="뉴스 제목 입력">
-                        <i type="button" class="fa-solid fa-magnifying-glass" onclick="fetchFraudData()"></i>
-
+                <h1 class="page-header">사기 사례 상세 정보</h1>
+                <!--로딩 부분-->
+                <div id="fraudContent">
+                    <div class="main">
+                        <div class="droplet_spinner">
+                            <div class="droplet"></div>
+                            <div class="droplet"></div>
+                            <div class="droplet"></div>
+                        </div>
                     </div>
-
-                    <!-- <button onclick="fetchFraudData()">검색</button> -->
-                </div>
-
-                <br><br>
-                <!--테이블 출력 부분-->
-
-                <div class="table-content">
-                    <div class="count">
-                        <span>총 </span><span id="board-count" style="color: #ff4dd6;"></span><span> 건</span>
-                    </div>
-                    <table border="1">
-                        <thead>
-                            <tr>
-                                <th>제목</th>
-                                <th>사기 유형</th>
-                                <th>국가명</th>
-                                <th>일자</th>
-                            </tr>
-                        </thead>
-                        <tbody id="results"></tbody>
-                    </table>
-                </div>
-                <!--<div id="results">결과가 여기에 표시됩니다.</div>-->
-
-                <!-- 검색 버튼 누를시 실행되는 함수 -->
-                <script>
-                    async function fetchFraudData() {
-                        const search1 = encodeURIComponent(document.getElementById('search1').value);
-                        const search2 = encodeURIComponent(document.getElementById('search2').value);
-                        //const search3 = encodeURIComponent(document.getElementById('search3').value);
-
-                        const serviceKey = '1Oo0omv4bVoztr5VGKOWz2QJYFpy2gmu8Kq8DbYg%2F%2B7gX2EfMQBU2jTu6MpQfsbJoqxzTTyyyDdSfpVZ0FIPlA%3D%3D';
-                        const url = `https://apis.data.go.kr/B410001/cmmrcFraudCase/cmmrcFraudCase?serviceKey=${serviceKey}&type=json&numOfRows=10&pageNo=1&search1=${search1}&search2=${search2}&_type=json`;
-
-                        try {
-                            const response = await fetch(url, {
-                                method: 'GET',
-                                headers: {
-                                    'Accept': 'application/json'
-                                }
-                            });
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                            const data = await response.json();
-                            displayResults(data);
-                        } catch (error) {
-                            console.error('Error:', error);
-                            document.getElementById('results').innerHTML = '데이터를 불러오는 중 오류가 발생했습니다.';
-                        }
-                    }
-
-                    function displayResults(data) {
-                        const results = document.getElementById('results');
-                        results.innerHTML = ''; // 결과 영역 초기화
-
-                        if (data && data.response && data.response.body && data.response.body.itemList && data.response.body.itemList.item) {
-                            const tbody = document.getElementById('results');
-                            let count = 0;
-                            data.response.body.itemList.item.forEach(item => {
-                                count += 1;
-                                let fraudType = item.fraudType;
-                                if (item.fraudType == "") {
-                                    fraudType = "-";
-                                }
-                                const tr = document.createElement('tr');
-                                tr.innerHTML = `
-                                <td><a class="showDetails" href="/showFraudDetail?title=${encodeURIComponent(item.titl)}">${item.titl}</a></td>
-                                            <td>${fraudType}</td>
-                                            <td>${item.natn}</td>
-                                            <td>${item.othbcDt}</td>
-                                        `;
-                                tbody.appendChild(tr);
-                            });
-                            $("#board-count").html(count);
-                        } else {
-                            const tbody = document.getElementById('results');
-                            tbody.innerHTML = '<tr><td colspan="3">검색 결과가 없습니다.</td></tr>';
-                        }
-                    }
-
-                </script>
-                <!-- 사기사례 검색 form -->
-
+                </div><!--로딩 end-->
 
 
                 <!--풋터-->
