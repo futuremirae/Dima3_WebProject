@@ -16,6 +16,7 @@
     <meta property="og:image:width" content="800">
     <meta property="og:image:height" content="400">
     <link type="text/css" rel="stylesheet" th:href="@{/css/nice_dev.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/flag.css}">
     <script th:src="@{/js/lib/jquery-3.7.1.min.js}"></script>
     <script th:src="@{/js/nice_dev.js}"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -37,8 +38,26 @@
         }
 
         .result {
-            width: 68%;
+            width: 70%;
             margin: 0 auto;
+
+        }
+
+        tr:nth-child(even) {
+
+            background-color: rgba(155, 217, 228, 0.5);
+        }
+
+        /* 셀렉트 박스 */
+        .selectNation {
+            width: 192px;
+            border: 1px solid #C4C4C4;
+            box-sizing: border-box;
+            border-radius: 10px;
+            padding: 12px 13px;
+            font-weight: 400;
+            line-height: 16px;
+            background-color: transparent;
 
         }
     </style>
@@ -50,9 +69,11 @@
         $(function () {
 
             bankingAPI();
-            $("#exchangeFrom").change(showrate);
-            $("#exchangeTo").change(showrate);
-            $('#amount').change(showrate);
+            //$("#exchangeFrom").change(showrate);
+            //$("#exchangeTo").change(showrate);
+            //$('#amount').change(showrate);
+            $("#exchangeFrom").change(showrateDown);
+            $("#exchangeTo").change(showrateUp);
 
 
 
@@ -71,10 +92,10 @@
                     let receivedData = `
                                     <thead>
                                             <tr>
-                                                <th>통화코드</th>
-                                                <th>국가/통화명</th>
-                                                <th>(송금)받으실때</th>
-                                                <th>(송금)보내실때</th>
+                                                
+                                                <th>국가</th>
+                                                <th>(송금)받을때</th>
+                                                <th>(송금)보낼때</th>
                                                 <th>매매 기준율</th>
                                                 <th>장부가격</th>
                                                 
@@ -85,7 +106,7 @@
                     data.forEach(item => {
                         receivedData += `
                         <tr>
-                            <td>${item.cur_unit}</td>
+                          
                             <td>${item.cur_nm}</td>
                             <td>${item.ttb}</td>
                             <td>${item.tts}</td>
@@ -155,15 +176,47 @@
 
             table += '</tbody>';
             table += `</table>`;
-            //alert(table);
-            //$("#monthRate").append(table);
-            //$("monthRate").prepend(table);
+
             $(".monthRate").after(table);
 
 
         }
+        function showrateUp() {
+            let endpoint = 'convert';
+            let access_key = 'dfb151f54a6885a76957931b4e3c05dd';  // can't reveal API key
+            let from = $("#exchangeFrom").val();
+            let to = $("#exchangeTo").val();
+            let amount = $('#amount').val();
+            $.ajax({
+                url: 'http://apilayer.net/api/' + endpoint + '?access_key=' + access_key + '&from=' + from + '&to=' + to + '&amount=' + amount,
+                dataType: 'jsonp',
+                success: function (json) {
+                    $("#amountDown").val(json.result);
 
 
+                }
+            });
+        }//
+        function showrateDown() {
+            let endpoint = 'convert';
+            let access_key = 'dfb151f54a6885a76957931b4e3c05dd';  // can't reveal API key
+            let from = $("#exchangeFrom").val();
+            let to = $("#exchangeTo").val();
+            let amount = $('#amount').val();
+            $.ajax({
+                url: 'http://apilayer.net/api/' + endpoint + '?access_key=' + access_key + '&from=' + from + '&to=' + to + '&amount=' + amount,
+                dataType: 'jsonp',
+                success: function (json) {
+                    $("#amountDown").val(json.result);
+
+
+                }
+            });
+        }//
+
+
+
+        // 이게 진짜
         function showrate() {
             let endpoint = 'convert';
             let access_key = 'dfb151f54a6885a76957931b4e3c05dd';  // can't reveal API key
@@ -174,7 +227,8 @@
                 url: 'http://apilayer.net/api/' + endpoint + '?access_key=' + access_key + '&from=' + from + '&to=' + to + '&amount=' + amount,
                 dataType: 'jsonp',
                 success: function (json) {
-                    $("#rate-result").html(json.result)
+                    $("#rate-result").html(json.result);
+
 
                 }
             });
@@ -298,7 +352,7 @@
                     <h2>환율</h2>
                     <div>
                         나라선택
-                        <select name="exchageRate" id="exchangeFrom">
+                        <select name="exchageRate" id="exchangeFrom" class="selectNation">
                             <option value="AED">아랍에미리트</option>
                             <option value="AFN">아프가니스탄</option>
                             <option value="ALL">알바니아</option>
@@ -470,7 +524,7 @@
 
                     <div>
                         나라선택
-                        <select name="exchageRate" id="exchangeTo">
+                        <select name="exchageRate" id="exchangeTo" class="selectNation">
                             <option value="AED">아랍에미리트</option>
                             <option value="AFN">아프가니스탄</option>
                             <option value="ALL">알바니아</option>
@@ -632,11 +686,13 @@
                             <option value="ZAR">남아프리카 공화국</option>
                             <option value="ZMW">잠비아</option>
                         </select>
+                        <input type="text" placeholder="금액을 입력하세요" id="amountDown" value="">
                         <span id="rate-result"></span>
                     </div>
+
                     <!-- 환율 form -->
 
-                </div><!--계산기 부분-->
+                </div><!--계산기 부분 전체-->
                 <div class="result">
                     <table class="dailyRate">
                     </table>
