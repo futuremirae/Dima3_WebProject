@@ -7,7 +7,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
-    <title>미래마이페이지</title>
+    <title>규제</title>
     <link rel="icon" th:href="@{/images/common/favi.png}">
     <meta property="og:title" content="나이스투매치유">
     <meta property="og:image:type" content="image/png">
@@ -32,6 +32,21 @@
             font-size: 36px;
             margin-top: 150px;
             margin-bottom: 50px;
+            display: flex;
+            /* Flexbox를 사용하여 요소를 가운데로 정렬합니다. */
+            justify-content: center;
+            /* 수평 가운데 정렬 */
+            align-items: center;
+            /* 수직 가운데 정렬 */
+        }
+
+        .page-header img {
+            margin-right: 10px;
+            /* 이미지 오른쪽에 약간의 여백을 추가합니다. */
+            width: 60px;
+            /* 이미지의 너비를 조정합니다. */
+            height: 60px;
+            /* 이미지의 높이를 조정합니다. */
         }
 
         .content {
@@ -44,6 +59,42 @@
             width: 100%;
 
         }
+
+        /* 테이블 간격 조정 */
+        #regulationTabletd:first-child(2),
+        #regulationTable th:first-child(2) {
+            width: 10%;
+            /* 첫 번째 열의 너비를 200px로 조정합니다. */
+        }
+
+        #regulationTabletd:first-child(3),
+        #regulationTable th:first-child(3) {
+            width: 50%;
+            /* 첫 번째 열의 너비를 200spx로 조정합니다. */
+        }
+
+        #regulationTabletd:first-child,
+        #regulationTable th:first-child {
+
+            width: 10%;
+
+        }
+
+
+
+        #regulationTabletd:first-child(4),
+        #regulationTable th:first-child(4) {
+            width: 20%;
+            /* 첫 번째 열의 너비를 200px로 조정합니다. */
+        }
+
+        #regulationTabletd:first-child(5),
+        #regulationTable th:first-child(5) {
+            width: 5%
+                /* 첫 번째 열의 너비를 200px로 조정합니다. */
+        }
+
+
 
 
 
