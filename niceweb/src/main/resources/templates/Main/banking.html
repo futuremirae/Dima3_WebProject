@@ -100,13 +100,25 @@
             let endpoint = 'convert';
             let access_key = 'dfb151f54a6885a76957931b4e3c05dd';  // can't reveal API key
             let from = $("#exchangeFrom").val();
+            // console.log("from은??")
+            // console.log(from)
             let to = $("#exchangeTo").val();
+            // console.log("to은??")
+
+
+            console.log(to)
             let amount = $('#amount').val();
+            // console.log("amount은??")
+
+            // console.log(amount)
             $.ajax({
                 url: 'http://apilayer.net/api/' + endpoint + '?access_key=' + access_key + '&from=' + from + '&to=' + to + '&amount=' + amount,
                 dataType: 'jsonp',
                 success: function (json) {
+                    alert(json);
                     $("#rate-result").html(json.result)
+                    console.log("결과눈")
+                    console.log(json.result)
 
                 }
             });

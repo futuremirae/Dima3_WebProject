@@ -10,7 +10,7 @@ public class ExchangeRateController {
 	@GetMapping("/rate")
 	public String rate() {
 		
-		return "Main/exchangeRate";
+		return "Main/banking";
 	}
 
 }
