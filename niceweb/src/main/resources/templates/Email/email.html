@@ -30,15 +30,17 @@
             /* header 아래에 20px의 여백을 줍니다. */
         }
 
-        .container {
+        .content {
             margin-top: 20px;
             /* container 위에 20px의 여백을 줍니다. */
+            margin-bottom: 100px;
+
         }
 
+
         .count {
-            margin-left: 500px;
-
-
+            text-align: left;
+            font-weight: bolder;
         }
 
         /**페이지 헤더**/
@@ -170,8 +172,9 @@
                         
                     </tr>
             </thead>`;
+            let count = 0
             $.each(item, function (index, item) {
-
+                count += 1
                 receivedData += `
                         <tr>
                             <input type="hidden" name="userNum" value=${item.emailContent}><!--메일 내용 -->
@@ -188,6 +191,7 @@
                     ;
                 receivedData += `</tr>`;
             });//each
+            $("#board-count").html(count);
 
             $("#sendedEmail-list").append(receivedData);
 
@@ -216,6 +220,8 @@
             // 이메일 삭제 함수 
             function deleteMail() {
                 let emailNum = $(this).attr("attr-emailNum");
+                let count = $("#board-count").text(); // 총 몇개인지 건수
+                count -= 1;
                 if (confirm("해당 메일을 삭제하시겠습니까?")) {
 
                     $.ajax({
@@ -229,6 +235,8 @@
                 }
                 let data = $(this).parent().parent();// 화면에서 tr객체 삭제 
                 data.remove();
+                $("#board-count").html(count);
+
                 //$("#board-count").html(favCount);
 
 
@@ -354,8 +362,9 @@
                 <span id="noResult"></span><!--보낸 메일함이 적을때 출력합니다.
                     -->
                 <div class="table-heading">
-                    <div>
-                        <h2>보낸 메일함</h2>
+
+                    <div class="count">
+                        <span>총 </span><span id="board-count" style="color: #ff4dd6;"></span><span> 건</span>
                     </div>
                     <table id="sendedEmail-list"> <!--보낸 편지 출력-->
 

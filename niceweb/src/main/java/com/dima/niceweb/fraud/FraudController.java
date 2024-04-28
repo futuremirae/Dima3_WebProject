@@ -14,27 +14,27 @@ public class FraudController {
     @GetMapping("/fraud")
     @ResponseBody
     public FraudDTO Fraud() {
-            try{
-                String result = FraudDownload.getFraud();
-                Gson gson = new Gson();
-                FraudDTO fraudDTO = gson.fromJson(result, FraudDTO.class);
-                return fraudDTO;
-            } catch(IOException e) {
-                System.out.println(e.getMessage());
-            }
+        try {
+            String result = FraudDownload.getFraud();
+            Gson gson = new Gson();
+            FraudDTO fraudDTO = gson.fromJson(result, FraudDTO.class);
+            return fraudDTO;
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
         return null;
     }
 
     @GetMapping("/showFraud")
     public String showFraud() {
-        
+
         return "showFraud";
     }
 
     @GetMapping("/showFraudDetail")
     public String showFraudDetail() {
-        
+
         return "showFraudDetail";
     }
-    
+
 }
