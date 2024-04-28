@@ -16,7 +16,6 @@
     <meta property="og:image:width" content="800">
     <meta property="og:image:height" content="400">
     <link type="text/css" rel="stylesheet" th:href="@{/css/nice_dev.css}">
-    <!-- <link type="text/css" rel="stylesheet" th:href="@{/css/flag.css}"> -->
     <script th:src="@{/js/lib/jquery-3.7.1.min.js}"></script>
     <script th:src="@{/js/nice_dev.js}"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -36,30 +35,6 @@
             margin: 0 auto;
             ;
         }
-
-        .result {
-            width: 70%;
-            margin: 0 auto;
-
-        }
-
-        tr:nth-child(even) {
-
-            background-color: rgba(155, 217, 228, 0.5);
-        }
-
-        /* 셀렉트 박스 */
-        .selectNation {
-            width: 192px;
-            border: 1px solid #C4C4C4;
-            box-sizing: border-box;
-            border-radius: 10px;
-            padding: 12px 13px;
-            font-weight: 400;
-            line-height: 16px;
-            background-color: transparent;
-
-        }
     </style>
 
 
@@ -67,27 +42,21 @@
 
 
         $(function () {
-            //showrate(); // 첫페이지에서 보여지는 환율 결과 
-            //1) 윗칸의 나라가 변했을 경우 
-            $("#exchangeFrom").change(showrateUp);
-            $("#amount").on("keyup", showrateUp);
 
             //bankingAPI();
-            //$("#exchangeFrom").change(showrate);
-            //$("#exchangeTo").change(showrate);
-            //$('#amount').change(showrate);
-            //$("#exchangeFrom").change(showrateDown);
-            //$("#exchangeTo").change(showrateUp);
+            $("#exchangeFrom").change(showrate);
+            $("#exchangeTo").change(showrate);
+            $('#amount').change(showrate);
 
 
 
         });
         function bankingAPI() {
             var authkey = 'Uz4el4zIIu0ZrTuEnM8A0ZDuSOb8ubhV';
-            var searchdate = '20240425';
+            var searchdate = '20240426';
             var data = 'AP01';
             var url = `https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=${authkey}&searchdate=${searchdate}&data=${data}`
-
+            const aaa = '' // 이 부분을 이용하는 서버 URL로 변경
 
             fetch(`https://cors-anywhere.herokuapp.com/${url}`)
                 .then((response) => response.json()) // 문자열이 아닌 리스트 형식으로 받아온다 
@@ -96,10 +65,10 @@
                     let receivedData = `
                                     <thead>
                                             <tr>
-                                                
-                                                <th>국가</th>
-                                                <th>(송금)받을때</th>
-                                                <th>(송금)보낼때</th>
+                                                <th>통화코드</th>
+                                                <th>국가/통화명</th>
+                                                <th>(송금)받으실때</th>
+                                                <th>(송금)보내실때</th>
                                                 <th>매매 기준율</th>
                                                 <th>장부가격</th>
                                                 
@@ -110,7 +79,7 @@
                     data.forEach(item => {
                         receivedData += `
                         <tr>
-                          
+                            <td>${item.cur_unit}</td>
                             <td>${item.cur_nm}</td>
                             <td>${item.ttb}</td>
                             <td>${item.tts}</td>
@@ -180,76 +149,44 @@
 
             table += '</tbody>';
             table += `</table>`;
-
+            //alert(table);
+            //$("#monthRate").append(table);
+            //$("monthRate").prepend(table);
             $(".monthRate").after(table);
 
 
         }
-        function showrateUp() {
-            let endpoint = 'convert';
-            let access_key = 'dfb151f54a6885a76957931b4e3c05dd';  // can't reveal API key
-            let from = $("#exchangeFrom").val();
-            console.log("from은??")
-            console.log(from)
-
-            let to = $("#exchangeTo").val();
-            console.log("to은??")
-
-            console.log(to)
-            let amount = $('#amount').val();
-            console.log("amount??")
-
-            console.log(amount);
-            $.ajax({
-                url: 'http://apilayer.net/api/' + endpoint + '?access_key=' + access_key + '&from=' + from + '&to=' + to + '&amount=' + amount,
-                dataType: 'jsonp',
-                success: function (json) {
-                    console.log(json.result)
-                    //$("#rate-result").html(json.result)
-
-                }
-            });
-        }//
-        function showrateDown() {
-            let endpoint = 'convert';
-            let access_key = 'dfb151f54a6885a76957931b4e3c05dd';  // can't reveal API key
-            let from = $("#exchangeFrom").val();
-            let to = $("#exchangeTo").val();
-            let amount = $('#amount').val();
-            $.ajax({
-                url: 'http://apilayer.net/api/' + endpoint + '?access_key=' + access_key + '&from=' + from + '&to=' + to + '&amount=' + amount,
-                dataType: 'jsonp',
-                success: function (json) {
-                    $("#amountDown").val(json.result);
 
 
-                }
-            });
-        }//
-
-
-
-        // 이게 진짜
         function showrate() {
             let endpoint = 'convert';
-            let access_key = 'dfb151f54a6885a76957931b4e3c05dd';  // can't reveal API key
+            //let access_key = 'dfb151f54a6885a76957931b4e3c05dd';  // can't reveal API key
+            let access_key = '58dfaebb4ddb4d8dea6360b93171efff';
             let from = $("#exchangeFrom").val();
+            console.log(from)
             let to = $("#exchangeTo").val();
+            console.log(to)
             let amount = $('#amount').val();
-            $.ajax({
-                url: 'http://apilayer.net/api/' + endpoint + '?access_key=' + access_key + '&from=' + from + '&to=' + to + '&amount=' + amount,
-                dataType: 'jsonp',
-                success: function (json) {
-                    // $("#rate-result").html(json.result);
-                    $("#amountDown").val(json.result);
+            console.log(amount)
+            let arr = `api.currencylayer.com/${endpoint}?access_key=${access_key}&from=${from}&to=${to}&amount=${amount}`;
+            arr = 'https://api.currencylayer.com/' + endpoint + '?access_key=' + access_key + '&from=' + from + '&to=' + to + '&amount=' + amount
+            alert(arr)
+            console.log(`http://api.currencylayer.com/${endpoint}?access_key=${access_key}&from=${from}&to=${to}&amount=${amount}`);
+            // $.ajax({
+            //     // url: 'http://api.currencylayer.com/' + endpoint + '?access_key=' + access_key + '&from=' + from + '&to=' + to + '&amount=' + amount,
+            //     url: `api.currencylayer.com/'${endpoint}?access_key=${access_key}&from=${from}&to=${to}&amount=${amount}`,
+            //     dataType: 'jsonp',
+            //     success: function (json) {
+            //         var result = json.result;
+            //         $("#rate-result").html(result)
+            //         alert(result);
 
-
-                }
-            });
+            //     }
+            // });
         }//
         function showAll() {
             let endpoint = 'historical';
-            let access_key = 'dfb151f54a6885a76957931b4e3c05dd';
+            let access_key = '58dfaebb4ddb4d8dea6360b93171efff';
 
             $.ajax({
                 url: 'http://apilayer.net/api/' + endpoint + '?access_key=' + access_key + '&date=' + '2024-03-02' + '&source' + 'KRW',
@@ -366,8 +303,7 @@
                     <h2>환율</h2>
                     <div>
                         나라선택
-                        <select name="exchageRate" id="exchangeFrom" class="selectNation">
-                            <option value="USD">미국</option>
+                        <select name="exchageRate" id="exchangeFrom">
                             <option value="AED">아랍에미리트</option>
                             <option value="AFN">아프가니스탄</option>
                             <option value="ALL">알바니아</option>
@@ -529,7 +465,7 @@
                             <option value="ZAR">남아프리카 공화국</option>
                             <option value="ZMW">잠비아</option>
                         </select>
-                        <input type="text" id="amount" value="1">
+                        <input type="text" placeholder="금액을 입력하세요" id="amount">
                     </div>
                     &nbsp;
                     &nbsp;
@@ -539,8 +475,7 @@
 
                     <div>
                         나라선택
-                        <select name="exchageRate" id="exchangeTo" class="selectNation">
-                            <option value="KRW" selected>대한민국</option>
+                        <select name="exchageRate" id="exchangeTo">
                             <option value="AED">아랍에미리트</option>
                             <option value="AFN">아프가니스탄</option>
                             <option value="ALL">알바니아</option>
@@ -620,6 +555,7 @@
                             <option value="KHR">캄보디아</option>
                             <option value="KMF">코모로</option>
                             <option value="KPW">북한</option>
+                            <option value="KRW">대한민국</option>
                             <option value="KWD">쿠웨이트</option>
                             <option value="KYD">케이맨 제도</option>
                             <option value="KZT">카자흐스탄</option>
@@ -645,8 +581,6 @@
                             <option value="MXN">멕시코</option>
                             <option value="MYR">말레이시아</option>
                             <option value="MZN">모잠비크</option>
-                            <option value="USD">미국</option>
-
                             <option value="NAD">나미비아</option>
                             <option value="NGN">나이지리아</option>
                             <option value="NIO">니카라과</option>
@@ -703,19 +637,17 @@
                             <option value="ZAR">남아프리카 공화국</option>
                             <option value="ZMW">잠비아</option>
                         </select>
-                        <input type="text" id="amountDown" value="">
-                        <!-- <span id="rate-result"></span> -->
+                        <span id="rate-result"></span>
                     </div>
-
                     <!-- 환율 form -->
 
-                </div><!--계산기 부분 전체-->
-                <div class="result">
-                    <table class="dailyRate">
-                    </table>
+                </div><!--계산기 부분-->
 
-                </div>
+                <table class="dailyRate">
 
+
+
+                </table>
             </div><!--전체 content -->
 
 
