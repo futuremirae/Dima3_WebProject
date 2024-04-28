@@ -25,8 +25,6 @@
     <script th:src="@{/js/lib/jquery-3.7.1.min.js}"></script>
     <script th:src="@{/js/nice_dev.js}"></script>
 
-    <script>
-    </script>
     <style>
         /**페이지 헤더**/
         .page-header {
@@ -36,9 +34,40 @@
             margin-bottom: 50px;
         }
 
+        .content {
+            width: 68%;
+            margin: 0 auto;
+        }
+
+        #regulationTable {
+            border-collapse: collapse;
+            width: 100%;
+
+        }
+
+
+
+
         #insertReg {
             margin-top: 30px;
         }
+
+        #regulationTable th {
+            padding: 8px;
+            text-align: left;
+            text-align: center;
+            border-top: 2px solid #000;
+            border-bottom: 2px solid #000;
+            color: #000;
+            font-weight: bold;
+        }
+
+        #regulationTable tbody tr {
+            border-bottom: 1px solid #d3d3d3;
+            /* 회색 선 추가 */
+        }
+
+        /* #regulationTable {} */
     </style>
 
 </head>
@@ -58,24 +87,24 @@
                     <div class="nav-wrap">
                         <ul class="gnb-list">
                             <li>
-                                <a href="" class="has-depth"><!--추후 수정 필요-->
+                                <a href="" class="has-depth">
                                     <span>ABOUT</span>
                                 </a>
                                 <ul>
                                     <li>
-                                        <a href="#"><!--추후 수정 필요-->
+                                        <a th:href="@{about}"><!--페이지 나중에 삽입-->
                                             <span>NICE TO MATCH YOU</span>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="#" class="has-depth">
+                                <a href="" class="has-depth">
                                     <span>SERVICE</span>
                                 </a>
                                 <ul>
                                     <li>
-                                        <a th:href="@{/showovsNews}">
+                                        <a th:href="@{/showOvsNews}">
                                             <span>NEWS</span>
                                         </a>
                                     </li>
@@ -92,20 +121,34 @@
                                 </ul>
                             </li>
                             <li>
-                                <a th:href="@{/search}"><!--서희가 수정한 css로 파일한-->
+                                <a th:href="@{/search}">
                                     <span>MATCH</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href=""><!--수정 필요-->
                                     <span>INFO</span>
                                 </a>
                             </li>
-                            <li>
+                            <li sec:authorize="isAnonymous()">
                                 <a th:href="@{/user/login}">
-                                    <span>LOGIN</span>
+                                    <span>Login</span>
                                 </a>
                             </li>
+                            <li sec:authorize="isAuthenticated()">
+                                <a th:href="@{/user/myPage}" class="has-depth">
+                                    <span>MyPage</span>
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a th:href="@{/user/logout}">
+                                            <span>Logout</span>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
+
                         </ul>
                     </div> <!-- // .nav-wrap -->
                 </nav>
@@ -128,9 +171,9 @@
             <!--데이터 꽂히는 부분 내용 들어갈 부분!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
             <div class="content">
                 <div class="page-header on">
+                    <img id="countryFlag" src="" alt="Flag">
                     <h2>규제</h2>
                 </div>
-                <!--규제 부분-->
                 <div id="insertReg">
 
                 </div>
@@ -172,8 +215,14 @@
         <!--나라별 규제 끌어오는 부분-->
         <script>
             document.addEventListener('DOMContentLoaded', function () {
+
+                console.log(flagUrl)
                 const params = new URLSearchParams(window.location.search);
                 const country = params.get('country');
+
+                //국기 api
+                var flagUrl = `https://flagsapi.com/${country}/flat/64.png`; // 국기 이미지 URL 생성
+                document.getElementById('countryFlag').src = flagUrl; // 이미지 소스 업데이트
 
                 if (!country) {
                     document.getElementById('insertReg').innerHTML = 'No country specified.';
@@ -221,7 +270,18 @@
                 if (data.length === 0) {
                     return 'No data found for selected country.';
                 }
-                let table = '<table border="1">';
+                let table = '<table border="1" id="regulationTable">';
+                table += `
+            <thead>
+                    <tr>
+                        <th>국가코드</th>
+                        <th>물품</th>
+                        <th>적용국가</th>
+                        <th>규제내용</th>
+                        <th>HS코드</th>
+                        
+                    </tr>
+            </thead>`;
                 data.forEach((row, index) => {
                     table += '<tr>';
                     row.forEach(cell => {
@@ -233,6 +293,7 @@
                 return table;
             }
         </script>
+
 
         <!--상단과 하단바에 적용되는 부분-->
         <script th:src="@{/js/lib/gsap.min.js}"></script>
