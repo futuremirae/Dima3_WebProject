@@ -9,6 +9,13 @@ public class GlobeController {
     @GetMapping("/globeindex")
     public String globeindex() {
 
-        return "globeindex";
+        return "Globe/globeindex";
     }
+    
+    @GetMapping("/showReg")
+    public String showReg() {
+
+        return "Globe/showReg";
+    }
+
 }

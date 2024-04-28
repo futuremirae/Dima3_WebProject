@@ -48,6 +48,7 @@ public class SecurityConfig {
 					,"/images/**"
 					,"/fonts/**"
 					,"/css/**"
+					,"/csv/**"
 					,"/js/**"	
 					,"/video/**"
 					,"/script/**").permitAll()//permitAll()은 인증 절차 없이도 접근가능한 요청 
