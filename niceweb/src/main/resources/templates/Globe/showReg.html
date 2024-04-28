@@ -27,6 +27,19 @@
 
     <script>
     </script>
+    <style>
+        /**페이지 헤더**/
+        .page-header {
+            text-align: center;
+            font-size: 36px;
+            margin-top: 150px;
+            margin-bottom: 50px;
+        }
+
+        #insertReg {
+            margin-top: 30px;
+        }
+    </style>
 
 </head>
 
@@ -114,8 +127,13 @@
 
             <!--데이터 꽂히는 부분 내용 들어갈 부분!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
             <div class="content">
+                <div class="page-header on">
+                    <h2>규제</h2>
+                </div>
+                <!--규제 부분-->
+                <div id="insertReg">
 
-
+                </div>
 
                 <!--풋터-->
                 <footer id="footer" class="footer">
@@ -150,6 +168,71 @@
                 </footer>
             </div><!-- id:scroller-->
         </div><!-- // #wrap -->
+
+        <!--나라별 규제 끌어오는 부분-->
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const params = new URLSearchParams(window.location.search);
+                const country = params.get('country');
+
+                if (!country) {
+                    document.getElementById('insertReg').innerHTML = 'No country specified.';
+                    return;
+                }
+
+                fetch('/file/STAT_REG.csv')
+                    .then(response => response.text())
+                    .then(csvString => {
+                        const parsedData = parseCSV(csvString);
+                        const filteredData = filterByCountry(parsedData, country);
+                        const tableHTML = convertToTableHTML(filteredData);
+                        document.getElementById('insertReg').innerHTML = tableHTML;
+                    })
+                    .catch(error => {
+                        console.error('Failed to load CSV file:', error);
+                        document.getElementById('insertReg').innerHTML = 'Error loading data.';
+                    });
+            });
+
+            function parseCSV(csvString) {
+                const rows = csvString.split('\n').filter(row => row.trim() !== '');
+                return rows.map(row => {
+                    let inQuotes = false;
+                    let modifiedRow = '';
+                    for (let char of row) {
+                        if (char === '"') {
+                            inQuotes = !inQuotes;
+                        }
+                        if (char === ',' && inQuotes) {
+                            modifiedRow += '|'; // 일시적인 대체 문자
+                        } else {
+                            modifiedRow += char;
+                        }
+                    }
+                    return modifiedRow.split(',').map(value => value.replace(/\|/g, ',').trim().replace(/"/g, ''));
+                });
+            }
+
+            function filterByCountry(data, country) {
+                return data.filter(row => row[0].toLowerCase() === country.toLowerCase());
+            }
+
+            function convertToTableHTML(data) {
+                if (data.length === 0) {
+                    return 'No data found for selected country.';
+                }
+                let table = '<table border="1">';
+                data.forEach((row, index) => {
+                    table += '<tr>';
+                    row.forEach(cell => {
+                        table += `<td>${cell}</td>`;
+                    });
+                    table += '</tr>';
+                });
+                table += '</table>';
+                return table;
+            }
+        </script>
 
         <!--상단과 하단바에 적용되는 부분-->
         <script th:src="@{/js/lib/gsap.min.js}"></script>
