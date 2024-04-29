@@ -379,17 +379,17 @@
                             </li>
                             <li sec:authorize="isAnonymous()">
                                 <a th:href="@{/user/login}">
-                                    <span>Login</span>
+                                    <span>LOGIN</span>
                                 </a>
                             </li>
                             <li sec:authorize="isAuthenticated()">
                                 <a th:href="@{/user/mypage}" class="has-depth">
-                                    <span>MyPage</span>
+                                    <span>MY PAGE</span>
                                 </a>
                                 <ul>
                                     <li>
                                         <a th:href="@{/user/logout}">
-                                            <span>Logout</span>
+                                            <span>LOGOUT</span>
                                         </a>
                                     </li>
 

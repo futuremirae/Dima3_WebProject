@@ -34,54 +34,68 @@
                     <div class="nav-wrap">
                         <ul class="gnb-list">
                             <li>
-                                <a href="about.html" class="has-depth">
+                                <a href="" class="has-depth">
                                     <span>ABOUT</span>
                                 </a>
                                 <ul>
                                     <li>
-                                        <a href="about.html">
+                                        <a th:href="@{/about}"><!--페이지 나중에 삽입-->
                                             <span>NICE TO MATCH YOU</span>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="service.html" class="has-depth">
+                                <a href="" class="has-depth">
                                     <span>SERVICE</span>
                                 </a>
                                 <ul>
                                     <li>
-                                        <a href="service.html">
+                                        <a th:href="@{/showOvsNews}">
                                             <span>NEWS</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="service.html">
+                                        <a th:href="@{/showFraud}">
                                             <span>무역 사기사례</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="service.html">
+                                        <a th:href="@{/rate}">
                                             <span>Exchange Rate</span>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="match.html">
+                                <a th:href="@{/search}">
                                     <span>MATCH</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="info.html">
+                                <a href=""><!--수정 필요-->
                                     <span>INFO</span>
                                 </a>
                             </li>
-                            <li>
+                            <li sec:authorize="isAnonymous()">
                                 <a th:href="@{/user/login}">
                                     <span>LOGIN</span>
                                 </a>
                             </li>
+                            <li sec:authorize="isAuthenticated()">
+                                <a th:href="@{/user/mypage}" class="has-depth">
+                                    <span>MY PAGE</span>
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a th:href="@{/user/logout}">
+                                            <span>LOGOUT</span>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
+
                         </ul>
                     </div> <!-- // .nav-wrap -->
                 </nav>
@@ -111,15 +125,15 @@
                                 <div class="mypage-main__menu">
                                     <div class="mypage-main__box mypageBox--style1">
                                         <p class="title">관심바이어</p>
-                                        <a th:href="@{/myPage/myFavCompany}" class="btn">관심바이어 보기</a>
+                                        <a th:href="@{/user/myFavCompany}" class="btn">관심바이어 보기</a>
                                     </div>
                                     <div class="mypage-main__box mypageBox--style2">
                                         <p class="title">이메일 발송내역</p>
-                                        <a th:href="@{/Email/emailDetails}" class="btn">확인하기</a>
+                                        <a th:href="@{/mail/sendedMail}" class="btn">확인하기</a>
                                     </div>
                                     <div class="mypage-main__box mypageBox--style3">
                                         <p class="title">개인정보</p>
-                                        <a th:href="@{/myPage/myPageEdit}" class="btn">확인하기</a>
+                                        <a href="#" class="btn">확인하기</a><!--아직 수정중-->
                                     </div>
                                 </div> <!-- mypage-main__menu-->
                             </div> <!-- mypage-main-->
