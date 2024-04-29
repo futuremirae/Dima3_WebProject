@@ -113,9 +113,10 @@
 
         }
 
-        .clickBtn {
+        .bbb {
             float: right;
-            margin-bottom: 20px;
+            /* margin-left: 100px; */
+
 
             /* You can adjust the margin as needed */
             color: #fff;
@@ -139,6 +140,54 @@
             border-radius: .25rem;
             transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 
+        }
+
+        .bbb {
+            /* margin: 1rem; */
+            margin-bottom: 30px;
+            margin-left: 30px;
+            background-color: #385E82;
+            border-color: #385E82;
+        }
+
+        .jittery {
+            animation: jittery 4s infinite;
+        }
+
+        @keyframes jittery {
+
+            5%,
+            50% {
+                transform: scale(1);
+            }
+
+            10% {
+                transform: scale(0.9);
+            }
+
+            15% {
+                transform: scale(1.15);
+            }
+
+            20% {
+                transform: scale(1.15) rotate(-5deg);
+            }
+
+            25% {
+                transform: scale(1.15) rotate(5deg);
+            }
+
+            30% {
+                transform: scale(1.15) rotate(-3deg);
+            }
+
+            35% {
+                transform: scale(1.15) rotate(2deg);
+            }
+
+            40% {
+                transform: scale(1.15) rotate(0);
+            }
         }
 
 
@@ -262,11 +311,9 @@
                     <img id="countryFlag" src="" alt="Flag">
                     <h2>규제</h2>
                 </div>
-                <button class="clickBtn"><a href="https://www.hs-tariff.com/main/hs_mti_ai_main/?device=pc"
-                        target="_blank">HS코드를
+                <button class="bbb btn-primary jittery"><a
+                        href="https://www.hs-tariff.com/main/hs_mti_ai_main/?device=pc" target="_blank">HS코드를
                         모른다면</a></button>
-
-
 
 
                 <div id="insertReg">
