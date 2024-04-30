@@ -32,11 +32,12 @@
 
         .content {
             margin-top: 200px;
+
         }
 
         .searchBox {
-            margin-top: 120px;
-            /* 화면 상단에서 떨어진 정도 */
+            margin-top: 50px;
+            /* 페이지 헤더와의 윗 간격 조정  */
         }
 
         /**페이지 헤더**/
@@ -44,7 +45,6 @@
             text-align: center;
             font-size: 36px;
             margin-top: 150px;
-            margin-bottom: 50px;
         }
 
         /* 검색창 영역*/
@@ -55,10 +55,8 @@
             width: 500px;
             height: 50px;
             border-radius: 25px;
-            /* box-shadow: 5px 5px 5px gray; */
             padding-left: 10px;
             border: 1px solid gray;
-
         }
 
         div.search {
@@ -69,23 +67,24 @@
 
         input {
             display: inline-block;
-            /* width: 100px; */
-
-            /* padding: 15px 5px 5px 5px; */
             margin-left: 20px;
-            /*margin: 5px 0px 0px 20px;*/
             border: 0px;
             outline: none;
-
             font-size: 16px;
-
         }
 
-        /* 테이블 출력 부분 */
+        .searchBox {
+            margin-bottom: 120px;
+        }
 
-        /**************************
-        *******************************/
+
+        /* 테이블 출력 부분 */
         /* 테이블 제목과 테이블 왼쪽 너비 맞춤 */
+
+        .table-content {
+            display: none;
+        }
+
         .count {
             font-weight: bolder;
 
@@ -95,13 +94,6 @@
             width: 68%;
             margin: 0 auto;
         }
-
-
-        /* div.table-content {
-            width: 68%;
-            margin: 0 auto;
-            margin-bottom: 100px;
-        } */
 
         table th {
             padding: 8px;
@@ -119,7 +111,6 @@
         }
 
         .showDetails:hover {
-
             color: #ff4dd6;
             font-size: larger;
             /* 원하는 크기로 조정하세요 */
@@ -132,11 +123,22 @@
             /* 가운데 정렬로 수정 */
         }
 
-        /*****
-        테이블 hidden
-        ******/
-        .hidden {
-            display: none;
+        /* 결과 없음 메시지 스타일 */
+        #noResult {
+            text-align: center;
+            /* 텍스트 가운데 정렬 */
+            width: 100%;
+            /* 전체 너비를 차지하도록 설정 */
+            color: var(--dark-gray);
+            /* 글자 색상 조정 */
+            font-size: 18px;
+            /* 글자 크기 확대 */
+            font-weight: bold;
+            /* 글자 두께를 굵게 */
+            margin-bottom: 100px;
+            /* fotter와의 간격조정 */
+            display: block;
+            /* 블록 레벨 요소로 설정 */
         }
     </style>
     <script>
@@ -187,12 +189,18 @@
                             `;
                     tbody.appendChild(tr);
                 });
-                $("#board-count").html(count);
-            } else {
-                alert("결과 없음");
+                if (count != 0) { // 검색된 정보가 있는 경우 
+                    $("#board-count").html(count);
+                    $(".table-content").show(); // table-content를 보이게 함
+                    $("#noResult").html(""); // 재검색의 경우 안보이도록 숨김
+                } else {
+
+                    $("#noResult").html("검색된 결과가 없습니다");
+                    $(".table-content").hide();
+                }
+            } else { // 동작 x
                 $("#noResult").html("검색된 결과가 없습니다");
-                // const tbody = document.getElementById('results');
-                // tbody.innerHTML = '<tr><td colspan="3">검색 결과가 없습니다.</td></tr>';
+                $(".table-content").hide();
             }
         }
     </script>
