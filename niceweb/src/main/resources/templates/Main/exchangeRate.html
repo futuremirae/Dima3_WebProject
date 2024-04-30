@@ -31,7 +31,6 @@
 
     <script>
 
-
         $(function () {
             init(); // 4월 환율 데이터 
             //bankingAPI(); -- 안됨 
@@ -313,10 +312,6 @@
 
         }
 
-
-
-
-
     </script>
 </head>
 
@@ -417,9 +412,16 @@
         </header>
         <div id="scroller" class="scroller" data-scrollbar>
             <div class="content">
-                <div class="page-header on">
-                    <h2>환율 계산기</h2>
+                <div class="sub-visual sub-visual--sub2">
+                    <div class="sub-visual__inner">
+                        <h2 class="sub-visual__h2">환율 계산기</h2>
+                        <p class="sub-visual__desc">바이어에게 실시간 환율 정보를 제공하는 페이지입니다. </p>
+                    </div>
+
                 </div>
+                <!-- <div class="page-header on">
+                    <h2>환율 계산기</h2>
+                </div> -->
 
                 <div class="crateCal" id="crateCal"><!--계산 부분-->
 
