@@ -5,8 +5,14 @@ header {
 
 .content {
     margin-top: 200px;
+    margin: 0 auto;
 
 }
+
+/* .content {
+    width: 68%;
+
+} */
 
 .searchBox {
     margin-top: 50px;
@@ -63,14 +69,10 @@ input {
 
 }
 
-.content {
-    width: 68%;
-    margin: 0 auto;
-}
 
 
 
-table th {
+.tableList th {
     padding: 8px;
     text-align: left;
     text-align: center;

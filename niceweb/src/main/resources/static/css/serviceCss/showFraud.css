@@ -110,7 +110,7 @@ input {
     margin: 0 auto;
 }
 
-table th {
+.tableList th {
     padding: 8px;
     text-align: left;
     text-align: center;
