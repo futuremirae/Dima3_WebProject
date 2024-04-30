@@ -153,6 +153,7 @@
         function plusMyCmp() {
             let dunsNo = $(this).attr("attr-dunsno"); // 고유 던스넘버
             let userNum = $("#userNum").val(); // 사용자의 고유 넘버 넣어주기 ~~
+            alert(userNum);
 
 
             $.ajax({
@@ -314,9 +315,7 @@
                     <!-- cosine 시작 -->
                     <h2>MATCH</h2>
                     <!-- 로그인 유저의 고유 넘버값 넣어주는거 있지말기-->
-                    <!-- <input type="hidden" id="loginId" th:value="${#authentication.name}"> 로그인한 유저의 -->
-                    <input type="hidden" id="userNum" value="1"><!--우선은 임의로 만들어봄 -->
-
+                    <input type="hidden" id="userNum" name="userNum" th:value="${#authentication.principal.userNum}">
                     <form th:action="@{/predict}" method="POST">
                         <div class="search">
                             <input type="text" placeholder="키워드 입력" id="search" name="inputKeyword"

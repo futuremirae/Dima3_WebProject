@@ -34,73 +34,54 @@
 					<div class="nav-wrap">
 						<ul class="gnb-list">
 							<li>
-								<a href="" class="has-depth">
+								<a href="about.html" class="has-depth">
 									<span>ABOUT</span>
 								</a>
 								<ul>
 									<li>
-										<a th:href="@{/about}"><!--페이지 나중에 삽입-->
+										<a href="about.html">
 											<span>NICE TO MATCH YOU</span>
 										</a>
 									</li>
 								</ul>
 							</li>
 							<li>
-								<a href="" class="has-depth">
+								<a href="service.html" class="has-depth">
 									<span>SERVICE</span>
 								</a>
 								<ul>
 									<li>
-										<a th:href="@{/showOvsNews}">
-											<span>News</span>
+										<a href="service.html">
+											<span>NEWS</span>
 										</a>
 									</li>
 									<li>
-										<a th:href="@{/showFraud}">
-											<span>Trade fraud</span>
+										<a href="service.html">
+											<span>무역 사기사례</span>
 										</a>
 									</li>
 									<li>
-										<a th:href="@{/globeindex}">
-											<span>Trade statistics</span>
-										</a>
-									</li>
-									<li>
-										<a th:href="@{/rate}">
+										<a href="service.html">
 											<span>Exchange Rate</span>
 										</a>
 									</li>
 								</ul>
 							</li>
 							<li>
-								<a th:href="@{/search}">
+								<a href="match.html">
 									<span>MATCH</span>
 								</a>
 							</li>
 							<li>
-								<a href=""><!--수정 필요-->
-									<span>NOTICE</span>
+								<a href="info.html">
+									<span>INFO</span>
 								</a>
 							</li>
-							<li sec:authorize="isAnonymous()">
+							<li>
 								<a th:href="@{/user/login}">
 									<span>LOGIN</span>
 								</a>
 							</li>
-							<li sec:authorize="isAuthenticated()">
-								<a th:href="@{/user/mypage}" class="has-depth">
-									<span>MY PAGE</span>
-								</a>
-								<ul>
-									<li>
-										<a th:href="@{/user/logout}">
-											<span>LOGOUT</span>
-										</a>
-									</li>
-
-								</ul>
-							</li>
-
 						</ul>
 					</div> <!-- // .nav-wrap -->
 				</nav>
@@ -124,14 +105,15 @@
 
 								<!-- login form 변경-->
 								<main class="form-login w-100 m-auto">
-									<form>
+									<form th:action="@{/user/loginProc}" method="post">
 										<div class="form-floating">
 											<label for="floatingInput">ID</label>
-											<input type="id" class="form-control" id="userId" placeholder="ID">
+											<input type="id" class="form-control" id="userId" name="userId"
+												placeholder="ID">
 										</div>
 										<div class="form-floating">
 											<label for="floatingPassword">Password</label>
-											<input type="password" class="form-control" id="floatingPassword"
+											<input type="password" class="form-control" id="userPwd" name="userPwd"
 												placeholder="Password">
 										</div>
 										<button class="w-100 btn btn-lg btn-primary" type="submit">LOGIN</button>
