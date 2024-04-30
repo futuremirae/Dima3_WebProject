@@ -20,11 +20,117 @@
 
         //aa();
 
+        function aa() {
+            let a = "aaa";
+            let englishRegex = /^[a-z|A-Z]+$/;
+            let koreanRegex = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+
+            if (!englishRegex.test(a)) { // 영문이 아닐경우 
+                alert(englishRegex.test(a));
+
+            }
+            if (koreanRegex.test(a)) {
+                alert("~~~aaaaaaaaa~!!!관심 품목을 한글이다.");
+
+            }
+        }
+
+        function checkjoinform() { // 자바스크립트가 모두 실행된 후에 마지막에 실행
+
+            let userName = $("#userName").val() // 담당자 이름 
+            let userPhone = $("#userPhone").val(); // 담당자 전화번호 
+            // let englishRegex = /^[a-zA-Z]+$/;
+            // let koreanRegex = /^[가-힣]+$/;
+
+            let englishRegex = /^[a-z|A-Z]+$/;
+            let koreanRegex = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+            let numberRegex = /^\d+$/; // 숫자
+            let dunsNoRegex = /^\d{9}$/; // 던스넘버
+            if (!englishRegex.test(userName)) {
+                alert("담당자 이름을 영문으로 작성해주세요");
+                $("#userName").focus();
+                return false;
+            }
+            if (!numberRegex.test(userPhone)) {
+                alert("연락처는 숫자만 입력해주세요.");
+                $("#userPhone").focus();
+                return false;
+            }
+            if (!englishRegex.test($("#userCmpEng").val()) || $("#userCmpEng").val().length == 0) {
+                alert("회사명을 영문으로 작성해주세요");
+                $("#userCmpEng").focus();
+                return false;
+            }
+            if (!koreanRegex.test($("#userCmpKor").val()) || $("#userCmpKor").val().length == 0) {
+                alert("회사명을 국문으로 작성해주세요");
+                $("#userCmpKor").focus();
+                return false;
+            }
+            if (!$("#countrySelect").val()) {
+                alert("국가를 선택해주세요.");
+                $("#countrySelect").focus();
+                return false;
+            }
+            if (!englishRegex.test($("#userCeoEng").val()) || $("#userCeoEng").val().length == 0) {
+                alert("대표자명을 영문으로 입력해주세요.");
+                $("#userCeoEng").focus();
+                return false;
+            }
+            if (!koreanRegex.test($("#userCeoKor").val()) || $("#userCeoKor").val().length == 0) {
+                alert("대표자명을 국문으로 입력해주세요.");
+                $("#userCeoKor").focus();
+                return false;
+            }
+
+            if (!dunsNoRegex.test($("#userDunsNo").val()) || $("#userDunsNo").val().length == 0) {
+                alert("올바른 던스넘버를 입력하세요.");
+                $("#userDunsNo").focus();
+                return false;
+            }
+
+            if ($("#userUrl").val().length == 0) {
+                alert("회사 홈페이지 주소를 입력하세요.")
+                $("#userUrl").focus();
+                return false;
+            }
+            if ($(!englishRegex.test($("#userSicCd").val()) || "#userSicCd").val().length == 0) {
+                alert("자사 취급 품목을 영문으로 입력해주세요.")
+                $("#userSicCd").focus();
+                return false;
+            }
+            // 수정필요
+            // if ($("#userKeyWord").val().length != 0) { // 관심 품목 키워드가 입력되었는데 
+            //     if ($(!englishRegex.test($("#userKeyWord").val()))) { // 영문이 아닐경우 
+            //         alert("관심 품목을 영문으로 입력해주세요.");
+            //         $("#userKeyWord").focus();
+            //         return false;
+            //     }
+            // }
+
+            if (!$("#agreementCheckbox").is(":checked")) {
+                alert("필수 이용약관에 동의해주세요");
+                $("#agreementCheckbox").focus();
+                return false;
+
+            }
+            if ($("#userId").attr("attr-checkid") && $("#userPwdConfirm").attr("attr-checkpwd")) {
+                return true;
+            } else {
+                alert("아이디와 비밀번호를 다시 확인해 주세요" + $("#userId").attr("attr-checkid") + $("#userPwdConfirm").attr("attr-checkpwd"))
+                return false;
+            }
+
+
+
+        }
 
         $(function () { // ajax 넘어가는 부분 
+            $("#userId").keyup(checkIdFunc); // 아이디 검사 -> 키업 이벤트
 
 
-
+            $("#userPwd").keyup(checkPwdFunc); // 비밀번호 유효성 검사
+            $("#userPwd").on('click', function () { $("#userPwdConfirm").val(""); $("#warnPwdConfirm").html(""); });// 변수 false도 해주는 코드 삽입 
+            $("#userPwdConfirm").keyup(doubleCheckPwd); // 비밀번호 확인 부분
 
             // 국가 데이터 배열
             let countries = [
@@ -92,10 +198,78 @@
             });
         })
 
+        // 아이디 유효성 검사 
+        function checkIdFunc() {
+
+            let userId = $("#userId").val(); // 사용자 입력 아이디 
+            if (!/^[a-z]{4,12}$/.test(userId)) {
+                $("#warnId").css("color", "red");
+                $("#warnId").html("아이디는 4~12글자 소문자로 입력해주세요.");
+                $("#userId").attr("attr-checkid", "false");
 
 
 
+                return;
+            }
+            else { // 아이디 중복 검사 
+                $.ajax({
+                    url: "/user/confirmId"
+                    , method: 'GET'
+                    , async: false
+                    , data: { "userId": userId }
+                    , success: function (output) {
+                        if (output) {
+                            $("#warnId").css("color", "blue");
+                            $("#warnId").html("사용가능한 아이디입니다.");
+                            $("#userId").attr("attr-checkid", "true");
 
+
+                        } else {
+                            $("#warnId").css("color", "red");
+                            $("#warnId").html("이미 존재하는 아이디입니다.");
+                            $("#userId").attr("attr-checkid", "false");
+
+
+                        }
+                    }
+
+                });
+
+            }
+        }// 아이디 중복검사 끝
+
+        function checkPwdFunc() { // 비밀번호 유효성 검사 
+            let userPwd = $("#userPwd").val(); // 사용자가 입력한 패스워드 
+            var regex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[a-zA-Z\d@$!%*#?&]+$/;
+            if (userPwd.length < 8 || userPwd.length > 12 || !regex.test(userPwd)) { //confirmPwd
+                $("#warnPwd").css("color", "red");
+                $("#warnPwd").html("8글자 이상~12글자 이하의 영문, 숫자, 특수문자(@$!%*#?&)를 사용하세요");
+            }
+            else {
+                $("#warnPwd").css("color", "blue");
+                $("#warnPwd").html("사용가능한 비밀번호 입니다.");
+            }
+        }
+
+        function doubleCheckPwd() { // 비밀번호 확인 유효성 검사 
+            let userPwd = $("#userPwd").val(); // 사용자가 입력한 패스워드 
+            let userPwdConfirm = $("#userPwdConfirm").val();
+            if (userPwd != userPwdConfirm && userPwdConfirm.length >= 1) {
+                $("#warnPwdConfirm").css("color", "red");
+                $("#warnPwdConfirm").html("비밀번호가 일치하지 않습니다.");
+                $("#userPwdConfirm").attr("attr-checkpwd", "false");
+
+
+
+            } if (userPwd == userPwdConfirm && userPwdConfirm.length >= 1) {
+                $("#warnPwdConfirm").css("color", "blue");
+                $("#warnPwdConfirm").html("비밀번호가 일치합니다.");
+                $("#userPwdConfirm").attr("attr-checkpwd", "true");
+
+
+
+            }
+        }
     </script>
 </head>
 
@@ -199,7 +373,7 @@
                 <div id="content" class="sub join home">
 
                     <!-- 회원가입 form 변경 -->
-                    <form th:action="@{/user/joinProc}" method="post">
+                    <form th:action="@{/user/joinProc}" method="post" onsubmit="return checkjoinform()">
                         <!--onsubmit : ajax 로만 걸기 -->
                         <section>
                             <div>
