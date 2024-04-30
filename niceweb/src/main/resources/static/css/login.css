@@ -6,8 +6,10 @@ LOGIN
 /* reset */
 @import url(lib/reset.css);
 /* library */
-@import url(lib/aos.css); /* Animate On Scroll: 웹 페이지에서 스크롤에 따라 요소들에 애니메이션 효과를 적용하는 JavaScript 라이브러리 */
-@import url(lib/swiper.css); /* Swiper: 모바일 터치 슬라이더 라이브러리 다양한 터치 이벤트와 애니메이션을 지원하여 사용자에게 부드러운 슬라이드 경험을 제공 */
+@import url(lib/aos.css);
+/* Animate On Scroll: 웹 페이지에서 스크롤에 따라 요소들에 애니메이션 효과를 적용하는 JavaScript 라이브러리 */
+@import url(lib/swiper.css);
+/* Swiper: 모바일 터치 슬라이더 라이브러리 다양한 터치 이벤트와 애니메이션을 지원하여 사용자에게 부드러운 슬라이드 경험을 제공 */
 /* common css */
 @import url(_swiper-custom.css);
 @import url(_font.css);
@@ -27,10 +29,11 @@ LOGIN
 }
 
 .sub.login .section.banner .full-h {
-  height: 100vh; /* Full viewport height */
+  height: 100vh;
+  /* Full viewport height */
 }
 
-#wrap.gap #container > #content.sub.login.home {
+#wrap.gap #container>#content.sub.login.home {
   padding-top: 0;
   margin-top: calc(var(--header-height, 60px));
 }
@@ -57,8 +60,8 @@ LOGIN
   flex-direction: column;
   align-items: center;
   background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   max-width: 330px;
   width: 100%;
@@ -75,7 +78,7 @@ LOGIN
   width: 100%;
   padding: 12px 20px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 20px;
   transition: border 0.3s ease;
 }
 
@@ -86,24 +89,24 @@ LOGIN
 }
 
 .form-login button[type="submit"] {
-  width: 100%;
+  width: 50%;
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: var(--blue);
   color: white;
   font-size: 1.0rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .form-login button[type="submit"]:hover {
-  background-color: #0056b3;
+  background-color: #7b92b4;
 }
 
 @media all and (max-width: 768px) {
   .sub.login.home .section.with {
-      background-image: url('../images/about/bg_space_mo.jpg');
+    background-image: url('../images/about/bg_space_mo.jpg');
   }
 }
 
@@ -115,28 +118,39 @@ LOGIN
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
-  background-color: #007bff; /* Bootstrap의 primary 색상 */
+  background-color: var(--blue);
+  /* Bootstrap의 primary 색상 */
   border: 1px solid transparent;
   text-decoration: none;
 }
 
 .auth-links {
   display: flex;
-  justify-content: flex-end; /* 오른쪽 정렬 */
-  margin-top: 20px; /* 폼과의 간격 조절 */
+  justify-content: flex-end;
+  /* 오른쪽 정렬 */
+  margin-top: 20px;
+  /* 폼과의 간격 조절 */
 }
 
 .auth-link {
-  margin-left: 10px; /* 링크 간의 간격 */
-  text-decoration: none; /* 밑줄 제거 */
-  font-size: 0.8rem; /* 폰트 크기 조정 */
-  color: white; /* 텍스트 색상 */
-  background-color: #6c757d; /* 배경 색상 */
-  padding: 10px 15px; /* 패딩 조정 */
-  border-radius: 4px; /* 모서리 둥글게 */
+  margin-left: 10px;
+  /* 링크 간의 간격 */
+  text-decoration: none;
+  /* 밑줄 제거 */
+  font-size: 0.8rem;
+  /* 폰트 크기 조정 */
+  color: white;
+  /* 텍스트 색상 */
+  background-color: #c9deff;
+  /* 배경 색상 */
+  padding: 10px 15px;
+  /* 패딩 조정 */
+  border-radius: 4px;
+  /* 모서리 둥글게 */
   display: block;
 }
 
 .btn-secondary:hover {
-  background-color: #5a6268; /* 호버 시 배경색 변경 */
+  background-color: #c9deff;
+  /* 호버 시 배경색 변경 */
 }
