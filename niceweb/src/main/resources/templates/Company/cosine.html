@@ -265,12 +265,24 @@
                                 </ul>
                             </li>
                             <li>
-                                <a th:href="@{/search}">
+                                <a href="" class="has-depth">
                                     <span>MATCH</span>
                                 </a>
+                                <ul>
+                                    <li>
+                                        <a th:href="@{/search}">
+                                            <span>Keyword</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a th:href="@{/categorySearch}">
+                                            <span>Category</span>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                             <li>
-                                <a href=""><!--수정 필요-->
+                                <a th:href="@{/noticeList}"><!--수정 필요-->
                                     <span>NOTICE</span>
                                 </a>
                             </li>
@@ -361,8 +373,8 @@
                 <div class="footer-inner">
                     <div class="cont site">
                         <div class="menu">
-                            <a href="/privacy.html">개인정보처리방침</a>
-                            <a href="/terms.html">이용약관</a>
+                            <a href="">개인정보처리방침</a>
+                            <a href="">이용약관</a>
                         </div>
                         <div class="select-box">
                             <select class="select family" title="나이스투매치유">
@@ -499,6 +511,7 @@
     <script th:src="@{/js/lib/aos.js}"></script>
     <script th:src="@{/js/lib/swiper-bundle.js}"></script>
     <script>
+        nav.current(3, 1);
 
         jQuery(function () {
 

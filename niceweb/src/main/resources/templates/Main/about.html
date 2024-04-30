@@ -76,12 +76,24 @@
                                 </ul>
                             </li>
                             <li>
-                                <a th:href="@{/search}">
+                                <a href="" class="has-depth">
                                     <span>MATCH</span>
                                 </a>
+                                <ul>
+                                    <li>
+                                        <a th:href="@{/search}">
+                                            <span>Keyword</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a th:href="@{/categorySearch}">
+                                            <span>Category</span>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                             <li>
-                                <a href=""><!--수정 필요-->
+                                <a th:href="@{/noticeList}"><!--수정 필요-->
                                     <span>NOTICE</span>
                                 </a>
                             </li>
