@@ -50,7 +50,7 @@ public class UserController {
 	}
 	@GetMapping("/login")
 	public String login() {
-		return"login/logincopy";
+		return"login/login";
 	}
 
 	@GetMapping("/find")
