@@ -308,12 +308,20 @@
             </div>
         </header>
 
+
         <div id="scroller" class="scroller" data-scrollbar>
             <div id="container" class="container">
-                <div id="content" class="main">
+                <div class="sub-visual sub-visual--sub2">
+                    <div class="sub-visual__inner">
+                        <h2 class="sub-visual__h2">빅데이터 매칭</h2>
+                        <p class="sub-visual__desc">자동차 관련 해외뉴스를 검색하고 제공하는 페이지입니다. </p>
+                    </div>
 
+                </div>
+
+                <div id="content" class="main">
                     <!-- cosine 시작 -->
-                    <h2>MATCH</h2>
+                    <!-- <h2>MATCH</h2> -->
                     <!-- 로그인 유저의 고유 넘버값 넣어주는거 있지말기-->
                     <input type="hidden" id="userNum" name="userNum" th:value="${#authentication.principal.userNum}">
                     <form th:action="@{/predict}" method="POST">
