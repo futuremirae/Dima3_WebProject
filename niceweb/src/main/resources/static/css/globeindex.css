@@ -266,7 +266,8 @@ dropdown
 
 .sub-visual__inner {
     position: relative;
-    max-width: 1366px;
+    /* max-width: 1366px; */
+    max-width: 1560px;
     margin: 122px auto 0;
     padding: 64px 0 65px 111px;
     border-radius: 32px 0;

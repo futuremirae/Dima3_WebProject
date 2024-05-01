@@ -126,14 +126,14 @@
 
         /* 사이드바의 너비와 높이를 변수를 통해 통제 */
         :root {
-            --side-bar-width: 300px;
+            --side-bar-width: 330px;
             --side-bar-height: 5vh;
         }
 
         .side-bar {
             width: var(--side-bar-width);
             position: fixed;
-            left: -300px;
+            left: -330px;
             /* 초기에 사이드바를 숨깁니다 */
             top: 0;
             height: 70px;
@@ -173,9 +173,7 @@
 
         /* 모든 메뉴가 마우스 인식 시 반응 */
         .side-bar ul>li:hover>a {
-
             background-color: #6b6e72;
-
 
         }
 
@@ -458,7 +456,7 @@
             /* 사이드바를 고정 위치에 표시 */
             top: 0;
             /* 상단에 맞춤 */
-            right: -300px;
+            right: -330px;
             /* 초기에는 숨김 */
             transition: right 0.3s;
             /* 부드러운 오른쪽으로 이동 효과 */
@@ -609,7 +607,7 @@
                 sidebarStates[toggleButtons[id]] = { isOpen: false, isFixed: false };
                 imageElement.addEventListener('mouseover', () => !anySidebarFixed && !sidebarStates[toggleButtons[id]].isFixed && (sidebar.style.left = '0px'));
                 imageElement.addEventListener('click', () => toggleSidebarState(toggleButtons[id]));
-                imageElement.addEventListener('mouseout', () => !anySidebarFixed && !sidebarStates[toggleButtons[id]].isFixed && (sidebar.style.left = '-300px'));
+                imageElement.addEventListener('mouseout', () => !anySidebarFixed && !sidebarStates[toggleButtons[id]].isFixed && (sidebar.style.left = '-330px'));
             });
 
 
@@ -629,14 +627,14 @@
                 resetOtherSidebars(id);
                 state.isFixed = !state.isFixed;
                 anySidebarFixed = state.isFixed;
-                sidebar.style.left = state.isFixed ? '0px' : '-300px';
+                sidebar.style.left = state.isFixed ? '0px' : '-330px';
             }
 
             function resetOtherSidebars(excludeId) {
                 Object.keys(sidebarStates).forEach(key => {
                     if (key !== excludeId) {
                         const sidebar = document.getElementById(key);
-                        sidebar.style.left = '-300px';
+                        sidebar.style.left = '-330px';
                         sidebarStates[key].isFixed = false;
                     }
                 });
@@ -682,7 +680,7 @@
                 Object.keys(sidebarStates).forEach(key => {
                     if (key !== excludeId) {
                         const sidebar = document.getElementById(key);
-                        sidebar.style.left = '-300px';
+                        sidebar.style.left = '-330px';
                         sidebarStates[key].isFixed = false;
                     }
                 });
@@ -747,7 +745,7 @@
         function closeSidebar() {
             const productListContainer = document.querySelector('.productListContainer');
             if (productListContainer.style.right === '0px') {
-                productListContainer.style.right = '-300px';
+                productListContainer.style.right = '-330px';
             }
         }
 
@@ -832,7 +830,7 @@
                                     class='bx bxs-chevrons-right arrow'></i></a>
                             <ul class="submenu">
                                 <li><a href="#none" class="toggle">Electrical and Electronic<i
-                                            class='bx bxs-chevrons-right arrow'></i>></a>
+                                            class='bx bxs-chevrons-right arrow'></i></a>
                                     <ul class="submenu" id="3rdmenu">
                                         <li><a href="#none">Milliwave and Laser Radar / LiDAR <button
                                                     onclick="displayItemsByCategory('18')">Search</button></a></li>

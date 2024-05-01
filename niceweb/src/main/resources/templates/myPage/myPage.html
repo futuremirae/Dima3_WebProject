@@ -128,19 +128,26 @@
             </div>
         </header>
         <div id="scroller" class="scroller" data-scrollbar>
+            <div class="sub-visual sub-visual--sub2">
+                <div class="sub-visual__inner">
+                    <h2 class="sub-visual__h2">마이페이지</h2>
+                    <p class="sub-visual__desc">관심 바이어와 이메일 발송내역을 관리하는 페이지입니다.</p>
+                </div>
+            </div>
 
 
             <!-- 마이페이지 form 변경 -->
             <div id="container" class="container">
+
                 <div>
                     <!-- 메인페이지 윗부분 -->
                     <!-- <h2> MY PAGE</h2> -->
-                    <div class="sub-visual sub-visual--sub2">
+                    <!-- <div class="sub-visual sub-visual--sub2">
                         <div class="sub-visual__inner">
                             <h2 class="sub-visual__h2">마이페이지</h2>
                         </div>
-                    </div>
-                    <br><br><br><br><br>
+                    </div> -->
+                    <br><br><br>
 
                     <!-- 메인페이지 메뉴들 -->
                     <div class="content-body">
@@ -157,7 +164,7 @@
                                     </div>
                                     <div class="mypage-main__box mypageBox--style3">
                                         <p class="title">개인정보</p>
-                                        <a href="#" class="btn">확인하기</a><!--아직 수정중-->
+                                        <a th:href="@{/user/myInfo}" class="btn">확인하기</a><!--아직 수정중-->
                                     </div>
                                 </div> <!-- mypage-main__menu-->
                             </div> <!-- mypage-main-->

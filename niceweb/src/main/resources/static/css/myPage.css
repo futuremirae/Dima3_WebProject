@@ -46,7 +46,7 @@ h2 {
 }
 
 .mypage-main__box {
-    width: 155px;
+    width: 175px;
     margin: 12px 0;
     padding: 58px 15px 15px;
     border-radius: 15px;
@@ -96,7 +96,7 @@ h2 {
         배너 만들기 
 *******************************/
 .sub-visual--sub2 .sub-visual__inner {
-    background: #f0e68c;
+    background: #FF88B6;
 }
 
 .sub-visual__inner {
@@ -139,12 +139,12 @@ h2 {
 .sub-visual__inner:before {
     content: "";
     position: absolute;
-    top: 0px;
+    top: -20px;
     right: -50px;
     display: block;
     width: 498px;
     height: 290px;
     /* height: 280px; */
 
-    background: url(/images/banner/matchsbanner.png) no-repeat 0 0 / 100% auto;
+    background: url(/images/banner/mypagebanner.png) no-repeat 0 0 / 100% auto;
 }

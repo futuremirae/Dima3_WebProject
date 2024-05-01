@@ -519,6 +519,8 @@ th.create_date {
 *******************************/
 .sub-visual--sub2 .sub-visual__inner {
     background: #a0db70;
+    /* height: 220px; */
+
 }
 
 .sub-visual__inner {
@@ -540,6 +542,17 @@ th.create_date {
     font-size: 48px;
     font-weight: 700;
     color: #fff;
+}
+
+.sub-visual__desc {
+    position: relative;
+    width: 475px;
+    margin-top: 15px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    color: #fff;
+
 }
 
 .sub-visual__inner:before {
