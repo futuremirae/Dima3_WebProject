@@ -180,6 +180,58 @@
         #newsContent {
             margin-top: 30px;
         }
+
+        /******************************
+        배너 만들기 
+*******************************/
+        .sub-visual--sub2 .sub-visual__inner {
+            background: #64DB99
+        }
+
+        .sub-visual__inner {
+            position: relative;
+            max-width: 1366px;
+            margin: 122px auto 0;
+            padding: 64px 0 65px 111px;
+            border-radius: 32px 0;
+        }
+
+        .sub-visual__h2 {
+            margin: 0;
+            padding: 0;
+            line-height: 1;
+            border: 0;
+            box-sizing: border-box;
+            font-family: Pretendard, Nanum Gothic, 나눔고딕, sans-serif;
+            position: relative;
+            font-size: 48px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .sub-visual__desc {
+            position: relative;
+            width: 475px;
+            margin-top: 15px;
+            font-size: 16px;
+            line-height: 24px;
+            font-weight: 500;
+            color: #fff;
+
+        }
+
+        .sub-visual__inner:before {
+            content: "";
+            position: absolute;
+            top: 50px;
+            right: 70px;
+            display: block;
+            width: 498px;
+            height: 269px;
+            /* height: 280px; */
+
+            background: url(/images/banner/newsbanner.png) no-repeat 0 0 / 100% auto;
+        }
     </style>
 
 </head>
@@ -293,7 +345,13 @@
         </header>
         <div id="scroller" class="scroller" data-scrollbar>
             <div class="content">
-                <h1 class="page-header">해외뉴스</h1>
+                <div class="sub-visual sub-visual--sub2">
+                    <div class="sub-visual__inner">
+                        <h2 class="sub-visual__h2">해외뉴스</h2>
+                        <p class="sub-visual__desc">자동차 관련 해외뉴스를 제공하는 페이지입니다.</p>
+                    </div>
+                </div>
+                <h1 class="page-header"></h1>
                 <div class="loading">
                     <div class="droplet_spinner">
                         <div class="droplet"></div>
