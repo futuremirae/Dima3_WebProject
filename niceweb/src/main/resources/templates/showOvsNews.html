@@ -28,7 +28,7 @@
     <script th:src="@{/js/nice_dev.js}"></script>
     <script>
         async function fetchOvsData() {
-            // 로딩 
+            // 로딩 중 스피너 삽입
             document.querySelector('.loading').style.display = 'block';
 
             const search1 = encodeURIComponent(document.getElementById('search1').value);
@@ -54,9 +54,9 @@
                 const data = await response.json();
                 //sosad.innerHTML = url;
                 displayResults(data);
-            } catch (error) {
+            } catch (error) { // 에러 발생시
                 console.error('Error:', error);
-                document.querySelector('.loading').style.display = 'none';// 로딩 종료
+                document.querySelector('.loading').style.display = 'none';// 에러 발생시 로딩 종료
                 document.getElementById('results').innerHTML = '데이터를 불러오는 중 오류가 발생했습니다.';
             }
         }

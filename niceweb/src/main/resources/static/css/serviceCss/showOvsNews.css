@@ -6,6 +6,7 @@ header {
 .content {
     margin-top: 200px;
     margin: 0 auto;
+    position: relative;
 
 }
 
@@ -171,7 +172,10 @@ input {
 
 /*************************
             로딩중 페이지 
-            **************************/
+**************************/
+/******************************
+로딩중 배너 ~~~
+******************************/
 
 .loading {
     /* width: 90vw; */
@@ -181,10 +185,21 @@ input {
     height: 1000px;
     /* 흰색 배경에 50%의 투명도 적용 */
     display: none;
+    position: absolute;
+    /* top: calc(50% - 50px); */
+    top: 100px;
+
+    /* 화면의 세로 중앙에서 50px 위로 조정 */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    /* 필요에 따라 조정 */
 
 
 
 }
+
+
 
 .droplet_spinner {
     display: flex;
@@ -206,20 +221,8 @@ input {
 }
 
 
-/******************************
-로딩중 배너 ~~~
-******************************/
 
-.loading {
-    position: absolute;
-    top: calc(50% - 50px);
 
-    /* 화면의 세로 중앙에서 50px 위로 조정 */
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 9999;
-    /* 필요에 따라 조정 */
-}
 
 .droplet_spinner .droplet:nth-child(1) {
     animation-delay: -0.4s;
