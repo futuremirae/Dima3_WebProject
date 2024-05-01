@@ -6,6 +6,7 @@ header {
 .content {
     margin-top: 200px;
     /* height: 300px; */
+    max-width: 1320px;
 }
 
 
