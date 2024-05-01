@@ -153,7 +153,7 @@
         function plusMyCmp() {
             let dunsNo = $(this).attr("attr-dunsno"); // 고유 던스넘버
             let userNum = $("#userNum").val(); // 사용자의 고유 넘버 넣어주기 ~~
-            alert(userNum);
+
 
 
             $.ajax({
@@ -408,7 +408,8 @@
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">이메일 발송</h4>
-                    <button type="button" class="closeBtn" data-bs-dismiss="modal"></button>
+                    <!-- <button type="button" class="closeBtn" data-bs-dismiss="modal"></button> -->
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
                 <!-- Modal body -->
@@ -487,7 +488,7 @@
                         </tr>
                         <tr>
                             <td>홈페이지</td>
-                            <td><a href="" id="cmpUrl"></a></td>
+                            <td><a href="" id="cmpUrl" target="_blank" class="linkhover"></a></td>
                         </tr>
                     </table>
 
