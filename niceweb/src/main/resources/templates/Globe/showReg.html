@@ -149,7 +149,7 @@
                 <div class="sub-visual sub-visual--sub2">
                     <div class="sub-visual__inner">
 
-                        <h2 class="sub-visual__h2">무역규제</h2>
+                        <h2 class="sub-visual__h2" id="conuntryName">무역규제</h2>
                         <p class="sub-visual__desc">세계 각국의 무역 규제에대한 정보를 제공합니다.</p>
                     </div>
                 </div>
@@ -162,6 +162,10 @@
                             모른다면</a></button>
 
                 </div>
+
+                <!-- <div class="conuntryName">
+                    <span id="conuntryName">나라이름</span>
+                </div> -->
 
 
                 <div id="insertReg">
@@ -205,12 +209,32 @@
         <script>
             document.addEventListener('DOMContentLoaded', function () {
 
+                // 나라 이름 반환 
+                const countryNames = {
+                    "CN": "China", "KR": "South Korea", "IN": "India", "MY": "Malaysia", "JP": "Japan", "TH": "Thailand", "HK": "Hong Kong", "SG": "Singapore", "TW": "Taiwan", "AE": "United Arab Emirates",
+                    "IL": "Israel", "BH": "Bahrain", "QA": "Qatar", "VN": "Vietnam", "SA": "Saudi Arabia", "ID": "Indonesia", "PH": "Philippines", "PK": "Pakistan", "LK": "Sri Lanka", "UZ": "Uzbekistan",
+                    "DE": "Germany", "GB": "United Kingdom", "FR": "France", "SE": "Sweden", "AT": "Austria", "DK": "Denmark", "IT": "Italy", "BE": "Belgium", "NL": "Netherlands", "SI": "Slovenia",
+                    "HU": "Hungary", "CH": "Switzerland", "CZ": "Czech Republic", "RO": "Romania", "TR": "Turkey", "RS": "Serbia", "PL": "Poland", "UA": "Ukraine", "SK": "Slovakia", "FI": "Finland",
+                    "BG": "Bulgaria", "EE": "Estonia", "GR": "Greece", "NO": "Norway", "PT": "Portugal", "LV": "Latvia", "HR": "Croatia", "GE": "Georgia", "BY": "Belarus", "LT": "Lithuania",
+                    "MT": "Malta", "BA": "Bosnia and Herzegovina", "ES": "Spain", "US": "United States", "CA": "Canada", "MX": "Mexico", "GT": "Guatemala", "CR": "Costa Rica", "SV": "El Salvador", "JM": "Jamaica",
+                    "NI": "Nicaragua", "DO": "Dominican Republic", "VG": "British Virgin Islands", "PA": "Panama", "BR": "Brazil", "CO": "Colombia", "AR": "Argentina", "CL": "Chile", "VE": "Venezuela", "EC": "Ecuador",
+                    "TT": "Trinidad and Tobago", "ZA": "South Africa", "NG": "Nigeria", "EG": "Egypt", "MA": "Morocco", "KE": "Kenya", "NZ": "New Zealand", "AU": "Australia", "RU": "Russia"
+                };
+                function getCountryName(code) {
+                    return countryNames[code] || code;  // 국가 코드에 해당하는 이름이 없다면 코드를 그대로 반환
+                }
+
                 console.log(flagUrl)
                 const params = new URLSearchParams(window.location.search);
                 const country = params.get('country');
 
                 //국기 api
                 var flagUrl = `https://flagsapi.com/${country}/flat/64.png`; // 국기 이미지 URL 생성
+                let countryName = getCountryName(country);
+                // 나라이름 반환 
+                // document.getElementById("conuntryName").innerHTML = countryName;
+                document.getElementById("conuntryName").innerHTML = countryName + " 무역 규제";
+                //alert(countryName); // 나라 이름 반환
                 document.getElementById('countryFlag').src = flagUrl; // 이미지 소스 업데이트
 
                 if (!country) {
