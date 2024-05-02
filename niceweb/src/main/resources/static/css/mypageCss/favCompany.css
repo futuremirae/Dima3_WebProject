@@ -147,7 +147,7 @@ td i:hover {
 
 .sub-visual__inner {
     position: relative;
-    max-width: 1366px;
+    /* max-width: 1366px; */
     margin: 122px auto 0;
     padding: 64px 0 65px 111px;
     border-radius: 32px 0;
@@ -181,11 +181,11 @@ td i:hover {
     content: "";
     position: absolute;
     top: 50px;
-    right: 111px;
+    right: 60px;
     display: block;
     width: 498px;
     /* height: 269px; */
-    height: 300px;
+    height: 350px;
 
     background: url(/images/banner/emailbanner.png) no-repeat 0 0 / 100% auto;
 }
