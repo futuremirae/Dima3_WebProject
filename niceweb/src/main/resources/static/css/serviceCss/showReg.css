@@ -197,7 +197,7 @@
 
 .sub-visual__inner {
     position: relative;
-    max-width: 1366px;
+    /* max-width: 1366px; */
     margin: 122px auto 0;
     padding: 64px 0 65px 111px;
     border-radius: 32px 0;
@@ -240,5 +240,5 @@
     width: 498px;
     height: 290px;
     /* height: 280px; */
-    background: url(/images/banner/staticbanner.png) no-repeat 0 0 / 100% auto;
+    background: url(/images/banner/showregbanner.png) no-repeat 0 0 / 100% auto;
 }

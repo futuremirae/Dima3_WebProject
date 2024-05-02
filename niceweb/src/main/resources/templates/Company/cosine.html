@@ -339,7 +339,7 @@
                     <!-- <h2>MATCH</h2> -->
                     <!-- 로그인 유저의 고유 넘버값 넣어주는거 있지말기-->
                     <input type="hidden" id="userNum" name="userNum" th:value="${#authentication.principal.userNum}">
-                    <form th:action="@{/predict}" method="POST">
+                    <form action="#" onsubmit="return false">
                         <div class="search">
                             <input type="text" placeholder="Enter Keyword" id="search" name="inputKeyword"
                                 th:value="${inputKeyword}">
