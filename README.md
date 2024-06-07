@@ -72,3 +72,7 @@
 
 ### ⭐️ 로그인 및 회원가입 
 ![로긍;ㄴ](https://github.com/futuremirae/Dima_Project_1/assets/136614563/388e25ab-e25c-42f5-a04e-d0ed60eedc5d)
+
+### 공지사항 
+- 관리자가 올린 공지사항을 확일 할 수 있습니다.
+![공지사항](https://github.com/futuremirae/Dima_Project_1/assets/136614563/91fc95b5-dd49-4754-b595-84741c18049f)
